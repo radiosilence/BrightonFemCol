@@ -44,6 +44,9 @@ section#main>header h1 {
 
 section#main>header span.date {
 	font-size: 12px;
+	display: block;
+	margin-top: 40px;
+	margin-bottom: 10px;
 }
 section#main>header span.date sup {
 	text-transform: none;
@@ -52,6 +55,12 @@ section#main>header span.date sup {
 section#main>header span.author {
 	font-size: 18px;
 	font-style: italic;
+	margin-bottom: 15px;
+	display: block;
+}
+
+section#main div p {
+	line-height: 1.8;
 }
 
 div.container>header a {
@@ -117,7 +126,13 @@ div.container>header nav li a {
 	text-align: center;
 	font-size: 14px;
 	padding: 8px 10px;
+	color: white;
 }
+
+div.container>header nav>ul.primary>li.selected a, div.container>header nav>ul.secondary a {
+	color: white;
+}
+
 figure, div.container>header nav>ul.primary>li.selected, div.container>header nav>ul.secondary {
 	background: #521717;
 	color: white;
@@ -150,7 +165,7 @@ div.container>header nav>ul.secondary>li.selected {
 }
 
 .tweet_list li a {
-	color: #ccc;
+	color: #fff	;
 	font-weight: bold;
 	text-decoration: none;
 }
