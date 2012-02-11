@@ -22,7 +22,7 @@ body {
 	font-family: 'PT Serif', serif;
 }
 
-h1, h2, nav, span.date, span.author, figure {
+h1, h2, nav, span.date, span.author, figure, #twitter {
 	font-family: 'PT Sans', sans-serif;
 }
 
@@ -60,7 +60,25 @@ div.container>header a {
 
 figure {
 	padding: 10px;
-	margin-left: 0px;
+	margin: 10px 0px;
+}
+
+figure img {
+	width: 100%;
+}
+
+figure>a, figure>a:visited {
+	display: block;
+	width: 100%;
+	text-align: right;
+	font-style: italic;
+	color: white;
+	text-decoration: none;
+}
+
+figure>a:before {
+	content: "Source: ";
+	text-decoration: none;
 }
 
 sup {
@@ -74,13 +92,14 @@ div.container>aside {
 }
 
 div.container>footer {
+	padding: 10px;
 	background: #202020;
 }
 /* Navigation */
 
 div.container>header nav {
 	background: #080808;
-	width: 960px !important;
+	width: 100% !important;
 	color: white;
 }
 
@@ -114,6 +133,41 @@ div.container>header nav>ul.secondary>li.selected {
 	font-weight: bold;
 }
 
+/* Twitter stuff */
+
+.tweet_list .awesome,
+.tweet_list .epic {
+	text-transform: uppercase;
+}
+
+.tweet_list li {
+	overflow: hidden;
+	padding: .5em;
+	list-style-type: none;
+	padding-right: .5em;
+	font-size: 14px;
+	color: #aaa;
+}
+
+.tweet_list li a {
+	color: #ccc;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.tweet_list .tweet_even {
+	background-color: #0c0c0c;
+}
+
+.tweet_list .tweet_avatar {
+	padding-right: .5em; float: left;
+}
+
+.tweet_list .tweet_avatar img {
+	vertical-align: middle;
+}
+
+	
 /* #Page Styles
 ================================================== */
 
