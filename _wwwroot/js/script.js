@@ -14,7 +14,7 @@ $(function() {
             ],
             join_text: "auto",
             avatar_size: 50,
-            count: 10,
+            count: 100,
             auto_join_text_default: "", 
             auto_join_text_ed: "we",
             auto_join_text_ing: "we were",
