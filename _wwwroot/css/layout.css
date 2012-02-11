@@ -18,7 +18,13 @@
 ================================================== */
 
 body {
-	background: #010101 url(../nami.png)
+	background: #010101 url(../nami.png);
+	color: black;
+}
+
+a:hover {
+	color: white;
+	background: black;
 }
 /*
 body {
@@ -40,6 +46,11 @@ h1, h2 {
 div.container {
 	background: white;
 }
+
+body>div>header h1 {
+	color: white;
+}
+
 #main>header {
 	margin-bottom: 10px;
 	margin-top: 30px;
@@ -48,7 +59,6 @@ div.container {
 #main>header h1 {
 	font-size: 48px;
 	margin-top: 20px;
-	display: block;
 }
 
 #main>header span.tags {
@@ -95,8 +105,11 @@ div.container>header a {
 
 
 figure {
+	background: #521717;
+	color: white;
+	font-size: 12px;
 	padding: 10px;
-	max-width: 240px;
+	width: 240px;
 	margin: 10px 0px;
 }
 
@@ -182,7 +195,7 @@ div.container>header nav>ul.primary>li.selected a, div.container>header nav>ul.s
 	color: white;
 }
 
-figure, div.container>header nav>ul.primary>li.selected, div.container>header nav>ul.secondary {
+div.container>header nav>ul.primary>li.selected, div.container>header nav>ul.secondary {
 	background: #521717;
 	color: white;
 }
