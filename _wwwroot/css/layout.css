@@ -18,11 +18,11 @@
 ================================================== */
 
 body {
-	background: #161616;
+	background: #fff;
 	font-family: 'PT Serif', serif;
 }
 
-h1, h2, nav, span.date, span.author, figure, #twitter {
+h1, h2, nav, span.date, span.author, span.tags, figure, #twitter {
 	font-family: 'PT Sans', sans-serif;
 }
 
@@ -37,24 +37,40 @@ h1, h2 {
 div.container {
 	background: white;
 }
+section#main>header {
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
 
 section#main>header h1 {
 	font-size: 48pt;
+	margin-top: 10px;
+}
+
+section#main>header span.tags {
+	font-size: 10px;
+	text-transform: uppercase;
+}
+section#main>header span.tags a {
 }
 
 section#main>header span.date {
 	font-size: 12px;
 	display: block;
-	margin-top: 40px;
-	margin-bottom: 10px;
 }
 section#main>header span.date sup {
 	text-transform: none;
 }
 
-section#main>header span.author {
+section#main>header span.subtitle {
 	font-size: 18px;
 	font-style: italic;
+	margin-bottom: 15px;
+	display: block;
+}
+
+section#main>header span.author {
+	font-size: 18px;
 	margin-bottom: 15px;
 	display: block;
 }
@@ -102,7 +118,7 @@ div.container>aside {
 
 div.container>footer {
 	padding: 10px;
-	background: #202020;
+	background: #080808;
 }
 /* Navigation */
 
