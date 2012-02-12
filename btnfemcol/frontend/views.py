@@ -6,10 +6,10 @@ from flaskext.uploads import (UploadSet, configure_uploads, IMAGES,
 
 from btnfemcol.frontend import frontend
 from flaskext.wtf import Form
-from wtforms.ext.appengine.orm import model_form
+from wtforms.ext.sqlalchemy.orm import model_form
 
 from btnfemcol import uploaded_images, uploaded_avatars
 
-@frontend.route('/'):
+@frontend.route('/')
 def home():
     return "DERPS"

@@ -70,7 +70,10 @@ def configure_base_views(app):
 
 def _status(error):
     status = [x.strip() for x in str(error).split(":")]
-    return render_template('status.html',
-        _status=status[0],
-        _message=status[1]
-        )
+    try:
+        return render_template('status.html',
+            _status=status[0],
+            _message=status[1]
+            )
+    except:
+        return """<h1>%s</h1><p>%s</p>""" % (status[0], status[1])

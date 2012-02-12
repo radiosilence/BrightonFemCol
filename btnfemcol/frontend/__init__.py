@@ -1,9 +1,6 @@
 from flask import Blueprint, g, session, config, current_app
 
 from btnfemcol.models import User
-from btnfemcol.utils import Auth
-
-import redis
 
 frontend = Blueprint('frontend', __name__,
     template_folder='templates')
@@ -12,8 +9,6 @@ frontend = Blueprint('frontend', __name__,
 @frontend.before_request
 def before_request():
     g.logged_in = False
-
-    g.auth = Auth(g.r)
     g.GMAPS_KEY = current_app.config['GMAPS_KEY']
     try:
         if session['logged_in']:
@@ -29,7 +24,6 @@ def before_request():
 @frontend.after_request
 def after_request(response):
     """Closes the database again at the end of the request."""
-    session.pop('user', g.auth.user)
     return response
 
 import views
