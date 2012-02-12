@@ -1,3 +1,9 @@
 Flask
 Flask-WTF
-
+pycrypto
+Flask-Markdown
+Flask-Uploads
+Flask-SQLAlchemy
+Whirlpool
+Markdown
+SQLAlchemy
