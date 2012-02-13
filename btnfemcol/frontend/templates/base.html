@@ -1,6 +1,9 @@
 {%- macro user_link(user) -%}
 <a href="#">{{ user.firstname }} {{ user.surname }}</a>
 {%- endmacro -%}
+{%- macro article_link(article) -%}
+<a href="#">{{ article.title }}</a> by {{ user_link(article.author) }}
+{%- endmacro -%}
 {%- macro flashes() %}
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}

@@ -1,4 +1,4 @@
-from btnfemcol.models import User
+from btnfemcol.models import User, Page, Article
 
 from flaskext.wtf import *
 from flaskext.wtf.html5 import *
@@ -72,3 +72,26 @@ class UserRegistrationForm(UserEditForm):
         [optional(), equal_to('confirm_pass',
             message='Passwords must match.')])
     confirm_pass = PasswordField('Confirm Password')
+
+
+PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
+    'title': {
+        'validators': [
+            Required()
+        ]
+    }
+})
+
+class PageEditForm(PageFormBase):
+    pass
+
+class AuthorField(SelectField):
+    def iter_choices(self):
+        yield (None, 'Please select an author.', not self.data)
+        for user in User.query.all():
+            yield (user.id, user.username, user.id == self.data)
+
+ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
+
+class ArticleEditForm(ArticleFormBase):
+    author_id = AuthorField()
