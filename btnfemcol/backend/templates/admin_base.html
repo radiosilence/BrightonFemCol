@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{%- macro render_field(field) -%}
+    {%- if field.type != 'HiddenField' -%}
+    <dt>{{ field.label() }}
+        <dd>{{ field(placeholder=field.description, **kwargs)|safe }}
+      {%- if field.errors -%}
+        <ul class="errors">
+        {% for error in field.errors %}<li>{{ error }}{% endfor %}
+        </ul>
+      {%- endif -%}
+      </dd>
+    {%- else -%}
+        {{ field(**kwargs) }}
+    {%- endif -%}
+{%- endmacro -%}
+{% block content %}{% endblock %}

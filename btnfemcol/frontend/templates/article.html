@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+        <header class="ten columns alpha omega offset-by-one">
+            {{ article.tags_html }}
+            <h1><span>{{ article.title }}</span></h1>
+            <span class="subtitle">{{ article.subtitle }}</span>
+            <span class="author">By {{ user_link(article.author) }}</span>
+            <span class="date tk-octin-vintage">{{ article.date }}</span>
+        </header>
+        <div class="ten columns offset-by-one alpha">
+            {{ article.body|markdown }}
+        </div>
+{% endblock %}

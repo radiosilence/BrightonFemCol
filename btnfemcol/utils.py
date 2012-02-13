@@ -1,7 +1,7 @@
 from base64 import b64encode
 from binascii import b2a_hex
 from os import urandom
-
+import math
 import whirlpool
 
 class Hasher:

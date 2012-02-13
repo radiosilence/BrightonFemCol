@@ -19,10 +19,10 @@ db = SQLAlchemy()
 def create_app(debug=False):
     if debug:
         print "Debug mode."
-        app = Flask('btnfemcol', static_path='/static/')
+        app = Flask('btnfemcol', static_path='/static')
 
     else:
-        app = Flask('btnfemcol', static_path='/')
+        app = Flask('btnfemcol', static_path='')
 
     app.config.from_object('btnfemcol.settings')
     app.config.from_envvar('BTNFEMCOL_SETTINGS', silent=True)
@@ -36,6 +36,8 @@ def create_app(debug=False):
 
     from btnfemcol.frontend import frontend
     app.register_blueprint(frontend, url_prefix='')
+    from btnfemcol.backend import backend
+    app.register_blueprint(backend, url_prefix='/admin')
             
     configure_base_views(app)
 

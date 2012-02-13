@@ -2,11 +2,11 @@ from flask import Blueprint, g, session, config, current_app
 
 from btnfemcol.models import User
 
-frontend = Blueprint('frontend', __name__,
+backend = Blueprint('backend', __name__,
     template_folder='templates')
 
 
-@frontend.before_request
+@backend.before_request
 def before_request():
     g.logged_in = False
     try:
@@ -20,7 +20,7 @@ def before_request():
         logout()
 
 
-@frontend.after_request
+@backend.after_request
 def after_request(response):
     """Closes the database again at the end of the request."""
     return response
