@@ -29,8 +29,9 @@ def create_app(debug=False):
     app.config['DEBUG'] = debug
     configure_uploads(app, uploaded_avatars)
     configure_uploads(app, uploaded_images)
-    Markdown(app)
+    db.app = app
     db.init_app(app)
+    Markdown(app)
     if not debug:
         configure_logging(app)
 

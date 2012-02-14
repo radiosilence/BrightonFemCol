@@ -5,18 +5,6 @@ from btnfemcol import db
 from btnfemcol.utils import Hasher
 
 
-class Administrable(object):
-    @classmethod
-    def __url__(cls):
-        return cls.__name__.lower()
-
-    @classmethod
-    def admin_url(cls, action, id=None):
-        if action == 'list':
-            return url_for('admin.list', type=cls.__url__())
-        else:
-            return url_for('admin.action', type=cls.__url__(), id=id, action=action)
-
 class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(120), unique=True)

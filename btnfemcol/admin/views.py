@@ -30,10 +30,12 @@ def home():
 
 
 @admin.route('/your-articles')
-def list_articles():
-    articles = g.user.articles.all()
-    return render_template('admin_list.html',
-        items=articles)
+def list_own_articles():
+    #articles = g.user.articles.all()
+    articles = Article.query.all()
+    print articles
+    return render_template('admin_list_articles.html',
+        articles=articles)
 
 @admin.route('/<string:type>/<int:id>/<string:action>')
 def action(type, id, action):
@@ -59,7 +61,11 @@ def save_object(form, object, message="%s saved."):
         form.populate_obj(object)
         db.session.add(object)
         db.session.commit()
+        print object.id
         flash(message % object)
+    else:
+        print form.errors
+        flash('Form failed to validate.')
 
 @admin.route('/user/create', methods=['GET', 'POST'])
 def create_user():
@@ -80,18 +86,21 @@ def edit_user(id=None):
     return render_template('form.html', form=form, submit=submit)
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
-def edit_article(id):
-    article = Article.query.filter_by(id=id).first()
+def edit_article(id=None):
+    if id:
+        article = Article.query.filter_by(id=id).first()
+        submit = 'Update'
+    else:
+        article = Article()
+        submit = 'Publish'
+    
     form = ArticleEditForm(request.form, article)
     save_object(form, article)
-    return render_template('editor.html', form=form, submit='Save')
+    return render_template('editor.html', form=form, submit=submit)
 
-@admin.route('/article/new')
+@admin.route('/article/new', methods=['GET', 'POST'])
 def create_article():
-    article = Article()
-    form = ArticleEditForm(request.form, article)
-    save_object(form, article)
-    return render_template('editor.html', form=form, submit='Create')
+    return edit_article()
 
 
 @admin.route('/')

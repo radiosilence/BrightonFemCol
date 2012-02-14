@@ -1,8 +1,13 @@
 {% extends 'admin_base.html' %}
 {% block admin_content %}
-<ul>
-    {% for item in items %}
-    <li>{{ item }}</li>
+<table>
+    {% for c in items[0].__table__.columns %}
+        <th>{{ c }}</th>
     {% endfor %}
-</ul>
+    {% for item in items %}
+    <tr>
+        <td>{{ item }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

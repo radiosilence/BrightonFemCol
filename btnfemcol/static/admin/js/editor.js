@@ -1,5 +1,12 @@
 var makeLarge = function() {
-    titleFields = $('input', $('.title'));
+    titleFields = $('div input, div select, div textarea, div buttom');
+    titleFields.each(function() {
+        t = $(this);
+        w = t.parent().width();
+        p = 10;
+        t.width(w-p);
+        console.log(p);
+    })
 }
 
 var autoSlug = function() {

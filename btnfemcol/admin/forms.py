@@ -103,10 +103,21 @@ class PageEditForm(PageFormBase):
     pass
 
 class AuthorField(SelectField):
+    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
+        super(SelectField, self).__init__(label, validators, **kwargs)
+        self.coerce = int
+        self.choices = User.query.all()
     def iter_choices(self):
         yield (None, 'Please select an author.', not self.data)
-        for user in User.query.all():
-            yield (user.id, u'%s' % user, user.id == self.data)
+        for user in self.choices:
+            yield (user.id, u'%s' % user, user.id == self.coerce(self.data))
+
+    def pre_validate(self, form):
+        for v in self.choices:
+            if self.coerce(self.data) == v.id:
+                break
+        else:
+            raise ValueError(self.gettext(u'Not a valid choice'))
 
 ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
 
