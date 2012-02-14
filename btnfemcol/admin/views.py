@@ -15,7 +15,7 @@ from btnfemcol import db
 
 from btnfemcol.models import User, Article
 from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
-    ArticleEditForm
+    ArticleEditForm, LoginForm
 
 from btnfemcol.utils import Auth, AuthError
 
@@ -56,21 +56,28 @@ def log_in():
 
 def save_object(form, object, message="%s saved."):
     if form.validate_on_submit():
-        if issubclass(object, User):
-            if form.password.data == '':
-                form.password.data = None
         form.populate_obj(object)
-        
         db.session.add(object)
         db.session.commit()
         flash(message % object)
 
+@admin.route('/user/create', methods=['GET', 'POST'])
+def create_user():
+    return edit_user()
+
 @admin.route('/user/<int:id>', methods=['GET', 'POST'])
-def edit_user(id):
-    user = User.query.filter_by(id=id).first()
-    form = UserRegistrationForm(request.form, user)
+def edit_user(id=None):
+    if id:
+        user = User.query.filter_by(id=id).first()
+        submit = 'Save'
+    else:    
+        user = User()
+        submit = 'Create'
+    if not user:
+        abort(404)
+    form = UserEditForm(request.form, user)
     save_object(form, user)
-    return render_template('form.html', form=form, submit='Save')
+    return render_template('form.html', form=form, submit=submit)
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
 def edit_article(id):

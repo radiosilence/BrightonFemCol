@@ -99,13 +99,6 @@ class User(db.Model):
             self.email
         )
 
-    def update_password(self, password):
-        if len(password) < 1:
-            return False
-        
-        h = Hasher()
-        self.password = h.hash(password)
-
 
 permissions = db.Table('permissions',
     db.Column('permission_id', db.Integer, db.ForeignKey('permission.id')),

@@ -42,13 +42,14 @@ class Auth:
         self.user_class = user_class
     
     def log_in(self, username, password):
-        user = self.user_class.session.filter_by(username=username).first()
+        user = self.user_class.query.filter_by(username=username).first()
         if not user:
             raise AuthUserNotFoundError()
         
         h = Hasher()
         try:
-            h.check(password, h)
+            print user.password, password
+            h.check(password, user.password)
         except HashMismatch:
             raise AuthPasswordIncorrectError()
 

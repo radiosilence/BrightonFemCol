@@ -4,6 +4,12 @@ from flaskext.wtf import *
 from flaskext.wtf.html5 import *
 from wtforms.ext.sqlalchemy.orm import model_form
 
+from btnfemcol.utils import Hasher
+
+class LoginForm(Form):
+    username = TextField('Username')
+    password = PasswordField('Password')
+
 
 class Unique(object):
     """Validator that checks field uniqueness."""
@@ -62,12 +68,24 @@ UserFormBase = model_form(User, Form, exclude=['id'], field_args={
 })
 
 class UserEditForm(UserFormBase):
+    password = PasswordField('Password',
+        [optional()])
+
     def __init__(self, form, user, *args, **kwargs):
         self._model = user
         super(UserEditForm, self).__init__(form, user, *args, **kwargs)
 
+    def populate_obj(self, user):
+        if len(self.password.data) < 1:
+            self.password.data = user.password
+        else:
+            h = Hasher()
+            self.password.data = h.hash(user.password)
+
+        return super(Form, self).populate_obj(user)
+
+
 class UserRegistrationForm(UserEditForm):
-    #email = EmailField()
     password = PasswordField('Password',
         [optional(), equal_to('confirm_pass',
             message='Passwords must match.')])
