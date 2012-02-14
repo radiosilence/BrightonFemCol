@@ -23,6 +23,8 @@ class Hasher:
         bits = h.split("$")
         try:
             if self._hash_multi(bits[3] + attempt, float(bits[2])) != bits[4]:
+                print bits[4]
+                print self._hash_multi(bits[3] + attempt, float(bits[2]))
                 raise HashMismatch()
         except IndexError:
             raise HashMismatch()
@@ -48,8 +50,8 @@ class Auth:
         
         h = Hasher()
         try:
-            print user.password, password
             h.check(password, user.password)
+            print user.password, password
         except HashMismatch:
             raise AuthPasswordIncorrectError()
 

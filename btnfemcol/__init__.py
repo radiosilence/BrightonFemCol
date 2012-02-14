@@ -2,7 +2,7 @@ import sys
 import logging
 from logging import Formatter, FileHandler
 
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, g, session
 
 from flaskext.markdown import Markdown
 from flaskext.uploads import configure_uploads, UploadSet, IMAGES
@@ -41,6 +41,8 @@ def create_app(debug=False):
             
     configure_base_views(app)
 
+    configure_pre_post_request(app)
+    
     if app.config['SECRET_KEY'] == '':
         print 'Please setup a secret key in local_settings.py!!!'
 
@@ -69,6 +71,26 @@ def configure_base_views(app):
     @app.errorhandler(500)
     def fuckup(error):
         return _status("500: Internal Server Error"), 500
+
+def configure_pre_post_request(app):
+    from btnfemcol.models import User
+
+    @app.before_request
+    def before_request():
+        g.logged_in = False
+        try:
+            if session['logged_in']:
+                g.logged_in = True
+                g.user = User.query.filter_by(id=session['logged_in']).first()
+        except KeyError:
+            pass
+
+
+    @app.after_request
+    def after_request(response):
+        """Closes the database again at the end of the request."""
+        return response
+        
 
 def _status(error):
     status = [x.strip() for x in str(error).split(":")]

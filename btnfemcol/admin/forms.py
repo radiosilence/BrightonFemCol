@@ -80,10 +80,9 @@ class UserEditForm(UserFormBase):
             self.password.data = user.password
         else:
             h = Hasher()
-            self.password.data = h.hash(user.password)
-
-        return super(Form, self).populate_obj(user)
-
+            self.password.data = h.hash(self.password.data)
+        x = super(Form, self).populate_obj(user)
+        return x
 
 class UserRegistrationForm(UserEditForm):
     password = PasswordField('Password',
