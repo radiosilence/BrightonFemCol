@@ -30,10 +30,10 @@ def home():
 
 
 @admin.route('/your-articles')
-def list(type):
-    articles = articles.filter_by(author=g.user)
+def list_articles():
+    articles = g.user.articles.all()
     return render_template('admin_list.html',
-        objects=object)
+        items=articles)
 
 @admin.route('/<string:type>/<int:id>/<string:action>')
 def action(type, id, action):
@@ -41,7 +41,7 @@ def action(type, id, action):
 
 
 @admin.route('/login', methods=['GET', 'POST'])
-def log_in():
+def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         a = Auth(session, db, User)

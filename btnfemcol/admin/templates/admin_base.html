@@ -13,9 +13,16 @@
         {{ field(**kwargs) }}
     {%- endif -%}
 {%- endmacro -%}
+{% block js %}
+  <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+  {% block admin_js %}{% endblock %}
+{% endblock js %}
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin.css') }}">
+{% endblock %}
 {% block content %}
-<header class="alpha omega twelve columns">
-    <h1>Admin Section</h1>
-</header>
-{% block admin_content %}{% endblock %}
+  <header class="alpha omega twelve columns">
+      <h1>Admin Section</h1>
+  </header>
+  {% block admin_content %}{% endblock %}
 {% endblock %}

@@ -34,7 +34,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
-
+	{% block css %}{% endblock %}
 	<script src="{{ url_for('static', filename='js/libs/modernizr-2.5.2.min.js') }}"></script>
 </head>
 <body>
@@ -81,6 +81,7 @@
 <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
 <script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block js %}{% endblock %}
 <script>
 	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
 	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

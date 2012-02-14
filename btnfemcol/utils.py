@@ -3,6 +3,8 @@ from binascii import b2a_hex
 from os import urandom
 import math
 import whirlpool
+from functools import wraps
+
 
 class Hasher:
     def __init__(self, strength=16):
@@ -23,8 +25,6 @@ class Hasher:
         bits = h.split("$")
         try:
             if self._hash_multi(bits[3] + attempt, float(bits[2])) != bits[4]:
-                print bits[4]
-                print self._hash_multi(bits[3] + attempt, float(bits[2]))
                 raise HashMismatch()
         except IndexError:
             raise HashMismatch()
@@ -51,7 +51,6 @@ class Auth:
         h = Hasher()
         try:
             h.check(password, user.password)
-            print user.password, password
         except HashMismatch:
             raise AuthPasswordIncorrectError()
 
@@ -64,3 +63,12 @@ class AuthUserNotFoundError(AuthError):
 
 class AuthPasswordIncorrectError(AuthError):
     pass
+
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if g.user is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function

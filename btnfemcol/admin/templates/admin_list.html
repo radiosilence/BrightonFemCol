@@ -1,6 +1,8 @@
 {% extends 'admin_base.html' %}
 {% block admin_content %}
-<table>
-
-</table>
+<ul>
+    {% for item in items %}
+    <li>{{ item }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
