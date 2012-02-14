@@ -2,17 +2,17 @@ from flask import Blueprint, g, session, config, current_app
 
 from btnfemcol.models import User
 
-backend = Blueprint('backend', __name__,
+admin = Blueprint('admin', __name__,
     template_folder='templates')
 
 
-@backend.before_request
+@admin.before_request
 def before_request():
     g.logged_in = False
     try:
         if session['logged_in']:
             g.logged_in = True
-            g.user.load(session['logged_in'])
+            g.user = User.session.filter_by(id=session['logged_in']).first()
     except KeyError:
         pass
     except UserNotFoundError:
@@ -20,7 +20,7 @@ def before_request():
         logout()
 
 
-@backend.after_request
+@admin.after_request
 def after_request(response):
     """Closes the database again at the end of the request."""
     return response

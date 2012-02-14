@@ -13,9 +13,9 @@ class Administrable(object):
     @classmethod
     def admin_url(cls, action, id=None):
         if action == 'list':
-            return url_for('backend.list', type=cls.__url__())
+            return url_for('admin.list', type=cls.__url__())
         else:
-            return url_for('backend.action', type=cls.__url__(), id=id, action=action)
+            return url_for('admin.action', type=cls.__url__(), id=id, action=action)
 
 class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True)

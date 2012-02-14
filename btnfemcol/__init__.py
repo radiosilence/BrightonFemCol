@@ -36,8 +36,8 @@ def create_app(debug=False):
 
     from btnfemcol.frontend import frontend
     app.register_blueprint(frontend, url_prefix='')
-    from btnfemcol.backend import backend
-    app.register_blueprint(backend, url_prefix='/admin')
+    from btnfemcol.admin import admin
+    app.register_blueprint(admin, url_prefix='/admin')
             
     configure_base_views(app)
 

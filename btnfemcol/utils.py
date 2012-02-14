@@ -32,6 +32,32 @@ class Hasher:
             string = b2a_hex(whirlpool.hash(string))
         return string
 
-
 class HashMismatch(Exception):
+    pass
+
+class Auth:
+    def __init__(self, session, db, user_class):
+        self.session = session
+        self.db = db
+        self.user_class = user_class
+    
+    def log_in(self, username, password):
+        user = self.user_class.session.filter_by(username=username).first()
+        if not user:
+            raise AuthUserNotFoundError()
+        
+        h = Hasher()
+        try:
+            h.check(password, h)
+        except HashMismatch:
+            raise AuthPasswordIncorrectError()
+
+        return user
+class AuthError(Exception):
+    pass
+
+class AuthUserNotFoundError(AuthError):
+    pass
+
+class AuthPasswordIncorrectError(AuthError):
     pass
