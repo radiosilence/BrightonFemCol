@@ -1,8 +1,8 @@
 {% extends 'admin_base.html' %}
 {% block admin_content %}
 <h1>List Articles</h1>
-<table>
-    <th>Title</th><th>Author</th><th>Publish Date</th><th>Edit</th><th>Bin</th>
+<table class="article-list">
+    <th>Title</th><th>Author</th><th>Publish Date</th>
 
     {% for article in articles %}
     <tr>

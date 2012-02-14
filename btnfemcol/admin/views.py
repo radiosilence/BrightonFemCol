@@ -29,11 +29,9 @@ def home():
 
 
 
-@admin.route('/your-articles')
-def list_own_articles():
-    #articles = g.user.articles.all()
+@admin.route('/articles')
+def list_articles():
     articles = Article.query.all()
-    print articles
     return render_template('admin_list_articles.html',
         articles=articles)
 
@@ -56,18 +54,16 @@ def login():
             flash('Invalid username or password.')
     return render_template('form.html', form=form, submit='Login')
 
-def save_object(form, object, message="%s saved."):
+def save_object(form, object, message=u"%s saved."):
     if form.validate_on_submit():
         form.populate_obj(object)
         db.session.add(object)
         db.session.commit()
-        print object.id
-        flash(message % object)
-    else:
-        print form.errors
-        flash('Form failed to validate.')
+        flash(message % object.__unicode__())
+        return True
+    return False
 
-@admin.route('/user/create', methods=['GET', 'POST'])
+@admin.route('/user/new', methods=['GET', 'POST'])
 def create_user():
     return edit_user()
 
@@ -82,7 +78,8 @@ def edit_user(id=None):
     if not user:
         abort(404)
     form = UserEditForm(request.form, user)
-    save_object(form, user)
+    if save_object(form, user):
+        return redirect(url_for('admin.home'))
     return render_template('form.html', form=form, submit=submit)
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])

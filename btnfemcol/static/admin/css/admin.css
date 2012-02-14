@@ -8,3 +8,15 @@
     float: left;
     height: 600px;
 }
+
+.article-list tr {
+    height: 30px;
+}
+
+.article-list tr:nth-child(odd) {
+    background: #efefef;
+}
+
+.article-list tr:nth-child(even) {
+    background: #fefefe;
+}
