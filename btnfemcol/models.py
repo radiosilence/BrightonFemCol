@@ -92,7 +92,7 @@ class User(db.Model):
         return '<User %r>' % self.username
 
     def __unicode__(self):
-        return '{0} {1} ({2}) <{4}>'.format(
+        return '%s %s (%s) <%s>' % (
             self.firstname,
             self.surname,
             self.username,

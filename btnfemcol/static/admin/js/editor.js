@@ -1,4 +1,8 @@
-$(function() {
+var makeLarge = function() {
+    titleFields = $('input', $('.title'));
+}
+
+var autoSlug = function() {
     if($('#slug').val() == '') {
         $('#slug').attr('auto', true);
     }
@@ -12,4 +16,9 @@ $(function() {
     $('#slug').on('keyup', function() {
         $(this).attr('auto', false);
     });
+}
+$(function() {
+
+    makeLarge();
+    autoSlug();
 })

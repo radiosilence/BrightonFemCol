@@ -1,1 +1,16 @@
 /** Delightful admin CSS styles **/
+
+p.title input {
+    font-size: 18px;
+    width: 98%;
+    float: left;
+}
+p.slug input {
+    width: 98%;
+    float: left;
+}
+p.body textarea {
+    width: 98%;
+    float: left;
+    height: 600px;
+}

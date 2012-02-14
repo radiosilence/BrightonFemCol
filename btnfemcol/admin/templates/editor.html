@@ -3,6 +3,8 @@
   <script src="{{ url_for('static', filename='admin/js/editor.js') }}"></script>
 {% endblock %}
 {% block admin_content %}
+<p class="author">{{ form.author_id }}</p>
 <p class="title">{{ form.title(placeholder='Article Title') }}</p>
 <p class="slug">{{ form.slug(placeholder='Article Slug') }}</p>
+<p class="body">{{ form.body(placeholder='Article Body') }}</p>
 {% endblock %}

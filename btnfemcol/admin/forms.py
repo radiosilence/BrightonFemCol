@@ -106,7 +106,7 @@ class AuthorField(SelectField):
     def iter_choices(self):
         yield (None, 'Please select an author.', not self.data)
         for user in User.query.all():
-            yield (user.id, user.username, user.id == self.data)
+            yield (user.id, u'%s' % user, user.id == self.data)
 
 ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
 
