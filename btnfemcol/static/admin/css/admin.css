@@ -20,3 +20,24 @@
 .article-list tr:nth-child(even) {
     background: #fefefe;
 }
+
+ul.flashes li {
+    border-radius: 2px;
+    color: rgba(100,50,0, .8);
+    border: 1px solid rgba(255,185,0,.55);
+    background: rgba(255,185,0,.5);
+    padding: 5px;
+    display: block;
+    margin-top: 5px;
+}
+
+ul.flashes li.success {
+    color: rgba(50, 100, 0, .8);
+    border: 1px solid rgba(185,255,0,.55);
+    background: rgba(185,255,0,.5);
+}
+ul.flashes li.error {
+    color: rgba(100, 0, 0, .8);
+    border: 1px solid rgba(255,25,0,.55);
+    background: rgba(255,25,0,.5);
+}

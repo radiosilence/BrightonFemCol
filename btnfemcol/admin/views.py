@@ -107,5 +107,6 @@ def home():
     #for member in inspect.getmembers(btnfemcol.models, inspect.isclass):
     #    if issubclass(member[1], db.Model):
     #        classes.append(member)
+    flash("DERP")
     return render_template('admin_home.html',
         classes=classes)

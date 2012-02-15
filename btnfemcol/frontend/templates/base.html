@@ -1,21 +1,11 @@
+{% extends 'macros.html' %}
 {%- macro user_link(user) -%}
 <a href="#">{{ user.firstname }} {{ user.surname }}</a>
 {%- endmacro -%}
 {%- macro article_link(article) -%}
 <a href="#">{{ article.title }}</a> by {{ user_link(article.author) }}
 {%- endmacro -%}
-{%- macro flashes() %}
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-	    <ul class=flashes>
-	    {% for message in messages %}
-	      <li>{{ message }}</li>
-	    {% endfor %}
-	    </ul>
-	  {% endif %}
-	{% endwith %}
-{% endmacro -%}
-<!doctype html>
+{% block main %}<!doctype html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -91,3 +81,4 @@
 
 </body>
 </html>
+{% endblock %}

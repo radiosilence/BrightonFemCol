@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'macros.html' %}
 {%- macro render_field(field, class=None, label=None) -%}
     {%- if field.type != 'HiddenField' -%}
     <dt>{{ field.label(label=label) }}
@@ -13,16 +13,49 @@
         {{ field(**kwargs) }}
     {%- endif -%}
 {%- endmacro -%}
-{% block js %}
-  <script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
-  {% block admin_js %}{% endblock %}
-{% endblock js %}
-{% block css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/admin.css') }}">
-{% endblock %}
-{% block content %}
-  <header class="alpha omega twelve columns">
-      <h1>Admin</h1>
-  </header>
-  {% block admin_content %}{% endblock %}
-{% endblock %}
+{%- block main -%}
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block title %}Brighton Feminist Collective{% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width">
+  
+  <!--<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/layout.css') }}">
+  {% block admin_css %}{% endblock %}
+  <script src="{{ url_for('static', filename='js/libs/modernizr-2.5.2.min.js') }}"></script>
+</head>
+<body>
+<div id="main-container" class="container">
+  derpaa
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/libs/jquery-1.7.1.min.js') }}"><\/script>')</script>
+
+<script type="text/javascript" src="http://use.typekit.com/ebk0xla.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+<script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block js %}{% endblock %}
+<script>
+  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+<script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
+{% block admin_js %}{% endblock %}
+</body>
+</html>{% endblock %}
