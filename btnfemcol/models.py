@@ -39,6 +39,7 @@ class Article(Page):
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.String(255))
     revision = db.Column(db.Integer)
+    status = db.Column(db.String(255))
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))

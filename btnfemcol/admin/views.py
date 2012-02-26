@@ -101,8 +101,9 @@ def create_article():
 def dashboard_writer():
     return render_template('articles.html')
 
-@admin.route('/async/articles/<string:user>/<int:page>')
-def json_user_articles(user, page=1, per_page=20, status=None, filter=None):
+@admin.route('/async/articles/<string:user>/filter/<string:filter>/<int:page>')
+@admin.route('/async/articles/<string:user>/<string:status>/<int:page>')
+def json_user_articles(user, status='any', page=1, per_page=20, filter=None):
     if isinstance(user, basestring):
         user = User.query.filter_by(username=user).first()
         if not user:
@@ -110,9 +111,16 @@ def json_user_articles(user, page=1, per_page=20, status=None, filter=None):
     
     start = per_page * (page - 1)
     end = per_page * page
-    articles = user.articles[start:end]
+
+    if filter:
+        articles = user.articles.filter(
+            Article.title.like('%' + filter + '%'))[start:end]
+    elif status == 'any':
+        articles = user.articles[start:end]
+    else:
+        articles = user.articles.filter_by(status=status)[start:end]
     
-    return json.dumps([{
+    return json.dumps({'articles': [{
             'id': a.id,
             'title': a.title,
             'revision': a.revision,
@@ -120,7 +128,7 @@ def json_user_articles(user, page=1, per_page=20, status=None, filter=None):
                 'weekday': a.pub_date.strftime('%a')
             }
         } for a in articles
-    ])
+    ]})
 
 @admin.route('/')
 def home():
