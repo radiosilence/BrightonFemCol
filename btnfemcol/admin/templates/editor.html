@@ -1,8 +1,8 @@
 {% extends 'admin_base.html' %}
-{% block admin_js %}
+{% block js %}
   <script src="{{ url_for('static', filename='admin/js/editor.js') }}"></script>
 {% endblock %}
-{% block admin_content %}
+{% block main_column %}
 <p>This is where you can create an article, and if you are a moderator, edit or disable other people's articles.</p>
 <form class="editor" method="POST">
     {{ form.csrf }}

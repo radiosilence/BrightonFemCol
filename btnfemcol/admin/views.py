@@ -1,4 +1,5 @@
 import inspect
+import json
 
 from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
@@ -12,6 +13,7 @@ from btnfemcol.admin import admin
 
 from btnfemcol import uploaded_images, uploaded_avatars
 from btnfemcol import db
+from btnfemcol import cache
 
 from btnfemcol.models import User, Article
 from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
@@ -19,16 +21,12 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 
 from btnfemcol.utils import Auth, AuthError
 
-"""@admin.route('/userreg', methods=['GET', 'POST'])
-def home():
-    user = User()
-    form = UserRegistrationForm(request.form, user)
-    save_user(form, user, message="Thanks for registering.")
-    return render_template('form.html', form=form, submit='Register')
-"""
-
-
-
+@admin.before_request
+def b4():
+    users =  User.query.filter_by().all()
+    for user in users:
+        print user
+        print user.articles.all()
 @admin.route('/articles')
 def list_articles():
     articles = Article.query.all()
@@ -100,13 +98,32 @@ def create_article():
     return edit_article()
 
 
+def dashboard_writer():
+    return render_template('articles.html')
+
+@admin.route('/async/articles/<string:user>/<int:page>')
+def json_user_articles(user, page=1, per_page=20, status=None, filter=None):
+    if isinstance(user, basestring):
+        user = User.query.filter_by(username=user).first()
+        if not user:
+            return abort(404)
+    
+    start = per_page * (page - 1)
+    end = per_page * page
+    articles = user.articles[start:end]
+    
+    return json.dumps([{
+            'id': a.id,
+            'title': a.title,
+            'revision': a.revision,
+            'pub_date': {
+                'weekday': a.pub_date.strftime('%a')
+            }
+        } for a in articles
+    ])
+
 @admin.route('/')
 def home():
-    classes = filter(lambda x: issubclass(x, db.Model),
-        [x[1] for x in inspect.getmembers(btnfemcol.models, inspect.isclass)])
-    #for member in inspect.getmembers(btnfemcol.models, inspect.isclass):
-    #    if issubclass(member[1], db.Model):
-    #        classes.append(member)
-    flash("DERP")
-    return render_template('admin_home.html',
-        classes=classes)
+    # Do some logic to get the right dashboard for the person
+    return dashboard_writer()
+

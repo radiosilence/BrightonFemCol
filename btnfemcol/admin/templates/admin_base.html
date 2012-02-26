@@ -13,49 +13,90 @@
         {{ field(**kwargs) }}
     {%- endif -%}
 {%- endmacro -%}
-{%- block main -%}
-<!doctype html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+{% block main %}
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>{% block title %}Brighton Feminist Collective{% endblock %}</title>
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>Admin - Brighton Feminist Collective</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <meta name="viewport" content="width=device-width">
-  
-  <!--<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>-->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/skeleton.css') }}">
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- CSS
+  ================================================== -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/skeleton.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='admin/css/layout.css') }}">
-  {% block admin_css %}{% endblock %}
-  <script src="{{ url_for('static', filename='js/libs/modernizr-2.5.2.min.js') }}"></script>
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+  <!-- Favicons
+  ================================================== -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='admin/images/favicon.ico') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='admin/images/apple-touch-icon.png') }}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename='admin/images/apple-touch-icon-72x72.png') }}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename='admin/images/apple-touch-icon-114x114.png') }}">
+  <script src="{{ url_for('static', filename='admin/js/libs/modernizr-2.5.3.min.js') }}"></script>
+
 </head>
 <body>
-<div id="main-container" class="container">
-  derpaa
-</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/libs/jquery-1.7.1.min.js') }}"><\/script>')</script>
 
-<script type="text/javascript" src="http://use.typekit.com/ebk0xla.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-<script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
-<script src="{{ url_for('static', filename='js/tabs.js') }}"></script>
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-{% block js %}{% endblock %}
-<script>
-  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-  s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-<script src="{{ url_for('static', filename='admin/js/admin.js') }}"></script>
-{% block admin_js %}{% endblock %}
+
+
+  <!-- Primary Page Layout
+  ================================================== -->
+
+
+  <div class="container">
+    <header class="sixteen columns">
+      <div class="twelve columns alpha omega">
+        <h1 class="remove-bottom">Brighton Feminist Collective</h1>
+      </div>
+      <div class="four columns alpha omega">
+        <p class="welcome-user">
+          Welcome back, <span class="user"><a class="link" href="#">Jane Doe</a><span class="group"> Writer</span></span>
+        </p>
+        <p class="welcome-group">
+          <span class="user"><a class="link" href="#">Jane Doe</a><span class="group"> Writer</span></span>
+        </p>
+      </div>
+    </header>
+    <nav class="four columns">
+    {% block nav_column %}
+      <p>This could be useful, also.</p>
+    {% endblock %}
+    </nav>
+    <section id="articles" class="twelve columns">
+    {% block main_column %}
+      <p>There really should be something here.</p>
+    {% endblock %}
+    </section>
+
+
+  </div><!-- container -->
+
+
+
+  <!-- JS
+  ================================================== -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='admin/js/libs/jquery-1.7.1.min.js') }}"><\/script>')</script>
+  <script src="{{ url_for('static', filename='admin/js/tabs.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/libs/ICanHaz.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/plugins.js') }}"></script>
+  <script src="{{ url_for('static', filename='admin/js/script.js') }}"></script>
+  {% block js %}{% endblock %}
+<!-- End Document
+================================================== -->
 </body>
-</html>{% endblock %}
+</html>
+{% endblock %}

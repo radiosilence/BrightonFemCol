@@ -38,6 +38,7 @@ class Article(Page):
         backref=db.backref('articles', lazy='dynamic'))
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.String(255))
+    revision = db.Column(db.Integer)
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))
@@ -50,6 +51,9 @@ class Article(Page):
         self.author = author
         self.subtitle = subtitle
         super(Article, self).__init__(title, body, slug=slug)
+
+    def __unicode__(self):
+        return self.title
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)

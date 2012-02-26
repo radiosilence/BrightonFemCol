@@ -4,6 +4,8 @@ pycrypto
 Flask-Markdown
 Flask-Uploads
 Flask-SQLAlchemy
+Flask-Cache
+pylibmc
 Whirlpool
 Markdown
 SQLAlchemy

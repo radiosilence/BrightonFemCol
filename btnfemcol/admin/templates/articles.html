@@ -1,0 +1,90 @@
+{% extends 'admin_base.html' %}
+{% block js %}
+  <script id="article_row_date" class="partial" type="text/html">
+  {% raw %}
+    {{ pub_date.weekday }} {{ pub_date.day }}<sup>{{ pub_date.day_suffix }}</sup> {{ pub_date.month }}, {{ pub_date.year }}
+  {% endraw %}
+  </script>
+  <script id="article_row" type="text/html">
+  {% raw %}
+  <tr article_id="1">
+    <td class="checkbox">
+      <input type="checkbox"/>
+    </td>
+    <td class="title">
+      {{ title }}
+    </td>
+    <td class="revision">
+      {{ revision }}
+    </td>
+    <td class="date">
+      {{>article_row_date }}
+    </td>
+    <td class="actions">
+      <a href="#">Edit</a> / <a href="#">Bin</a>
+    </td>
+  </tr>
+  {% endraw %}
+  </script>
+  <script>
+  p_arts = [{
+    id: 1,
+    title: 'My Article',
+    revision: 4,
+    date: {
+      weekday: 'Wed',
+      day: 3,
+      day_suffix: 'rd',
+      month: 'April',
+      year: 2012
+    }
+  }];
+  $(function() {
+    for(art in p_arts) {
+      $('#published-articles table').append(ich.article_row(p_arts[art]));
+    }
+
+  });
+  </script>
+{% endblock %}
+{% block nav_column %}
+  <h1>Articles</h1>
+  <ul class="actions square">
+    <li><a href="#" class="write-new">Write an article&hellip;</a></li>
+  </ul>
+  <h2>Filter</h2>
+  <form>
+  <br/>
+    <input type="text" placeholder="Enter Search Query" id="article-search"/>
+    <input type="text" value="Slider bullshit" />
+    <input type="submit" value="Filter" />
+  </form>
+{% endblock %}
+{% block main_column %}
+      <div id="published-articles">
+        <h2>Published <span class="subheader">A list of your published articles.</span></h2>
+        <table class="articles">
+          <tr class="header">
+            <th>&nbsp;</th>
+            <th class="title">Title</th>
+            <th>Revision</th>
+            <th>Published On</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+
+      <div id="draft-articles">
+        <h2>Drafts <span class="subheader">These articles will not show on the site.</span></h2>
+
+        <table class="articles">
+          <tr class="header">
+            <th>&nbsp;</th>
+            <th class="title">Title</th>
+            <th>Revision</th>
+            <th>Written On</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+{% endblock %}

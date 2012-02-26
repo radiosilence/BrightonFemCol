@@ -107,8 +107,12 @@ class AuthorField(SelectField):
         super(SelectField, self).__init__(label, validators, **kwargs)
         self.coerce = int
         self.choices = User.query.all()
+
     def iter_choices(self):
+        print self.data
         yield (None, 'Please select an author.', not self.data)
+        if not self.data:
+            self.data = -1
         for user in self.choices:
             yield (user.id, u'%s' % user, user.id == self.coerce(self.data))
 

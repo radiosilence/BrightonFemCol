@@ -4,6 +4,7 @@ from logging import Formatter, FileHandler
 
 from flask import Flask, render_template, flash, g, session
 
+from flaskext.cache import Cache
 from flaskext.markdown import Markdown
 from flaskext.uploads import configure_uploads, UploadSet, IMAGES
 
@@ -11,12 +12,16 @@ from flaskext.sqlalchemy import SQLAlchemy
 
 from btnfemcol.settings import *
 
+import pylibmc
+
 uploaded_avatars = UploadSet('avatars', IMAGES)
 uploaded_images = UploadSet('images', IMAGES)
 
 db = SQLAlchemy()
+cache = Cache()
 
 def create_app(debug=False):
+    # Change static path based on whether we're debugging.
     if debug:
         print "Debug mode."
         app = Flask('btnfemcol', static_path='/static')
@@ -24,17 +29,28 @@ def create_app(debug=False):
     else:
         app = Flask('btnfemcol', static_path='')
 
+    # Handle configuration
     app.config.from_object('btnfemcol.settings')
     app.config.from_envvar('BTNFEMCOL_SETTINGS', silent=True)
     app.config['DEBUG'] = debug
+
+    # Initialise uploads
     configure_uploads(app, uploaded_avatars)
     configure_uploads(app, uploaded_images)
+
+    # Initialise database
     db.app = app
     db.init_app(app)
+
+    # Initialise cache
+    cache.init_app(app)
+
+    # Initialise Markdown
     Markdown(app)
     if not debug:
         configure_logging(app)
 
+    # Sub applications
     from btnfemcol.frontend import frontend
     app.register_blueprint(frontend, url_prefix='')
     from btnfemcol.admin import admin
