@@ -12,16 +12,15 @@
       <input type="checkbox"/>
     </td>
     <td class="title">
-      {{ title }}
+      <a href="{{ urls.edit }}">{{ title }}</a>
     </td>
     <td class="revision">
       {{ revision }}
     </td>
     <td class="date">
-      {{>article_row_date }}
-    </td>
+      {{ pub_date }}
     <td class="actions">
-      <a href="#">Edit</a> / <a href="#">Bin</a>
+      <a href="{{ urls.edit }}">Edit</a> / <a href="{{ urls.bin }}">Bin</a>
     </td>
   </tr>
   {% endraw %}
@@ -40,9 +39,18 @@
     }
   }];
   $(function() {
-    for(art in p_arts) {
-      $('#published-articles table').append(ich.article_row(p_arts[art]));
-    }
+    $.getJSON("{{ url_for('admin.json_user_articles', status='published', page=1)}}", function(data) {
+      for(a in data['articles']) {
+        a = data['articles'][a];
+         $('#published-articles table').append(ich.article_row(a));
+      }
+    });   
+    $.getJSON("{{ url_for('admin.json_user_articles', status='draft', page=1)}}", function(data) {
+      for(a in data['articles']) {
+        a = data['articles'][a];
+         $('#draft-articles table').append(ich.article_row(a));
+      }
+    });   
 
   });
   </script>
@@ -50,7 +58,7 @@
 {% block nav_column %}
   <h1>Articles</h1>
   <ul class="actions square">
-    <li><a href="#" class="write-new">Write an article&hellip;</a></li>
+    <li><a href="{{ url_for('admin.create_article') }}" class="write-new">Write an article&hellip;</a></li>
   </ul>
   <h2>Filter</h2>
   <form>

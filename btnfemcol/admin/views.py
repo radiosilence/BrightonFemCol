@@ -21,12 +21,8 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 
 from btnfemcol.utils import Auth, AuthError
 
-@admin.before_request
-def b4():
-    users =  User.query.filter_by().all()
-    for user in users:
-        print user
-        print user.articles.all()
+from btnfemcol.admin.utils import auth_logged_in
+
 @admin.route('/articles')
 def list_articles():
     articles = Article.query.all()
@@ -58,14 +54,16 @@ def save_object(form, object, message=u"%s saved."):
         db.session.add(object)
         db.session.commit()
         flash(message % object.__unicode__())
-        return True
+        return object.id
     return False
 
 @admin.route('/user/new', methods=['GET', 'POST'])
+@auth_logged_in
 def create_user():
     return edit_user()
 
 @admin.route('/user/<int:id>', methods=['GET', 'POST'])
+@auth_logged_in
 def edit_user(id=None):
     if id:
         user = User.query.filter_by(id=id).first()
@@ -81,6 +79,7 @@ def edit_user(id=None):
     return render_template('form.html', form=form, submit=submit)
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
+@auth_logged_in
 def edit_article(id=None):
     if id:
         article = Article.query.filter_by(id=id).first()
@@ -90,10 +89,13 @@ def edit_article(id=None):
         submit = 'Publish'
     
     form = ArticleEditForm(request.form, article)
-    save_object(form, article)
+    created = save_object(form, article)
+    if created:
+        return redirect(url_for('admin.edit_article', id=created))
     return render_template('editor.html', form=form, submit=submit)
 
 @admin.route('/article/new', methods=['GET', 'POST'])
+@auth_logged_in
 def create_article():
     return edit_article()
 
@@ -103,12 +105,14 @@ def dashboard_writer():
 
 @admin.route('/async/articles/<string:user>/filter/<string:filter>/<int:page>')
 @admin.route('/async/articles/<string:user>/<string:status>/<int:page>')
-def json_user_articles(user, status='any', page=1, per_page=20, filter=None):
-    if isinstance(user, basestring):
-        user = User.query.filter_by(username=user).first()
-        if not user:
-            return abort(404)
-    
+@admin.route('/async/articles/filter/<string:filter>/<int:page>')
+@admin.route('/async/articles/<string:status>/<int:page>')
+@cache.memoize(20)
+@auth_logged_in
+def json_user_articles(user=None, status='any', page=1, per_page=20, filter=None):
+    if not user:
+        user = g.user
+
     start = per_page * (page - 1)
     end = per_page * page
 
@@ -124,14 +128,16 @@ def json_user_articles(user, status='any', page=1, per_page=20, filter=None):
             'id': a.id,
             'title': a.title,
             'revision': a.revision,
-            'pub_date': {
-                'weekday': a.pub_date.strftime('%a')
+            'pub_date': a.pub_date.strftime('%c'),
+            'urls': {
+                'edit': url_for('admin.edit_article', id=a.id),
+                'bin': '#'
             }
         } for a in articles
     ]})
 
 @admin.route('/')
+@auth_logged_in
 def home():
     # Do some logic to get the right dashboard for the person
     return dashboard_writer()
-

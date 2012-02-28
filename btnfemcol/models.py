@@ -74,12 +74,23 @@ class User(db.Model):
     email = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(80))
     twitter = db.Column(db.String(80))
+    group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
+    group = db.relationship('Group',
+        backref=db.backref('users', lazy='dynamic'))
 
-    def __init__(self, username=None, email=None, firstname=None, surname=None):
+    def __init__(self, group, username=None, email=None, firstname=None,
+        surname=None, password=None):
+        
+        if password:
+            h = Hasher()
+            self.password = h.hash(password)
+
         self.username = username
         self.firstname = firstname
         self.surname = surname
         self.email = email
+        self.group = group
+        self.group_id = group.id
 
     def __repr__(self):
         return '<User %r>' % self.username

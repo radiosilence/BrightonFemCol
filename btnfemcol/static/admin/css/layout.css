@@ -26,11 +26,6 @@ a {
 	color: black;
 }
 
-a:hover {
-	color: white;
-	background: black;	
-}
-
 div.container>header h1 {
 	font-size: 48px;
 	border: 0px;
@@ -83,9 +78,6 @@ table {
 	width: 100%;
 }
 
-table tr:hover {
-	background-color: #ded9c7;
-}
 table h1 {
 	border: 0px;
 	margin: 0px;

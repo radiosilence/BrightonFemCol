@@ -94,6 +94,13 @@ class UserRegistrationForm(UserEditForm):
 PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
     'title': {
         'validators': [
+            Unique(Article, Article.title),
+            Required()
+        ]
+    },
+    'slug': {
+        'validators': [
+            Unique(Article, Article.slug),
             Required()
         ]
     }
@@ -109,7 +116,6 @@ class AuthorField(SelectField):
         self.choices = User.query.all()
 
     def iter_choices(self):
-        print self.data
         yield (None, 'Please select an author.', not self.data)
         if not self.data:
             self.data = -1
@@ -127,3 +133,11 @@ ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
 
 class ArticleEditForm(ArticleFormBase):
     author_id = AuthorField()
+    status = SelectField(u'Publish Status', choices=[
+        ('draft', u'Draft'),
+        ('published', u'Published')
+    ])
+
+    def __init__(self, form, article, *args, **kwargs):
+        self._model = article
+        super(ArticleEditForm, self).__init__(form, article, *args, **kwargs)

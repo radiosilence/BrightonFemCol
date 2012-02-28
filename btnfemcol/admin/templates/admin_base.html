@@ -50,12 +50,8 @@
 </head>
 <body>
 
-
-
   <!-- Primary Page Layout
   ================================================== -->
-
-
   <div class="container">
     <header class="sixteen columns">
       <div class="twelve columns alpha omega">
@@ -63,10 +59,10 @@
       </div>
       <div class="four columns alpha omega">
         <p class="welcome-user">
-          Welcome back, <span class="user"><a class="link" href="#">Jane Doe</a><span class="group"> Writer</span></span>
+          Welcome back, <span class="user">{{ g.user.firstname }} {{ g.user.surname }}</span>
         </p>
         <p class="welcome-group">
-          <span class="user"><a class="link" href="#">Jane Doe</a><span class="group"> Writer</span></span>
+          <span class="group">{{ g.user.group.name }}</span>
         </p>
       </div>
     </header>
@@ -75,7 +71,8 @@
       <p>This could be useful, also.</p>
     {% endblock %}
     </nav>
-    <section id="articles" class="twelve columns">
+    <section class="twelve columns">
+    {{ flashes() }}
     {% block main_column %}
       <p>There really should be something here.</p>
     {% endblock %}
