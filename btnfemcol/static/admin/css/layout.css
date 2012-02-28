@@ -142,7 +142,8 @@ input[type=text] {
 	padding: 2px;
 	font-size: 14px;
 	border-radius: 0px;
-	border: 1px solid black;
+	border: 0px solid black;
+	border-bottom: 1px dotted black;
 }
 
 ::-webkit-input-placeholder {

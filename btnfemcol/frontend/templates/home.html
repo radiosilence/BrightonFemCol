@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="twelve columns alpha omega">
+        Slideshow thing?
+
+        <p>Derpy intro text</p>
+    </div>
+    <div class="six columns alpha">
+        <h1>Articles</h1>
+        {% for article in articles %}
+        <article>
+            <h1><a href="#">{{ article.title }}</a></h1>
+            <p>{{ article.excerpt }}</p>
+        </article>
+        {% endfor %}
+    </div>
+    <div class="six columns omega">
+        <h1>Events</h1>
+        {% for event in events %}
+        <article>
+            <h1><a href="#">{{ event.title }}</a></h1>
+            <p>{{ event.excerpt }}</p>
+        </article>
+        {% endfor %}
+
+    </div>
+{% endblock %}

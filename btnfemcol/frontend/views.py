@@ -28,19 +28,5 @@ def show_page(slug):
 
 @frontend.route('/')
 def home():
-    user = User('btnfemcol', 'derp@derp.com', firstname='Brighton',
-        surname='Feminist Collective')
-
-    front_text = """
-Brighton Feminist Collective is a feminist activist group that started in December 2011,
-we are a sex-positive, pro-choice, trans-inclusive, and anti-exploitation group.
-
-Check out our [Facebook Page](http://www.facebook.com/groups/brightonfeminists/) or our [Twitter](http://twitter.com/BrightonFemCol).
-
-Site will soon be updated to have articles, stories, events and information about our constitution, philosophy and organisation.
-
-The links at the top don't work because the site isn't complete.
-"""
-    article = Article('Coming Soon', front_text, author=user, subtitle="Website still in production.")
-    return render_template('article.html',
-        article=article)
+    articles = Article.query.filter_by(status='published').all()
+    return render_template('home.html', articles=articles, events=[])

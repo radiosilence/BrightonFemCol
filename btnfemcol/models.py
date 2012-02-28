@@ -19,6 +19,10 @@ class Page(db.Model):
             self.slug = self._generate_slug()
             self.slug = slug
 
+    @property
+    def excerpt(self):
+        return self.body[:140]
+
     def _generate_slug(self):
         pass
 

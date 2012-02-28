@@ -210,6 +210,14 @@ div.container>header nav>ul.secondary>li.selected {
 	font-weight: 800;
 }
 
+#main>div h1 {
+	font-size: 20px;
+}
+
+#main>div article h1 {
+	font-size: 18px;
+	font-family: serif;
+}
 /* Twitter stuff */
 
 .tweet_list .awesome,

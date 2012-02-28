@@ -86,7 +86,7 @@ def edit_article(id=None):
         submit = 'Update'
     else:
         article = Article()
-        submit = 'Publish'
+        submit = 'Create'
     
     form = ArticleEditForm(request.form, article)
     created = save_object(form, article)
