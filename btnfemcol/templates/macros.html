@@ -1,17 +1,17 @@
 {%- macro flashes() %}
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      {% for category, message in messages %}
       <ul class="flashes">
+      {% for category, message in messages %}
         {% if category == 'error' %}
-          <li class="error ui-state-error ui-corner-all response_error"><span class="ui-icon ui-icon-alert"></span>{{ message }}</li>
+          <li class="error">{{ message }}</li>
         {% elif category == 'success' %}
-          <li class="success ui-state-highlight ui-corner-all response_highlight"><span class="ui-icon ui-icon-info"></span>{{ message }}</li>
+          <li class="success">{{ message }}</li>
         {% else %}
           <li>{{ message }}</li>
         {% endif %}
-      </ul>
       {% endfor %}
+      </ul>
     {% endif %}
   {% endwith %}
 {% endmacro -%}{% block main %}{% endblock %}

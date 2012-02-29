@@ -19,7 +19,7 @@
 
 body {
 	background: #010101 url(../nami.png);
-	color: black;
+	color: white;
 }
 
 a:hover {
@@ -45,7 +45,10 @@ h1, h2 {
 
 div.container {
 	background: white;
+	color: black;
 }
+
+
 
 body>div>header h1 {
 	color: white;
@@ -103,6 +106,9 @@ div.container>header a {
 	text-decoration: none;
 }
 
+footer {
+	color: white;
+}
 
 figure {
 	background: #521717;
@@ -216,7 +222,13 @@ div.container>header nav>ul.secondary>li.selected {
 
 #main>div article h1 {
 	font-size: 18px;
-	font-family: serif;
+	display: block;
+	margin: 0px;
+	border-top: 1px solid #521717;
+	overflow: hidden;
+	padding: 5px;
+	line-height: 1;
+	font-weight: bold;
 }
 /* Twitter stuff */
 

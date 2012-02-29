@@ -42,11 +42,18 @@ def login():
         try:
             g.user = a.log_in(form.username.data, form.password.data)
             session['logged_in'] = g.user.id
-            flash("Successfully logged in.")
+            flash("Successfully logged in.", 'success')
             return redirect(url_for('admin.home'))
         except AuthError:
-            flash('Invalid username or password.')
-    return render_template('form.html', form=form, submit='Login')
+            flash('Invalid username or password.', 'error')
+    return render_template('login.html', form=form, submit='Login')
+
+@admin.route('/logout')
+def logout():
+    g.user = None
+    del session['logged_in']
+    flash('Logged out.')
+    return redirect(url_for('admin.login'))
 
 def save_object(form, object, message=u"%s saved."):
     if form.validate_on_submit():

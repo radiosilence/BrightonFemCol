@@ -22,7 +22,7 @@ body {
 	color: black;
 }
 
-a {
+a, a:visited {
 	color: black;
 }
 
@@ -31,13 +31,15 @@ div.container>header h1 {
 	border: 0px;
 	font-variant: normal;
 }
+div.container>header h1 a {
+	text-decoration: none;
+}
 
 h1 {
 	font-weight: bold;
 	font-variant: small-caps;
 	color: black;
 	font-size: 24px;
-	border-top: 1px solid black;	
 	margin-top: 20px;
 	margin-bottom: 0px;
 	line-height: 1.8;
@@ -132,18 +134,63 @@ span.subheader {
 	color: black;
 }
 
-/*FORMS*/
+/* FLASHES */
+ul.flashes {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
 
-input[type=text] { 
+}
+
+ul.flashes li {
+	width: 100%;
+	display: block;
+	padding: 5px;
+	margin: 0px 0px 0px 0px;
+	line-height: 1;
+	font-style: italic;
+	text-align:center;
+	color: #884400;
+	background: rgba(255,224,128,.9);
+	border-bottom: 1px solid rgba(196,128,24,.9);
+	font-weight: bold;
+}
+
+ul.flashes li.success {
+	color: #228800;
+	background: rgba(196,255,128,.8);
+	border-bottom: 1px solid rgba(64,128,96,.9);
+}
+ul.flashes li.error {
+	color: #c82222;
+	background: rgba(255,128,128,.8);
+	border-bottom: 1px solid rgba(224,96,64,.9);
+}
+
+/* FORMS */
+
+input[type=text], input[type=password] { 
 	border: 1px solid black;
 	color: black;
 	font-family: 'PT Serif', serif;
 	font-style: italic;
-	padding: 2px;
+	padding: 2px 0px;
 	font-size: 14px;
 	border-radius: 0px;
 	border: 0px solid black;
 	border-bottom: 1px dotted black;
+}
+
+textarea {
+	border: 1px dotted black;
+	font-family: 'PT Serif', serif;
+	color: black;
+	width: 690px;
+}
+
+input[type=submit] {
+	float: right;
 }
 
 ::-webkit-input-placeholder {
@@ -222,6 +269,23 @@ table.articles td.date {
 	text-align: center;
 }
 
+/* Login Page */
+
+#login-form {
+	position: absolute;
+	width: 220px;
+	left: 50%;
+	top: 50%;
+	display: block;
+	margin-top: -180px;
+	margin-left: -110px;
+}
+
+#login-form h1 {
+	border: 0px;
+	font-variant: normal;
+	font-size: 48px;
+}
 
 /* #Media Queries
 ================================================== */
@@ -233,7 +297,11 @@ table.articles td.date {
 	@media only screen and (min-width: 768px) and (max-width: 959px) {}
 
 	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {}
+	@media only screen and (max-width: 767px) {
+		div.container>header h1 {
+			font-size: 24px;
+		}
+	}
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 	@media only screen and (min-width: 480px) and (max-width: 767px) {}
