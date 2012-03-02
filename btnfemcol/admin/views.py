@@ -161,8 +161,6 @@ def json_user_articles(username=None, *args, **kwargs):
 
     @cache.memoize(5)
     def inner(user, status='any', page=1, per_page=20, filter=None):
-        print "DOING INENER"
-        print user, status, page, per_page, filter
         start = per_page * (page - 1)
         end = per_page * page
 
