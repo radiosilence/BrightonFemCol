@@ -96,6 +96,12 @@ class User(db.Model):
         self.group = group
         self.group_id = group.id
 
+    def has_permission(self, name):
+        """This will check if a user can do a certain action."""
+        permission = Permission.query.filter_by(name=name)
+        
+        return permission in self.group.permissions
+
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -113,6 +119,7 @@ permissions = db.Table('permissions',
     db.Column('group_id', db.Integer, db.ForeignKey('group.id'))
 )
 
+
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True)
@@ -127,11 +134,14 @@ class Group(db.Model):
 class Permission(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True)
+    title = db.Column(db.String(255))
+
     groups = db.relationship('Group', secondary=permissions,
         backref=db.backref('permissions', lazy='dynamic'))
 
-    def __init__(self, name=None):
+    def __init__(self, name, title):
         self.name = name
+        self.title = title
     
     def __repr__(self):
-        return '<Permission %r>' % self.name
+        return '<Permission %s:%r>' % (self.id, self.name)

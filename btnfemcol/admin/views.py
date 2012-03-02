@@ -29,6 +29,7 @@ def list_articles():
     return render_template('admin_list_articles.html',
         articles=articles)
 
+
 @admin.route('/<string:type>/<int:id>/<string:action>')
 def action(type, id, action):
     return id, type
@@ -48,6 +49,7 @@ def login():
             flash('Invalid username or password.', 'error')
     return render_template('login.html', form=form, submit='Login')
 
+
 @admin.route('/logout')
 def logout():
     g.user = None
@@ -55,7 +57,11 @@ def logout():
     flash('Logged out.')
     return redirect(url_for('admin.login'))
 
+
 def save_object(form, object, message=u"%s saved."):
+    """This function handles the simple cyle of testing if an object's form
+    validates and then saving it.
+    """
     if form.validate_on_submit():
         form.populate_obj(object)
         db.session.add(object)
@@ -85,6 +91,13 @@ def edit_user(id=None):
         return redirect(url_for('admin.home'))
     return render_template('form.html', form=form, submit=submit)
 
+
+@admin.route('/articles')
+@auth_logged_in
+def list_articles():
+    return render_template('articles.html')
+
+
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
 def edit_article(id=None):
@@ -108,7 +121,29 @@ def create_article():
 
 
 def dashboard_writer():
-    return render_template('articles.html')
+    """This is the dashboard for the writer group type, it just returns the
+    article list because that's all writers really need to do.
+    """
+    return list_articles()
+
+
+def dashboard_editor():
+    """Editor dashboard has things for proof-reading and accepting submitted
+    articles, and also writing one's own."""
+    return render_template('dashboard_editor.html')
+
+
+def dashboard_admin():
+    """Administrator dashboard will cover page editing, event uploading, user
+    management."""
+    return render_template('dashboard_admin.html')
+
+
+def dashboard_superuser():
+    """Superuser can anything an admin can, but with the ability to change site
+    settings, manage permissions, etc."""
+    return render_template('dashboard_superuser.html')
+
 
 @admin.route('/async/articles/<string:user>/filter/<string:filter>/<int:page>')
 @admin.route('/async/articles/<string:user>/<string:status>/<int:page>')
