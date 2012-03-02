@@ -63,7 +63,7 @@ def save_object(form, object, message=u"%s saved."):
         form.populate_obj(object)
         db.session.add(object)
         db.session.commit()
-        flash(message % object.__unicode__())
+        flash(message % object.__unicode__(), 'success')
         return object.id
     return False
 

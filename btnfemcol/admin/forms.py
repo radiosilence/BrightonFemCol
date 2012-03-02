@@ -168,7 +168,20 @@ class ArticleStatusField(SelectField):
         else:
             raise ValueError(self.gettext(u'Not a valid choice'))
 
-ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
+ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'], field_args={
+    'title': {
+        'validators': [
+            Unique(Article, Article.title),
+            Required()
+        ]
+    },
+    'slug': {
+        'validators': [
+            Unique(Article, Article.slug),
+            Required()
+        ]
+    }
+})
 
 class ArticleEditForm(ArticleFormBase):
     author_id = AuthorField(label='Author')
