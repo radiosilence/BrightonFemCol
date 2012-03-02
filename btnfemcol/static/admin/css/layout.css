@@ -189,6 +189,10 @@ input[type=text], input[type=password]{
 	border-bottom: 1px dotted black;
 }
 
+span.required label:before {
+	content: '* ';
+	color: red;
+}
 .button,
 button,
 input[type="submit"],
