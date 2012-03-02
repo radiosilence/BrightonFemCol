@@ -96,10 +96,10 @@ class User(db.Model):
         self.group = group
         self.group_id = group.id
 
-    def has_permission(self, name):
+
+    def allowed_to(self, name):
         """This will check if a user can do a certain action."""
-        permission = Permission.query.filter_by(name=name)
-        
+        permission = Permission.query.filter_by(name=name).first()
         return permission in self.group.permissions
 
     def __repr__(self):

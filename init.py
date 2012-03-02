@@ -83,11 +83,3 @@ u = User(
 
 db.session.add(u)
 db.session.commit()
-
-for g in Group.query.all():
-    print g
-    for p in g.permissions:
-        print p
-
-    for u in g.users:
-        print u
