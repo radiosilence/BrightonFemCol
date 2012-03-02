@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import url_for, abort
 
 from btnfemcol import db
+from btnfemcol import cache
 from btnfemcol.utils import Hasher
 
 
@@ -96,7 +97,7 @@ class User(db.Model):
         self.group = group
         self.group_id = group.id
 
-
+    @cache.memoize(20)
     def allowed_to(self, name):
         """This will check if a user can do a certain action."""
         permission = Permission.query.filter_by(name=name).first()

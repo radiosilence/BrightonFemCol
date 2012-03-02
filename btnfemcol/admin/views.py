@@ -94,13 +94,16 @@ def list_articles():
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
-@auth_allowed_to('manage_articles')
+@auth_allowed_to('write_articles')
 def edit_article(id=None):
     if id:
         article = Article.query.filter_by(id=id).first()
         if not article:
             return abort(404)
         submit = 'Update'
+
+        if g.user != article.user and not g.user.allowed_to('manage_articles'):
+            return abort(403)
     else:
         article = Article()
         submit = 'Create'
@@ -113,6 +116,7 @@ def edit_article(id=None):
 
 @admin.route('/article/new', methods=['GET', 'POST'])
 @auth_logged_in
+@auth_allowed_to('write_articles')
 def create_article():
     return edit_article()
 
