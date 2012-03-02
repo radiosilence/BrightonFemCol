@@ -69,6 +69,7 @@ for name, _ in perms:
     g_su.permissions.append(permissions[name])
 db.session.add(g_su)
 
+# Commit users
 db.session.commit()
 
 # Create our first SU
@@ -82,4 +83,16 @@ u = User(
 )
 
 db.session.add(u)
+
+u2 = User(
+    g_writer,
+    username='writer',
+    password='writer',
+    email='writer@example.com',
+    firstname='Writer',
+    surname='Omega'
+)
+
+db.session.add(u2)
+
 db.session.commit()

@@ -21,13 +21,7 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 
 from btnfemcol.utils import Auth, AuthError
 
-from btnfemcol.admin.utils import auth_logged_in
-
-@admin.route('/articles')
-def list_articles():
-    articles = Article.query.all()
-    return render_template('admin_list_articles.html',
-        articles=articles)
+from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to
 
 
 @admin.route('/<string:type>/<int:id>/<string:action>')
@@ -100,9 +94,12 @@ def list_articles():
 
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
+@auth_allowed_to('manage_articles')
 def edit_article(id=None):
     if id:
         article = Article.query.filter_by(id=id).first()
+        if not article:
+            return abort(404)
         submit = 'Update'
     else:
         article = Article()
@@ -145,32 +142,66 @@ def dashboard_superuser():
     return render_template('dashboard_superuser.html')
 
 
-@admin.route('/async/articles/<string:user>/filter/<string:filter>/<int:page>')
-@admin.route('/async/articles/<string:user>/<string:status>/<int:page>')
+@admin.route('/async/articles/<string:username>/filter/<string:filter>/<int:page>')
+@admin.route('/async/articles/<string:username>/<string:status>/<int:page>')
 @admin.route('/async/articles/filter/<string:filter>/<int:page>')
 @admin.route('/async/articles/<string:status>/<int:page>')
-@cache.memoize(20)
 @auth_logged_in
-def json_user_articles(user=None, status='any', page=1, per_page=20, filter=None):
-    if not user:
-        user = g.user
-
-    start = per_page * (page - 1)
-    end = per_page * page
-
-    if filter:
-        articles = user.articles.filter(
-            Article.title.like('%' + filter + '%'))[start:end]
-    elif status == 'any':
-        articles = user.articles[start:end]
+@auth_allowed_to('write_articles')
+def json_user_articles(username=None, *args, **kwargs):
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if not user:
+            return abort(404)
     else:
-        articles = user.articles.filter_by(status=status)[start:end]
+        user = g.user
     
+    if g.user != user and not g.user.allowed_to('manage_articles'):
+        return abort(403)
+
+    @cache.memoize(5)
+    def inner(user, status='any', page=1, per_page=20, filter=None):
+        print "DOING INENER"
+        print user, status, page, per_page, filter
+        start = per_page * (page - 1)
+        end = per_page * page
+
+        if filter:
+            articles = user.articles.filter(
+                Article.title.like('%' + filter + '%'))[start:end]
+        elif status == 'any':
+            articles = user.articles[start:end]
+        else:
+            articles = user.articles.filter_by(status=status)[start:end]
+        
+        return json.dumps({'articles': [{
+                'id': a.id,
+                'title': a.title,
+                'revision': a.revision,
+                'pub_date': a.pub_date.strftime('%c'),
+                'urls': {
+                    'edit': url_for('admin.edit_article', id=a.id),
+                    'bin': '#'
+                }
+            } for a in articles
+        ]})
+
+    return inner(user, *args, **kwargs)
+
+@admin.route('/async/articles/edit-queue')
+@auth_logged_in
+@auth_allowed_to('manage_articles')
+def json_articles_edit_queue():
+    articles = Articles.query.filter_by(status='edit-queue')
     return json.dumps({'articles': [{
             'id': a.id,
             'title': a.title,
             'revision': a.revision,
             'pub_date': a.pub_date.strftime('%c'),
+            'user': {
+                'fullname': '%s %s' % (a.user.firstname, a.user.surname),
+                'url': url_for('admin.edit_user', id=a.user.id)
+            },
             'urls': {
                 'edit': url_for('admin.edit_article', id=a.id),
                 'bin': '#'

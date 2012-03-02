@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import url_for
+from flask import url_for, abort
 
 from btnfemcol import db
 from btnfemcol.utils import Hasher
