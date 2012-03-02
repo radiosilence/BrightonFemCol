@@ -4,11 +4,11 @@
       <ul class="flashes">
       {% for category, message in messages %}
         {% if category == 'error' %}
-          <li class="error">{{ message }}</li>
+          <li class="error"><div>{{ message }}</div></li>
         {% elif category == 'success' %}
-          <li class="success">{{ message }}</li>
+          <li class="success"><div>{{ message }}</div></li>
         {% else %}
-          <li>{{ message }}</li>
+          <li><div>{{ message }}</div></li>
         {% endif %}
       {% endfor %}
       </ul>

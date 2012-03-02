@@ -129,20 +129,6 @@
 /* #Buttons
 ================================================== */
 
-	.button,
-	button,
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"] {
-		background: #b23939;
-		color: white;
-		font-weight: bold;
-		border: 1px solid black;
-		padding: 2px 10px;
-		font-family: 'PT Sans', sans-serif;
-		border-radius: 2px;
-	}
-
 
 /* #Tabs (activate in tabs.js)
 ================================================== */

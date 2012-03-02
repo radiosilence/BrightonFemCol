@@ -26,18 +26,6 @@
   {% endraw %}
   </script>
   <script>
-  p_arts = [{
-    id: 1,
-    title: 'My Article',
-    revision: 4,
-    date: {
-      weekday: 'Wed',
-      day: 3,
-      day_suffix: 'rd',
-      month: 'April',
-      year: 2012
-    }
-  }];
   $(function() {
     $.getJSON("{{ url_for('admin.json_user_articles', status='published', page=1)}}", function(data) {
       for(a in data['articles']) {

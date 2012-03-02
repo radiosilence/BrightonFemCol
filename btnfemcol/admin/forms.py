@@ -1,5 +1,6 @@
 from btnfemcol.models import User, Page, Article
 
+from flask import g
 from flaskext.wtf import *
 from flaskext.wtf.html5 import *
 from wtforms.ext.sqlalchemy.orm import model_form
@@ -113,7 +114,10 @@ class AuthorField(SelectField):
     def __init__(self, label=u'', validators=None, choices=None, **kwargs):
         super(SelectField, self).__init__(label, validators, **kwargs)
         self.coerce = int
-        self.choices = User.query.all()
+        if g.user.allowed_to('manage_articles'):
+            self.choices = User.query.all()
+        else:
+            self.choices = [g.user]
 
     def iter_choices(self):
         yield (None, 'Please select an author.', not self.data)
@@ -123,8 +127,43 @@ class AuthorField(SelectField):
             yield (user.id, u'%s' % user, user.id == self.coerce(self.data))
 
     def pre_validate(self, form):
+        if not self.data:
+            return False
         for v in self.choices:
             if self.coerce(self.data) == v.id:
+                break
+        else:
+            raise ValueError(self.gettext(u'Not a valid choice'))
+
+    def process_formdata(self, valuelist):
+        if not valuelist:
+            return False
+        if valuelist:
+            try:
+                self.data = self.coerce(valuelist[0])
+            except ValueError:
+                raise ValueError(self.gettext(u'Not a valid choice'))
+
+class ArticleStatusField(SelectField):
+    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
+        super(SelectField, self).__init__(label, validators, **kwargs)
+        self.coerce = str
+        self.choices = [
+            ('draft', u'Draft'),
+            ('edit-queue', u'Submitted')
+        ]
+        if g.user.allowed_to('manage_articles'):
+            self.choices.append(('published', 'Published'))
+
+    def iter_choices(self):
+        if not self.data:
+            self.data = self.choices[0][0]
+        for choice in self.choices:
+            yield (choice[0], u'%s' % choice[1], choice[0] == self.coerce(self.data))
+
+    def pre_validate(self, form):
+        for v in self.choices:
+            if self.coerce(self.data) == v[0]:
                 break
         else:
             raise ValueError(self.gettext(u'Not a valid choice'))
@@ -132,11 +171,8 @@ class AuthorField(SelectField):
 ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'])
 
 class ArticleEditForm(ArticleFormBase):
-    author_id = AuthorField()
-    status = SelectField(u'Publish Status', choices=[
-        ('draft', u'Draft'),
-        ('published', u'Published')
-    ])
+    author_id = AuthorField(label='Author')
+    status = ArticleStatusField(label='Publish Status')
 
     def __init__(self, form, article, *args, **kwargs):
         self._model = article

@@ -56,7 +56,10 @@ def save_object(form, object, message=u"%s saved."):
     """This function handles the simple cyle of testing if an object's form
     validates and then saving it.
     """
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        if not form.validate():
+            flash("There were errors saving, see below.", 'error')
+            return False
         form.populate_obj(object)
         db.session.add(object)
         db.session.commit()
@@ -102,17 +105,20 @@ def edit_article(id=None):
             return abort(404)
         submit = 'Update'
 
-        if g.user != article.user and not g.user.allowed_to('manage_articles'):
+        if g.user != article.author and not g.user.allowed_to('manage_articles'):
             return abort(403)
     else:
         article = Article()
         submit = 'Create'
     
     form = ArticleEditForm(request.form, article)
+    if not g.user.allowed_to('manage_articles'):
+        form.author_id.data = g.user.id
+    
     created = save_object(form, article)
     if created:
         return redirect(url_for('admin.edit_article', id=created))
-    return render_template('editor.html', form=form, submit=submit)
+    return render_template('edit_article.html', form=form, submit=submit)
 
 @admin.route('/article/new', methods=['GET', 'POST'])
 @auth_logged_in
@@ -193,16 +199,17 @@ def json_user_articles(username=None, *args, **kwargs):
 @admin.route('/async/articles/edit-queue')
 @auth_logged_in
 @auth_allowed_to('manage_articles')
+@cache.memoize(5)
 def json_articles_edit_queue():
-    articles = Articles.query.filter_by(status='edit-queue')
+    articles = Article.query.filter_by(status='edit-queue')
     return json.dumps({'articles': [{
             'id': a.id,
             'title': a.title,
             'revision': a.revision,
             'pub_date': a.pub_date.strftime('%c'),
-            'user': {
-                'fullname': '%s %s' % (a.user.firstname, a.user.surname),
-                'url': url_for('admin.edit_user', id=a.user.id)
+            'author': {
+                'fullname': '%s %s' % (a.author.firstname, a.author.surname),
+                'url': url_for('admin.edit_user', id=a.author.id)
             },
             'urls': {
                 'edit': url_for('admin.edit_article', id=a.id),
