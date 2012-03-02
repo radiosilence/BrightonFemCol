@@ -1,6 +1,29 @@
 /* Author:
 
 */
+var remove_flash = function(flash, duration) {
+    if(duration == undefined) {
+        duration = 500;
+    };
+    flash.stop(true, true).animate({left: '100%', 'margin-left': '20px'}, duration, function() {
+        flash.remove();
+        fade_first_flash();
+    });
+}
+
+var fade_first_flash = function() {
+    $('ul.flashes li:first-child').animate({display: 'block'}, 3000, function() {
+        remove_flash($(this));
+    });
+}
+
+$(function() {
+    fade_first_flash();
+    $('ul.flashes li').on('click', function() {
+        remove_flash($(this), 200);
+    })
+});
+
 $(function() {
     $('table tr').on('click', function() {
         if($(this).hasClass('selected')) {
@@ -34,28 +57,4 @@ $(function() {
             t.text('Advanced -');          
         }
     });
-});
-
-
-var remove_flash = function(flash, duration) {
-    if(duration == undefined) {
-        duration = 500;
-    };
-    flash.stop(true, true).animate({left: '100%', 'margin-left': '20px'}, duration, function() {
-        flash.remove();
-        fade_first_flash();
-    });
-}
-
-var fade_first_flash = function() {
-    $('ul.flashes li:first-child').animate({display: 'block'}, 3000, function() {
-        remove_flash($(this));
-    });
-}
-
-$(function() {
-    fade_first_flash();
-    $('ul.flashes li').on('click', function() {
-        remove_flash($(this), 200);
-    })
 });

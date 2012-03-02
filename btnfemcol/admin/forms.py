@@ -179,13 +179,15 @@ ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'], field_args={
         'validators': [
             Unique(Article, Article.slug),
             Required()
-        ]
+        ],
+        'label': 'Permalink'
     }
 })
 
 class ArticleEditForm(ArticleFormBase):
     author_id = AuthorField(label='Author')
     status = ArticleStatusField(label='Publish Status')
+    pub_date = DateTimeField(label='Publication Date')
 
     def __init__(self, form, article, *args, **kwargs):
         self._model = article

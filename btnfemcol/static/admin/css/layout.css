@@ -176,6 +176,7 @@ ul.flashes li.error div {
 
 label {
 	margin: 10px 0 5px 0;
+	font-size: 14px;
 }
 
 input[type=text], input[type=password]{ 
