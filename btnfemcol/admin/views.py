@@ -135,6 +135,7 @@ def create_article():
     return edit_article()
 
 @section('articles')
+@auth_allowed_to('write_articles')
 def dashboard_writer():
     """This is the dashboard for the writer group type, it just returns the
     article list because that's all writers really need to do.
@@ -142,18 +143,21 @@ def dashboard_writer():
     return list_articles()
 
 @section('editor')
+@auth_allowed_to('manage_articles')
 def dashboard_editor():
     """Editor dashboard has things for proof-reading and accepting submitted
     articles, and also writing one's own."""
     return render_template('dashboard_editor.html')
 
 @section('pages')
-def dashboard_admin():
+@auth_allowed_to('manage_pages')
+def dashboard_administrator():
     """Administrator dashboard will cover page editing, event uploading, user
     management."""
-    return render_template('dashboard_admin.html')
+    return render_template('dashboard_administrator.html')
 
 @section('users')
+@auth_allowed_to('manage_site')
 def dashboard_superuser():
     """Superuser can anything an admin can, but with the ability to change site
     settings, manage permissions, etc."""
@@ -231,4 +235,14 @@ def json_articles_edit_queue():
 @auth_logged_in
 def home():
     # Do some logic to get the right dashboard for the person
-    return dashboard_editor()
+    if g.user.group.name == 'Writer':
+        return dashboard_writer()
+    if g.user.group.name == 'Editor':
+        return dashboard_editor()
+    if g.user.group.name == 'Moderator':
+        return dashboard_moderator()
+    if g.user.group.name == 'Administrator' \
+        or g.user.group.name == 'Super User':
+        return dashboard_administrator()
+    else:
+        return g.user.group.name

@@ -42,8 +42,9 @@ $(function() {
     })
 });
 
-// Advanced / Basic form hiding parts.
+
 $(function() {
+    // Advanced / Basic form hiding parts.
     $('fieldset.advanced').before('<a href="#" class="advanced_hider">Advanced +</a>');
     $('fieldset.advanced').hide();
     $('a.advanced_hider').on('click', function(event) {
