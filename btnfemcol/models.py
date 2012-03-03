@@ -1,5 +1,6 @@
 from datetime import datetime
 from sqlalchemy.ext.declarative import AbstractConcreteBase
+
 from flask import url_for, abort
 
 from btnfemcol import db
@@ -7,17 +8,29 @@ from btnfemcol import cache
 from btnfemcol.utils import Hasher
 
 
-class BaseEntity(AbstractConcreteBase, db.Model):
+class SiteEntity(object):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(120), unique=True)
     title = db.Column(db.String(120), unique=True)
     status = db.Column(db.String(255))
     order = db.Column(db.Integer)
 
+    def __init__(self, title=None, slug=None, body=None, order=0, status=None):
+        self.slug = slug
+        self.title = title
+        self.status = status
+        self.order = order
 
-class Category(BaseEntity):
-    __mapper_args__ = {'polymorphic_identity': 'category', 'concrete': True}
 
+class Displayable(SiteEntity):
+    body = db.Column(db.Text)
+
+    def __init__(self, title=None, slug=None, body=None):
+        self.body = body
+        super(Displayable, self).__init__(title=title, slug=slug)
+
+
+class Category(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     def __init__(self, title, slug, order, live=True):
@@ -26,9 +39,9 @@ class Category(BaseEntity):
         self.order = order
 
 
-class Section(BaseEntity):
-    __mapper_args__ = {'polymorphic_identity': 'section', 'concrete': True}
+class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+
     pages = db.relationship('Page', backref='section')
 
     def __init__(self, title, slug, order, live=True):
@@ -36,22 +49,11 @@ class Section(BaseEntity):
         self.slug = slug
         self.order = order
 
-class BasePage(BaseEntity):
-    __mapper_args__ = {'polymorphic_identity': 'base_page', 'concrete': True}
-    body = db.Column(db.Text)
 
-class Page(BasePage):
-    __mapper_args__ = {'polymorphic_identity': 'page', 'concrete': True}
+class Page(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
 
-    def __init__(self, title=None, body=None, slug=None):
-        self.title = title
-        self.body = body
-        
-        if not slug:
-            self.slug = self._generate_slug()
-            self.slug = slug
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
 
     @property
     def excerpt(self):
@@ -68,8 +70,7 @@ tags = db.Table('tags',
     db.Column('article_id', db.Integer, db.ForeignKey('article.id'))
 )
  
-class Article(BasePage):
-    __mapper_args__ = {'polymorphic_identity': 'article', 'concrete': True}
+class Article(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -81,6 +82,16 @@ class Article(BasePage):
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))
+
+
+    def __init__(self, title=None, body=None, pub_date=None, slug=None,
+        author=None, subtitle=None):
+        if pub_date is None:
+            pub_date = datetime.utcnow()
+        self.pub_date = pub_date
+        self.author = author
+        self.subtitle = subtitle
+        super(Article, self).__init__(title=title, body=body, slug=slug)
 
     @property
     def json_dict(self, exclude=[]):
@@ -106,22 +117,11 @@ class Article(BasePage):
             del d[key]
         return d
 
-    def __init__(self, title=None, body=None, pub_date=None, slug=None,
-        author=None, subtitle=None):
-        if pub_date is None:
-            pub_date = datetime.utcnow()
-        self.pub_date = pub_date
-        self.author = author
-        self.subtitle = subtitle
-        super(Article, self).__init__(title, body, slug=slug)
-
     def __unicode__(self):
         return self.title
 
 
-class Event(Page):
-    __mapper_args__ = {'polymorphic_identity': 'event', 'concrete': True}
-
+class Event(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     start = db.Column(db.DateTime)

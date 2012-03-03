@@ -46,6 +46,7 @@ for name, title in perms:
     db.session.add(p)
 
 db.session.commit()
+print "Added permissions."
 
 # Basic User
 g_user = Group(name='User')
@@ -93,6 +94,7 @@ db.session.add(g_su)
 
 # Commit users
 db.session.commit()
+print "Added groups."
 
 # Create our first SU
 u = User(
@@ -129,3 +131,4 @@ u3 = User(
 db.session.add(u3)
 
 db.session.commit()
+print "Added test users."
