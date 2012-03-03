@@ -114,10 +114,7 @@ class AuthorField(SelectField):
     def __init__(self, label=u'', validators=None, choices=None, **kwargs):
         super(SelectField, self).__init__(label, validators, **kwargs)
         self.coerce = int
-        if g.user.allowed_to('manage_articles'):
-            self.choices = User.query.all()
-        else:
-            self.choices = [g.user]
+        self.choices = User.query.all()
 
     def iter_choices(self):
         yield (None, 'Please select an author.', not self.data)

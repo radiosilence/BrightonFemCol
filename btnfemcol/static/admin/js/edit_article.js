@@ -17,6 +17,7 @@ function string_to_slug(str) {
 }
 
 $(function() {
+    // Slug autogeneration
     if($('input#slug').val() == '') {
         $('input#slug').attr('auto', 'auto');
     }

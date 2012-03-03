@@ -179,14 +179,14 @@ label {
 	font-size: 14px;
 }
 
-input[type=text], input[type=password]{ 
+input[type=text], input[type=password], input[type=date] { 
 	color: black;
 	font-family: 'PT Serif', serif;
 	font-style: italic;
 	padding: 2px 0px;
 	font-size: 14px;
 	border-radius: 0px;
-	border: 0px solid black;
+	border: 1px solid white;
 	border-bottom: 1px dotted black;
 }
 
@@ -194,6 +194,7 @@ span.required label:before {
 	content: '* ';
 	color: red;
 }
+
 .button,
 button,
 input[type="submit"],
@@ -209,8 +210,27 @@ input[type="button"], select {
 	border-radius: 2px;
 }
 
+.button,
+button,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover {
+	background-color: #c43f3f;
+}
 select {
+	background-color: #181410;
+	color: white;
 	padding: 2px 0px;
+}
+
+select:hover {
+	background-color: #241e18;
+}
+
+select[disabled="true"] {
+	background-color: white;
+	color: grey;
+	border-color: grey;
 }
 option {
 	padding: 5px;

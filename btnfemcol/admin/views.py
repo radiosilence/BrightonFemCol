@@ -112,8 +112,12 @@ def edit_article(id=None):
         submit = 'Create'
     
     form = ArticleEditForm(request.form, article)
-    if not g.user.allowed_to('manage_articles'):
-        form.author_id.data = g.user.id
+
+    if not g.user.allowed_to('change_authors'):
+        if article.id:
+            form.author_id.data = article.author.id
+        else:
+            form.author_id.data = g.user.id
     
     created = save_object(form, article)
     if created:
@@ -222,4 +226,4 @@ def json_articles_edit_queue():
 @auth_logged_in
 def home():
     # Do some logic to get the right dashboard for the person
-    return dashboard_writer()
+    return dashboard_editor()

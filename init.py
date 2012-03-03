@@ -14,7 +14,8 @@ perms = [
     ('manage_users', 'Manage Users'),
     ('moderate', 'Moderate Forums and Comments'),
     ('post_comments', 'Post Comments'),
-    ('write_articles', 'Write Articles')
+    ('write_articles', 'Write Articles'),
+    ('change_authors', 'Change the author of an article.')
 ]
 
 permissions = {}
@@ -94,5 +95,16 @@ u2 = User(
 )
 
 db.session.add(u2)
+
+u3 = User(
+    g_editor,
+    username='editor',
+    password='editor',
+    email='editor@example.com',
+    firstname='Editor',
+    surname='Zeta'
+)
+
+db.session.add(u3)
 
 db.session.commit()

@@ -11,8 +11,11 @@
     {{ form.csrf }}
     <fieldset class="basic">
         {{ render_field(form.title, class_='title') }}
-        {% if g.user.allowed_to('manage_articles') %}
+        {% if g.user.allowed_to('change_authors') %}
             {{ render_field(form.author_id, label='Author') }}
+
+        {% elif g.user.allowed_to('manage_articles') %}
+            {{ render_field(form.author_id, label='Author', disabled=True) }}
         {% endif %}
         {{ render_field(form.subtitle) }}
         {{ render_field(form.pub_date) }}

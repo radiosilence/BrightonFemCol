@@ -1,0 +1,72 @@
+{% extends 'admin_base.html' %}
+{% block js %}
+  <script id="article_row_date" class="partial" type="text/html">
+  {% raw %}
+    {{ pub_date.weekday }} {{ pub_date.day }}<sup>{{ pub_date.day_suffix }}</sup> {{ pub_date.month }}, {{ pub_date.year }}
+  {% endraw %}
+  </script>
+  <script id="article_row" type="text/html">
+  {% raw %}
+  <tr article_id="1">
+    <td class="checkbox">
+      <input type="checkbox"/>
+    </td>
+    <td class="title">
+      <a href="{{ urls.edit }}">{{ title }}</a>
+    </td>
+    <td class="author">
+      <a href="{{ author.url }}">{{ author.fullname }}</a>
+    </td>
+    <td class="revision">
+      {{ revision }}
+    </td>
+    <td class="date">
+      {{ pub_date }}
+    <td class="actions">
+      <a href="{{ urls.edit }}">Edit</a> / <a href="{{ urls.bin }}">Bin</a>
+    </td>
+  </tr>
+  {% endraw %}
+  </script>
+  <script>
+  $(function() {
+    $.getJSON("{{ url_for('admin.json_articles_edit_queue', page=1)}}", function(data) {
+      for(a in data['articles']) {
+        a = data['articles'][a];
+         $('#edit-queue table').append(ich.article_row(a));
+      }
+    });   
+
+  });
+  </script>
+{% endblock %}
+{% block nav_column %}
+  <h1>Articles</h1>
+  <ul class="actions square">
+    <li><a href="{{ url_for('admin.create_article') }}" class="write-new">Write an article&hellip;</a></li>
+  </ul>
+  <h2>Filter</h2>
+  <form>
+  <br/>
+    <input type="text" placeholder="Enter Search Query" id="article-search"/>
+    <input type="text" value="Slider bullshit" />
+    <input type="submit" value="Filter" />
+  </form>
+{% endblock %}
+{% block main_column %}
+
+      <div id="edit-queue">
+        <h2>Edit Queue <span class="subheader">These articles have been submitted by writers and are pending review.</span></h2>
+
+        <table class="articles">
+          <tr class="header">
+            <th>&nbsp;</th>
+            <th class="title">Title</th>
+            <th>Author</th>
+            <th>Revision</th>
+            <th>Written On</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+{% endblock %}

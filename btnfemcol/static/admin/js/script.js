@@ -18,6 +18,7 @@ var fade_first_flash = function() {
 }
 
 $(function() {
+    // Slowly disappear the flashes
     fade_first_flash();
     $('ul.flashes li').on('click', function() {
         remove_flash($(this), 200);
@@ -25,6 +26,7 @@ $(function() {
 });
 
 $(function() {
+    // Full row selection
     $('table tr').on('click', function() {
         if($(this).hasClass('selected')) {
             $(this).removeClass('selected')
