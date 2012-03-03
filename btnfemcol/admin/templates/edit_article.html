@@ -2,9 +2,6 @@
 {% block js %}
   <script src="{{ url_for('static', filename='admin/js/edit_article.js') }}"></script>
 {% endblock %}
-{% block nav_column %}
-<a href="{{ url_for('admin.list_articles') }}">Back to Articles</a>
-{% endblock %}
 {% block main_column %}
 <p>This is where you can create an article, and if you are a moderator, edit or disable other people's articles.</p>
 <form class="editor" method="POST">

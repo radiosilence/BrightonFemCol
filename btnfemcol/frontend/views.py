@@ -13,7 +13,7 @@ from btnfemcol.models import Article, User, Page
 
 @frontend.route('/article/<path:slug>')
 def show_article(slug):
-    page = Article.query.filter_by(slug=slug).first()
+    article = Article.query.filter_by(slug=slug).first()
     if not article:
         abort(404)
     return render_template('article.html', article=article)

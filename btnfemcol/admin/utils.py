@@ -30,3 +30,12 @@ def auth_allowed_to(permission):
             return f(*args, **kwargs)
         return inner
     return decorator
+
+def section(name):
+    def decorator(f):
+        @wraps(f)
+        def inner(*args, **kwargs):
+            g.section = name
+            return f(*args, **kwargs)
+        return inner
+    return decorator

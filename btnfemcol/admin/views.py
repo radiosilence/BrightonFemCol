@@ -21,7 +21,7 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 
 from btnfemcol.utils import Auth, AuthError
 
-from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to
+from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section
 
 
 @admin.route('/<string:type>/<int:id>/<string:action>')
@@ -69,11 +69,13 @@ def save_object(form, object, message=u"%s saved."):
 
 @admin.route('/user/new', methods=['GET', 'POST'])
 @auth_logged_in
+@section('users')
 def create_user():
     return edit_user()
 
 @admin.route('/user/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
+@section('users')
 def edit_user(id=None):
     if id:
         user = User.query.filter_by(id=id).first()
@@ -91,6 +93,7 @@ def edit_user(id=None):
 
 @admin.route('/articles')
 @auth_logged_in
+@section('articles')
 def list_articles():
     return render_template('articles.html')
 
@@ -98,6 +101,7 @@ def list_articles():
 @admin.route('/article/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
 @auth_allowed_to('write_articles')
+@section('articles')
 def edit_article(id=None):
     if id:
         article = Article.query.filter_by(id=id).first()
@@ -130,26 +134,26 @@ def edit_article(id=None):
 def create_article():
     return edit_article()
 
-
+@section('articles')
 def dashboard_writer():
     """This is the dashboard for the writer group type, it just returns the
     article list because that's all writers really need to do.
     """
     return list_articles()
 
-
+@section('editor')
 def dashboard_editor():
     """Editor dashboard has things for proof-reading and accepting submitted
     articles, and also writing one's own."""
     return render_template('dashboard_editor.html')
 
-
+@section('pages')
 def dashboard_admin():
     """Administrator dashboard will cover page editing, event uploading, user
     management."""
     return render_template('dashboard_admin.html')
 
-
+@section('users')
 def dashboard_superuser():
     """Superuser can anything an admin can, but with the ability to change site
     settings, manage permissions, etc."""
@@ -162,6 +166,7 @@ def dashboard_superuser():
 @admin.route('/async/articles/<string:status>/<int:page>')
 @auth_logged_in
 @auth_allowed_to('write_articles')
+@section('articles')
 def json_user_articles(username=None, *args, **kwargs):
     if username:
         user = User.query.filter_by(username=username).first()

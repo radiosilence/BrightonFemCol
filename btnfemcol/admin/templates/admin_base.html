@@ -1,4 +1,104 @@
 {% extends 'admin_boilerplate.html' %}
+
+{% macro menu_article_filter() %}
+    <h2>Filter</h2>
+    <form>
+    <br/>
+      <input type="text" placeholder="Enter Search Query" id="article-search"/>
+      <input type="text" value="Slider bullshit" />
+      <input type="submit" value="Filter" />
+    </form>
+{% endmacro %}
+
+{% macro menu_articles() %}
+  <h1>Articles</h1>
+  <ul class="actions square">
+    <li><a href="{{ url_for('admin.create_article') }}" class="write-new">Write an article&hellip;</a></li>
+    <li><a href="{{ url_for('admin.list_articles') }}">Your Articles</a></li>
+  </ul>
+  <div class="inner">
+    {{ menu_article_filter() }}
+  </div>
+{% endmacro %}
+
+{% macro menu_editor() %}
+  <h1>Editor</h1>
+  <ul class="actions square">
+    <li><a href="{{ url_for('admin.home') }}">Review Submitted Articles</a></li>
+  </ul>
+  <div class="inner">
+    {{ menu_article_filter() }}
+  </div>
+{% endmacro %}
+
+{% macro menu_events() %}
+  <h1>Events</h1>
+  <ul class="actions square">
+  </ul>
+{% endmacro %}
+
+{% macro menu_moderation() %}
+  <h1>Moderation</h1>
+  <ul class="actions square">
+  </ul>
+{% endmacro %}
+
+{% macro menu_pages() %}
+  <h1>Pages</h1>
+  <ul class="actions square">
+  </ul>
+{% endmacro %}
+
+{% macro menu_site() %}
+  <h1>Site</h1>
+  <ul class="actions square">
+  </ul>
+{% endmacro %}
+
+{% macro menu_users() %}
+  <h1>Users</h1>
+  <ul class="actions square">
+  </ul>
+{% endmacro %}
+
+{% macro menu() %}
+  {% if g.user.allowed_to('manage_articles') %}
+    <div class="editor">
+      {{ menu_editor() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('manage_events') %}
+    <div class="events">
+      {{ menu_events() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('moderate') %}
+    <div class="moderation">
+      {{ menu_moderation() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('manage_pages') %}
+    <div class="pages">
+      {{ menu_pages() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('write_articles') %}
+    <div class="articles">
+      {{ menu_articles() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('manage_site') %}
+    <div class="site">
+      {{ menu_site() }}
+    </div>
+  {% endif %}
+  {% if g.user.allowed_to('manage_users') %}
+    <div class="users"> 
+      {{ menu_users() }}
+    </div>
+  {% endif %}
+
+{% endmacro %}
 {% block admin %}
   <div class="container">
     <header class="sixteen columns">
@@ -15,9 +115,9 @@
         </p>
       </div>
     </header>
-    <nav class="four columns">
+    <nav class="four columns {{ g.section }}">
     {% block nav_column %}
-      <p>This could be useful, also.</p>
+      {{ menu() }}
     {% endblock %}
     </nav>
     <section class="twelve columns">

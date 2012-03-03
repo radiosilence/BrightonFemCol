@@ -42,7 +42,7 @@ class Article(Page):
     author = db.relationship('User',
         backref=db.backref('articles', lazy='dynamic'))
     pub_date = db.Column(db.DateTime)
-    subtitle = db.Column(db.String(255))
+    subtitle = db.Column(db.Text)
     revision = db.Column(db.Integer)
     status = db.Column(db.String(255))
 

@@ -72,6 +72,60 @@ sub {
 	top: .5ex;
 }
 
+/* NAVIGATION */
+
+div.container>nav {
+	padding-top: 15px;
+}
+
+div.container>nav div {
+	overflow: hidden;
+}
+
+div.container>nav div h1 {
+	font-size: 18px;
+	margin: 0 0 10px 0;
+}
+
+div.container>nav div div.inner {
+	display: none;
+}
+
+div.container>nav div ul {
+	margin-bottom: 10px;
+}
+div.container>nav div ul li {
+	margin-bottom: 5px;
+}
+div.container>nav.articles div.articles div.inner {
+	display: block;
+}
+
+div.container>nav.events div.events div.inner {
+	display: block;
+}
+
+div.container>nav.editor div.editor div.inner {
+	display: block;
+}
+
+div.container>nav.moderation div.moderation div.inner {
+	display: block;
+}
+
+div.container>nav.pages div.pages div.inner {
+	display: block;
+}
+
+div.container>nav.site div.site div.inner {
+	display: block;
+}
+
+div.container>nav.users div.users div.inner {
+	display: block;
+}
+/* TABULAR */
+
 table {
 	margin: 10px 0 20px 0;
 	border-top: 2px solid black;
@@ -238,7 +292,7 @@ option {
 }
 
 input.title {
-	font-size: 18px;
+	font-size: 24px;
 }
 textarea {
 	border: 1px dotted black;

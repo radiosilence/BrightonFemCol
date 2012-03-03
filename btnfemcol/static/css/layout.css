@@ -216,6 +216,19 @@ div.container>header nav>ul.secondary>li.selected {
 	font-weight: 800;
 }
 
+/* Article related */
+
+div.article-body p img {
+	max-width: 200px;
+	float: right;
+	margin: 0px 0px 20px 20px;
+}
+
+div.article-body p:nth-child(even) img {
+	float: left;
+	margin: 0px 20px 20px 0px;
+}
+
 #main>div h1 {
 	font-size: 20px;
 }

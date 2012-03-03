@@ -40,19 +40,6 @@
   });
   </script>
 {% endblock %}
-{% block nav_column %}
-  <h1>Articles</h1>
-  <ul class="actions square">
-    <li><a href="{{ url_for('admin.create_article') }}" class="write-new">Write an article&hellip;</a></li>
-  </ul>
-  <h2>Filter</h2>
-  <form>
-  <br/>
-    <input type="text" placeholder="Enter Search Query" id="article-search"/>
-    <input type="text" value="Slider bullshit" />
-    <input type="submit" value="Filter" />
-  </form>
-{% endblock %}
 {% block main_column %}
 
       <div id="edit-queue">
