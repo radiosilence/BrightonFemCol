@@ -1,4 +1,4 @@
-from btnfemcol.models import User, Page, Article
+from btnfemcol.models import User, Page, Article, Event
 
 from flask import g
 from flaskext.wtf import *
@@ -6,11 +6,6 @@ from flaskext.wtf.html5 import *
 from wtforms.ext.sqlalchemy.orm import model_form
 
 from btnfemcol.utils import Hasher
-
-class LoginForm(Form):
-    username = TextField('Username')
-    password = PasswordField('Password')
-
 
 class Unique(object):
     """Validator that checks field uniqueness."""
@@ -29,69 +24,7 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
-
-UserFormBase = model_form(User, Form, exclude=['id'], field_args={
-    'username': {
-        'validators': [
-            Unique(User, User.username)
-        ],
-        'description': 'Eg. lady_derpington'
-    },
-    'firstname': {
-        'label': u'First Name',
-        'validators': [
-            Required()
-        ],
-        'description': 'Eg. Jane'
-    },
-    'surname': {
-        'validators': [
-            Required()
-        ],
-        'description': 'Eg. Derp'
-    },
-    'url': {
-        'label': u'URL',
-        'description': 'Eg. http://www.derpsworth.com'
-    },
-    'email': {
-        'validators': [
-            Required()
-        ],
-        'description': 'Eg. derping@gmail.com'
-    },
-    'phone': {
-        'description': 'Eg. 07688283555'
-    },
-    'twitter': {
-        'description': 'Eg. @derpslife'
-    }
-})
-
-class UserEditForm(UserFormBase):
-    password = PasswordField('Password',
-        [optional()])
-
-    def __init__(self, form, user, *args, **kwargs):
-        self._model = user
-        super(UserEditForm, self).__init__(form, user, *args, **kwargs)
-
-    def populate_obj(self, user):
-        if len(self.password.data) < 1:
-            self.password.data = user.password
-        else:
-            h = Hasher()
-            self.password.data = h.hash(self.password.data)
-        x = super(Form, self).populate_obj(user)
-        return x
-
-class UserRegistrationForm(UserEditForm):
-    password = PasswordField('Password',
-        [optional(), equal_to('confirm_pass',
-            message='Passwords must match.')])
-    confirm_pass = PasswordField('Confirm Password')
-
-
+# Page Forms
 PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
     'title': {
         'validators': [
@@ -108,8 +41,19 @@ PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
 })
 
 class PageEditForm(PageFormBase):
+    status = SelectField(label='Page Status', choices=[
+        ('draft', 'Draft'),
+        ('live', 'Live'),
+        ('binned', 'Binned')
+    ])
+
+# Event Forms
+EventFormBase = model_form(Event, PageEditForm)
+
+class EventEditForm(EventFormBase):
     pass
 
+# Article Forms
 class AuthorField(SelectField):
     def __init__(self, label=u'', validators=None, choices=None, **kwargs):
         super(SelectField, self).__init__(label, validators, **kwargs)
@@ -189,3 +133,73 @@ class ArticleEditForm(ArticleFormBase):
     def __init__(self, form, article, *args, **kwargs):
         self._model = article
         super(ArticleEditForm, self).__init__(form, article, *args, **kwargs)
+
+
+# User Forms
+UserFormBase = model_form(User, Form, exclude=['id'], field_args={
+    'username': {
+        'validators': [
+            Unique(User, User.username)
+        ],
+        'description': 'Eg. lady_derpington'
+    },
+    'firstname': {
+        'label': u'First Name',
+        'validators': [
+            Required()
+        ],
+        'description': 'Eg. Jane'
+    },
+    'surname': {
+        'validators': [
+            Required()
+        ],
+        'description': 'Eg. Derp'
+    },
+    'url': {
+        'label': u'URL',
+        'description': 'Eg. http://www.derpsworth.com'
+    },
+    'email': {
+        'validators': [
+            Required()
+        ],
+        'description': 'Eg. derping@gmail.com'
+    },
+    'phone': {
+        'description': 'Eg. 07688283555'
+    },
+    'twitter': {
+        'description': 'Eg. @derpslife'
+    }
+})
+
+class UserEditForm(UserFormBase):
+    password = PasswordField('Password',
+        [optional()])
+
+    def __init__(self, form, user, *args, **kwargs):
+        self._model = user
+        super(UserEditForm, self).__init__(form, user, *args, **kwargs)
+
+    def populate_obj(self, user):
+        if len(self.password.data) < 1:
+            self.password.data = user.password
+        else:
+            h = Hasher()
+            self.password.data = h.hash(self.password.data)
+        x = super(Form, self).populate_obj(user)
+        return x
+
+class UserRegistrationForm(UserEditForm):
+    password = PasswordField('Password',
+        [optional(), equal_to('confirm_pass',
+            message='Passwords must match.')])
+    confirm_pass = PasswordField('Confirm Password')
+
+
+# Generic Forms
+class LoginForm(Form):
+    username = TextField('Username')
+    password = PasswordField('Password')
+

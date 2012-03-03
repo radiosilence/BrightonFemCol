@@ -1,10 +1,6 @@
 {% extends 'admin_base.html' %}
 {% block js %}
-  <script id="article_row_date" class="partial" type="text/html">
-  {% raw %}
-    {{ pub_date.weekday }} {{ pub_date.day }}<sup>{{ pub_date.day_suffix }}</sup> {{ pub_date.month }}, {{ pub_date.year }}
-  {% endraw %}
-  </script>
+  <script src="{{url_for('static', filename='admin/js/articles.js') }}"></script>
   <script id="article_row" type="text/html">
   {% raw %}
   <tr article_id="1">
@@ -12,46 +8,46 @@
       <input type="checkbox"/>
     </td>
     <td class="title">
-      <a href="{{ urls.edit }}">{{ title }}</a>
+      <a href="{{ urls.edit }}">{{ title }}</a><br/>
+      <span class="author">by <a href="{{ author.url }}">{{ author.username }}</a></span>
     </td>
-    <td class="author">
-      <a href="{{ author.url }}">{{ author.fullname }}</a>
-    </td>
-    <td class="revision">
-      {{ revision }}
-    </td>
-    <td class="date">
-      {{ pub_date }}
     <td class="actions">
-      <a href="{{ urls.edit }}">Edit</a> / <a href="{{ urls.bin }}">Bin</a>
+      <a href="{{ urls.edit }}">Review</a>
     </td>
   </tr>
   {% endraw %}
   </script>
   <script>
   $(function() {
-    $.getJSON("{{ url_for('admin.json_articles_edit_queue', page=1)}}", function(data) {
-      for(a in data['articles']) {
-        a = data['articles'][a];
-         $('#edit-queue table').append(ich.article_row(a));
-      }
-    });   
+    articles_url = "{{ url_for('admin.json_articles') }}";
+    populate_table(articles_url, '#edit-queue table', 'edit-queue');
+    populate_table(articles_url, '#published-articles table', 'published');
 
   });
   </script>
 {% endblock %}
 {% block main_column %}
 
-      <div id="edit-queue">
+      <div id="edit-queue" class="six columns alpha">
         <h2>Edit Queue <span class="subheader">These articles have been submitted by writers and are pending review.</span></h2>
 
         <table class="articles">
           <tr class="header">
             <th>&nbsp;</th>
-            <th class="title">Title</th>
-            <th>Author</th>
-            <th>Revision</th>
-            <th>Written On</th>
+            <th>Article</th>
+            <th>Actions</th>
+          </tr>
+        </table>
+      </div>
+
+
+      <div id="published-articles" class="six columns alpha">
+        <h2>Published <span class="subheader">These articles are live on the website. You can take them down or make corrections.</span></h2>
+
+        <table class="articles">
+          <tr class="header">
+            <th>&nbsp;</th>
+            <th>Article</th>
             <th>Actions</th>
           </tr>
         </table>

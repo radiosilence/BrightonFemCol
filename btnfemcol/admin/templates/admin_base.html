@@ -24,7 +24,7 @@
 {% macro menu_editor() %}
   <h1>Editor</h1>
   <ul class="actions square">
-    <li><a href="{{ url_for('admin.home') }}">Review Submitted Articles</a></li>
+    <li><a href="{{ url_for('admin.dashboard_editor') }}">Manage Articles</a></li>
   </ul>
   <div class="inner">
     {{ menu_article_filter() }}
@@ -46,6 +46,7 @@
 {% macro menu_pages() %}
   <h1>Pages</h1>
   <ul class="actions square">
+    <li><a href="{{ url_for('admin.list_pages') }}">Manage Pages</a></li>
   </ul>
 {% endmacro %}
 
@@ -102,10 +103,10 @@
 {% block admin %}
   <div class="container">
     <header class="sixteen columns">
-      <div class="twelve columns alpha omega">
+      <div class="eleven columns alpha omega">
         <h1 class="remove-bottom"><a href="{{ url_for('admin.home') }}">Brighton Feminist Collective</a></h1>
       </div>
-      <div class="four columns alpha omega">
+      <div class="five columns alpha omega">
         <p class="welcome-user">
           Welcome back, <span class="user">{{ g.user.firstname }} {{ g.user.surname }}</span>
           <a href="{{ url_for('admin.logout') }}">Logout</a>

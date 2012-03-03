@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy.ext.declarative import AbstractConcreteBase
 from flask import url_for, abort
 
 from btnfemcol import db
@@ -6,13 +7,45 @@ from btnfemcol import cache
 from btnfemcol.utils import Hasher
 
 
-class Page(db.Model):
+class BaseEntity(AbstractConcreteBase, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(120), unique=True)
     title = db.Column(db.String(120), unique=True)
+    status = db.Column(db.String(255))
+    order = db.Column(db.Integer)
+
+
+class Category(BaseEntity):
+    __mapper_args__ = {'polymorphic_identity': 'category', 'concrete': True}
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    def __init__(self, title, slug, order, live=True):
+        self.title = title
+        self.slug = slug
+        self.order = order
+
+
+class Section(BaseEntity):
+    __mapper_args__ = {'polymorphic_identity': 'section', 'concrete': True}
+    id = db.Column(db.Integer, primary_key=True)
+    pages = db.relationship('Page', backref='section')
+
+    def __init__(self, title, slug, order, live=True):
+        self.title = title
+        self.slug = slug
+        self.order = order
+
+class BasePage(BaseEntity):
+    __mapper_args__ = {'polymorphic_identity': 'base_page', 'concrete': True}
     body = db.Column(db.Text)
 
-    def __init__(self, title, body, slug=None):
+class Page(BasePage):
+    __mapper_args__ = {'polymorphic_identity': 'page', 'concrete': True}
+    id = db.Column(db.Integer, primary_key=True)
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+
+    def __init__(self, title=None, body=None, slug=None):
         self.title = title
         self.body = body
         
@@ -35,19 +68,43 @@ tags = db.Table('tags',
     db.Column('article_id', db.Integer, db.ForeignKey('article.id'))
 )
  
-class Article(Page):
-    __mapper_args__ = {'polymorphic_identity': 'article'}
-    id = db.Column(db.Integer, db.ForeignKey('page.id'), primary_key=True)
+class Article(BasePage):
+    __mapper_args__ = {'polymorphic_identity': 'article', 'concrete': True}
+    id = db.Column(db.Integer, primary_key=True)
+
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User',
         backref=db.backref('articles', lazy='dynamic'))
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.Text)
     revision = db.Column(db.Integer)
-    status = db.Column(db.String(255))
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))
+
+    @property
+    def json_dict(self, exclude=[]):
+        """This is a form of serialisation but specifically for the output to
+        JSON for asyncronous requests."""
+        d = {
+            'id': self.id,
+            'title': self.title,
+            'revision': self.revision,
+            'pub_date': self.pub_date.strftime('%c'),
+            'urls': {
+                'edit': url_for('admin.edit_article', id=self.id),
+                'bin': '#'
+            },
+            'status': self.status,
+            'author': {
+                'username': self.author.username,
+                'fullname': '%s %s' % (self.author.firstname, self.author.surname),
+                'url': url_for('admin.edit_user', id=self.author.id)
+            }
+        }
+        for key in exclude:
+            del d[key]
+        return d
 
     def __init__(self, title=None, body=None, pub_date=None, slug=None,
         author=None, subtitle=None):
@@ -61,11 +118,16 @@ class Article(Page):
     def __unicode__(self):
         return self.title
 
-class Tag(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    
 
-class Category(db.Model):
+class Event(Page):
+    __mapper_args__ = {'polymorphic_identity': 'event', 'concrete': True}
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    start = db.Column(db.DateTime)
+    end = db.Column(db.DateTime)
+
+class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 

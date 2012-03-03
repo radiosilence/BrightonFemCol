@@ -10,12 +10,6 @@
     <td class="title">
       <a href="{{ urls.edit }}">{{ title }}</a>
     </td>
-    <td class="revision">
-      {{ revision }}
-    </td>
-    <td class="date">
-      {{ pub_date }}
-    </td>
     <td class="actions">
       <a href="{{ urls.edit }}">Edit</a> / <a href="{{ urls.bin }}">Bin</a>
     </td>
@@ -31,9 +25,9 @@
   </script>
 {% endblock %}
 {% block main_column %}
-      <div id="published-articles">
-        <h2>Published <span class="subheader">A list of your published articles.</span></h2>
-        <table class="articles">
+      <div id="pages-live">
+        <h2>Live <span class="subheader">Pages that are live on the site.</span></h2>
+        <table class="pages">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
@@ -43,16 +37,14 @@
           </tr>
         </table>
       </div>
-
-      <div id="draft-articles">
-        <h2>Drafts <span class="subheader">These articles will not show on the site.</span></h2>
-
-        <table class="articles">
+      <div id="pages-draft">
+        <h2>Drafts <span class="subheader">Pages that are not live.</span></h2>
+        <table class="pages">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
             <th>Revision</th>
-            <th>Written On</th>
+            <th>Published On</th>
             <th>Actions</th>
           </tr>
         </table>

@@ -2,8 +2,29 @@
 from btnfemcol import create_app, db
 
 db.create_all(app=create_app())
+print "Created database."
 
-from btnfemcol.models import User, Group, Permission
+from btnfemcol.models import User, Group, Permission, Section
+
+# Add sections
+
+sections = [
+    ('uncategorized', 'Uncategorised', False),
+    ('home', 'Home', True),
+    ('events', 'Events', True),
+    ('articles', 'Articles', True),
+    ('about', 'About', True),
+    ('contact', 'Contact', True)
+]
+
+i = 0
+for s in sections:
+    section = Section(s[0], s[1], i, live=s[2])
+    db.session.add(section)
+    i += 1
+
+db.session.commit()
+print "Added sections."
 
 # Add permissions
 perms = [

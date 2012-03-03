@@ -1,7 +1,25 @@
 """Admin specific utility functions and classes."""
 
 from functools import wraps
-from flask import g, redirect, flash, url_for, abort
+from flask import g, redirect, flash, url_for, abort, request
+
+from btnfemcol import db
+from btnfemcol import cache
+
+def save_object(form, object, message=u"%s saved."):
+    """This function handles the simple cyle of testing if an object's form
+    validates and then saving it.
+    """
+    if request.method == 'POST':
+        if not form.validate():
+            flash("There were errors saving, see below.", 'error')
+            return False
+        form.populate_obj(object)
+        db.session.add(object)
+        db.session.commit()
+        flash(message % object.__unicode__(), 'success')
+        return object.id
+    return False
 
 def auth_logged_in(f):
     @wraps(f)

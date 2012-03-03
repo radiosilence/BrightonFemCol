@@ -1,7 +1,7 @@
-/* Author:
-
-*/
 var remove_flash = function(flash, duration) {
+    /**
+     * Hide a flash.
+     */
     if(duration == undefined) {
         duration = 500;
     };
@@ -12,6 +12,9 @@ var remove_flash = function(flash, duration) {
 }
 
 var fade_first_flash = function() {
+    /**
+     * Hide the first flash then call the next one.
+     */
     $('ul.flashes li:first-child').animate({display: 'block'}, 3000, function() {
         remove_flash($(this));
     });
