@@ -68,7 +68,7 @@ var populate_table = function(table) {
         page = 1;
     }
 
-    var per_page = 1;
+    var per_page = 20;
 
     var d = {
         page: page,
