@@ -60,7 +60,6 @@ var populate_table = function(table) {
     var filter = table.attr('filter');
     var page = table.attr('page');
     var url = table.attr('url');
-    console.log(status, filter, page, url, table);
     var cols = $('tr.header th', table).length;
     if(status == undefined) {
         status = 'any';
@@ -111,10 +110,8 @@ var populate_tables = function() {
     });
 }
 $(function() {
-    console.log($('#filter'));
     // Table population filtering and pagination.
     $('nav').on('keyup', '#filter', function() {
-        console.log(filter);
         filter = $(this).val();
         $('table.js-pop').attr('filter', filter);
         populate_tables();
