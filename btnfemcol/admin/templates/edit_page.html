@@ -5,9 +5,9 @@
     {{ form.csrf }}
     <fieldset class="basic">
         {{ render_field(form.title, class_='title') }}
+        {{ render_field(form.section_id, label='Section') }}
         {{ render_field(form.body) }}
 
-        {{ render_field(form.section_id, label='Author') }}
     </fieldset>
     <fieldset class="advanced">
         {{ render_field(form.slug, class='slug') }}
