@@ -185,6 +185,54 @@ table td.actions {
 	text-align: center;
 }
 
+table tr.footer {
+	overflow: hidden;
+	padding: 0px;
+	border-top: 1px solid black;
+	line-height: 1;
+}
+
+table tr.footer td {
+	padding: 0px;
+	margin: 0px;
+}
+
+table tr.footer td span {
+	margin-top: 4px;
+	display: block;
+	float: right;
+	font-size: 13px;
+	font-style: italic;
+}
+table tr.footer td ul {
+	float: right;
+	display: block;
+	margin: 0px;
+	height: 20px;
+}
+
+table tr.footer td li {
+	float: left;
+	line-height: 1;
+	font-size: 14px;
+	margin: 0 0 0 0px;
+	height: 20px;
+}
+
+table tr.footer td li a {
+	display: block;
+	padding: 2px 4px 4px 4px;
+	width: 14px;
+	height: 14px;
+	margin: 0px;
+	text-align: center;
+	vertical-align: middle;
+	text-decoration: none;
+}
+table tr.footer td li.selected a {
+	background: black;
+	color: white;
+}
 /* Table cell classes */
 
 table td.title {
@@ -332,6 +380,7 @@ input.title {
 textarea {
 	border: 1px dotted black;
 	font-family: 'PT Serif', serif;
+	padding: 10px;
 	color: black;
 	width: 100%;
 }

@@ -1,5 +1,5 @@
 """Admin specific utility functions and classes."""
-
+import math
 from functools import wraps
 from flask import g, redirect, flash, url_for, abort, request
 
@@ -57,3 +57,7 @@ def section(name):
             return f(*args, **kwargs)
         return inner
     return decorator
+
+
+def calc_pages(results, per_page):
+    return int(math.ceil(float(results) / float(per_page)))

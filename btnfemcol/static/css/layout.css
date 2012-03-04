@@ -26,23 +26,25 @@ a:hover {
 	color: white;
 	background: black;
 }
-/*
-body {
-	font-family: 'PT Serif', serif;
-}
-h1, h2, nav, span.date, span.author, span.tags, figure, #twitter {
-	font-family: 'PT Sans', sans-serif;
-}
-*/
+
 span.date, h1, h2 {
 }
-/*
-h1, h2 {
-	font-weight: 700;
-	line-height: 1;
-	text-transform: uppercase;
-}*/
 
+code {
+	fong-family: 'Dejavu Sans Mono', monospace;
+}
+
+ul li {
+	list-style-type: square;
+	margin-left: 2em;
+	line-height: 1.4;
+}
+pre {
+	background-color: #010101;
+	color: white;
+	padding: 10px;
+	margin: 20px 10px;
+}
 div.container {
 	background: white;
 	color: black;
@@ -98,6 +100,11 @@ body>div>header h1 {
 }
 
 #main div p {
+	line-height: 1;
+	font-size: 14px;
+}
+
+#main div.article p {
 	line-height: 1.9;
 	font-size: 16px;
 }
@@ -186,6 +193,7 @@ div.container>header nav a:hover {
 
 div.container>header nav li {
 	float: left;
+	list-style-type: none;
 	margin: 0px;
 }
 
@@ -244,7 +252,9 @@ div.article-body p:nth-child(even) img {
 	font-weight: bold;
 }
 /* Twitter stuff */
-
+.twitter {
+	color: white;
+}
 .tweet_list .awesome,
 .tweet_list .epic {
 	text-transform: uppercase;
@@ -255,6 +265,7 @@ div.article-body p:nth-child(even) img {
 	padding: .5em;
 	list-style-type: none;
 	padding-right: .5em;
+	margin: 0px;
 	font-size: 12px;
 	color: #aaa;
 }

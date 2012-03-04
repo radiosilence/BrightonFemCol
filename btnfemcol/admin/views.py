@@ -22,7 +22,7 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 from btnfemcol.utils import Auth, AuthError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
-    save_object
+    save_object, calc_pages
 
 # Article Views
 @admin.route('/articles')
@@ -82,15 +82,23 @@ def json_articles_inner(user=None, status='any', page=1, per_page=20, filter=Non
     else:
         base = Article.query
 
-    if filter:
-        articles = base.filter(
-            Article.title.like('%' + filter + '%'))[start:end]
+    if filter and status != 'any':
+        q = base.filter_by(status=status).filter(
+            Article.title.like('%' + filter + '%'))
+    elif filter:
+        q = base.filter(
+            Article.title.like('%' + filter + '%'))
     elif status == 'any':
-        articles = base[start:end]
+        q = base[start:end]
     else:
-        articles = base.filter_by(status=status)[start:end]
+        q = base.filter_by(status=status)
     
-    return json.dumps({'items': [a.json_dict for a in articles]})
+    articles = q[start:end]
+    num_pages = calc_pages(q.count(), per_page)
+    return json.dumps({
+        'items': [a.json_dict for a in articles],
+        'num_pages': num_pages
+    })
 
 
 @admin.route('/async/user_articles')
@@ -176,15 +184,25 @@ def json_pages(*args, **kwargs):
         end = per_page * page
 
 
-        if filter:
-            pages = Page.query.filter(
-                Page.title.like('%' + filter + '%'))[start:end]
+
+        if filter and status != 'any':
+            q = base.filter_by(status=status).filter(
+                Page.title.like('%' + filter + '%'))
+        elif filter:
+            q = Page.query.filter(
+                Page.title.like('%' + filter + '%'))
         elif status == 'any':
-            pages = Page.query[start:end]
+            q = Page.query
         else:
-            pages = Page.query.filter_by(status=status)[start:end]
+            q = Page.query.filter_by(status=status)
         
-        return json.dumps({'items': [p.json_dict for p in pages]})
+        pages = q[start:end]
+        num_pages = calc_pages(q.count(), per_page)
+        
+        return json.dumps({
+            'items': [p.json_dict for p in pages],
+            'num_pages': num_pages
+        })
 
 
     return inner(

@@ -19,7 +19,7 @@ def before_request():
 def show_article(slug):
     article = Article.query.filter_by(slug=slug).first()
     if not article:
-        abort(404)
+        return abort(404)
     return render_template('article.html', article=article)
 
 #@cache.memoize(60)
@@ -37,23 +37,26 @@ def secondary_nav_pages(section_slug):
 
 @frontend.route('/<string:slug>')
 def show_section(slug):
-    page = get_section(slug).pages.filter_by(status='live').first()
+    section = get_section(slug)
+    if not section:
+        return abort(404)
+    page = section.pages.filter_by(status='live').first()
     if not page:
-        page_slug = ''
+        return abort(404)
     else:
         page_slug = page.slug
     return show_page(slug, page_slug)
 
 
 @frontend.route('/<string:section_slug>/<string:page_slug>')
-@cache.memoize(200)
+#@cache.memoize(200)
 def show_page(section_slug, page_slug, template='page.html',
     **kwargs):
     
     page = get_page(page_slug)
 
     if not page:
-        abort(404)
+        return abort(404)
 
     g.secondary_nav = secondary_nav_pages(section_slug)
 
@@ -67,7 +70,7 @@ def show_page(section_slug, page_slug, template='page.html',
 @frontend.route('/')
 def home():
 
-    @cache.memoize(20)
+#    @cache.memoize(20)
     def articles():
         return Article.query.all()
 

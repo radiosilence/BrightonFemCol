@@ -18,16 +18,14 @@
   </script>
   <script>
   $(function() {
-    pages_url = "{{ url_for('admin.json_pages') }}";
-    populate_table(pages_url, '#pages-live table', 'live');
-    populate_table(pages_url, '#pages-draft table', 'draft');
+    populate_tables();
   });
   </script>
 {% endblock %}
 {% block main_column %}
       <div id="pages-live">
         <h2>Live <span class="subheader">Pages that are live on the site.</span></h2>
-        <table class="pages">
+        <table class="pages js-pop" url="{{ url_for('admin.json_pages') }}" status="live" page="1">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
@@ -37,7 +35,7 @@
       </div>
       <div id="pages-draft">
         <h2>Drafts <span class="subheader">Pages that are not live.</span></h2>
-        <table class="pages">
+        <table class="pages js-pop" url="{{ url_for('admin.json_pages') }}" status="draft" page="1">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>

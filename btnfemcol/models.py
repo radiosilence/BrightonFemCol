@@ -55,7 +55,12 @@ class Section(SiteEntity, db.Model):
 
     @property
     def url(self):
-        return url_for('frontend.show_section', slug=self.slug)
+        print self
+        print self.pages.all()
+        print self.pages.count()
+        if self.pages.count() == 0:
+            return '#'
+        return self.pages.first().url
 
     def __repr__(self):
         return '<Section: %s>' % self.title
@@ -64,7 +69,7 @@ class Section(SiteEntity, db.Model):
         return self.title
 
     @classmethod
-    @cache.memoize(20)
+#    @cache.memoize(20)
     def get_live(cls):
         return cls.query.filter_by(status='live') \
             .order_by(Section.order).all()
@@ -226,7 +231,7 @@ class User(db.Model):
         self.group = group
         self.group_id = group.id
 
-    @cache.memoize(20)
+#    @cache.memoize(20)
     def allowed_to(self, name):
         """This will check if a user can do a certain action."""
         permission = Permission.query.filter_by(name=name).first()

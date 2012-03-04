@@ -38,40 +38,93 @@ var string_to_slug = function(str) {
   return str;
 }
 
-var populate_table = function(url, selector, status, page, filter) {
+var generate_page_list = function(current_page, number_pages) {
+    string = '<ul class="pagination">';
+    for(i=1; i<= number_pages; i++) {
+        if(i == current_page) {
+            selected = ' class="selected"';
+        } else {
+            selected = '';
+        }
+        string += '<li' + selected + '><a href="#">' + i + '</a></li>';
+    }
+    string += '</ul>';
+    return string;
+}
+var populate_table = function(table) {
     /**
      * Populate a table with articles.
      */
-//    console.log(url, selector, "status:", status, "PAGE:", page, "filter:", filter);
-    var table = $(selector);
+
+    var status = table.attr('status');
+    var filter = table.attr('filter');
+    var page = table.attr('page');
+    var url = table.attr('url');
+    var cols = $('tr.header th', table).length;
     if(status == undefined) {
         status = 'any';
     }
     if(page == undefined) {
         page = 1;
     }
+
+    var per_page = 1;
+
     var d = {
         page: page,
-        status: status
+        status: status,
+        per_page: per_page
     };
     if(filter != undefined) {
         d['filter'] = filter;
     }
-    $('tr', table).each(function() {
-        tr = $(this);
-        if(!tr.hasClass('header')) {
-            tr.remove();
-        }
-    });
     $.getJSON(url, d, function(data) {
+        if(data['num_pages'] < page && data['num_pages'] != 0) {
+            table.attr('page', data['num_pages']);
+            return populate_table(table)
+        }
+        $('tr', table).each(function() {
+            tr = $(this);
+            if(!tr.hasClass('header')) {
+                tr.remove();
+            }
+        });
         for(a in data['items']) {
             a = data['items'][a];
             tr = ich.table_row(a);
             table.append(tr);
-//            console.log("ADDING,", table.parent(), tr)
         }
-    }); 
+        if(data['num_pages'] > 1) {
+            var foot = '<tr class="footer"><td colspan="' + cols + '"></td></tr>';
+            table.append(foot);
+            list = generate_page_list(table.attr('page'), data['num_pages']);
+            foot_html = list + '<span>Showing ' + per_page + ' results per page...</span>';
+        $('tr.footer td', table).html(foot_html);
+        }
+    });
 }
+
+var populate_tables = function() {
+    $('table.js-pop').each(function() {
+        populate_table($(this));
+    });
+}
+$(function() {
+    // Table population filtering and pagination.
+    $('#filter').on('keyup', function() {
+        filter = $(this).val();
+        console.log(filter);
+        $('table.js-pop').attr('filter', filter);
+        populate_tables();
+    });
+    $('table.js-pop').on('click', 'ul.pagination a', function(event) {
+        event.preventDefault();
+        page = $(this).text();
+        table = $(this).closest('table.js-pop');
+        table.attr('page', page);
+        populate_table(table);
+    })
+});
 $(function() {
     // Slug autogeneration
     if($('input#slug').val() == '') {

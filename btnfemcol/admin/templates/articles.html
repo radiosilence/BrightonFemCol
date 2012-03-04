@@ -1,7 +1,7 @@
 {% extends 'admin_base.html' %}
 {% block js %}
   <script src="{{url_for('static', filename='admin/js/articles.js') }}"></script>
-  <script id="article_row" type="text/html">
+  <script id="table_row" type="text/html">
   {% raw %}
   <tr article_id="1">
     <td class="checkbox">
@@ -24,16 +24,14 @@
   </script>
   <script>
   $(function() {
-    user_articles_url = "{{ url_for('admin.json_user_articles') }}";
-    populate_table(user_articles_url, '#published-articles table', 'published');
-    populate_table(user_articles_url, '#draft-articles table', 'draft');
+    populate_tables();
   });
   </script>
 {% endblock %}
 {% block main_column %}
       <div id="published-articles">
         <h2>Published <span class="subheader">A list of your published articles.</span></h2>
-        <table class="articles">
+        <table class="articlesjs-pop" url="{{ url_for('admin.json_user_articles') }}" status="published" page="1">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
@@ -47,7 +45,7 @@
       <div id="draft-articles">
         <h2>Drafts <span class="subheader">These articles will not show on the site.</span></h2>
 
-        <table class="articles">
+        <table class="articles js-pop" url="{{ url_for('admin.json_user_articles') }}" status="draft" page="1">
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
