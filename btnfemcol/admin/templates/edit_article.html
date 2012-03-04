@@ -3,7 +3,7 @@
   <script src="{{ url_for('static', filename='admin/js/edit_article.js') }}"></script>
 {% endblock %}
 {% block main_column %}
-<p>This is where you can create an article, and if you are a moderator, edit or disable other people's articles.</p>
+<p>This is where you can create an article, and if you are an editor, edit or disable other people's articles.</p>
 <form class="editor" method="POST">
     {{ form.csrf }}
     <fieldset class="basic">

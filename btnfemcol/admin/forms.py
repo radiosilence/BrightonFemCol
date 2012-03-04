@@ -1,4 +1,4 @@
-from btnfemcol.models import User, Page, Article, Event
+from btnfemcol.models import User, Page, Article, Event, Section
 
 from flask import g
 from flaskext.wtf import *
@@ -24,49 +24,8 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
-# Page Forms
-PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
-    'title': {
-        'validators': [
-            Unique(Article, Article.title),
-            Required()
-        ]
-    },
-    'slug': {
-        'validators': [
-            Unique(Article, Article.slug),
-            Required()
-        ]
-    }
-})
 
-class PageEditForm(PageFormBase):
-    status = SelectField(label='Page Status', choices=[
-        ('draft', 'Draft'),
-        ('live', 'Live'),
-        ('binned', 'Binned')
-    ])
-
-# Event Forms
-EventFormBase = model_form(Event, PageEditForm)
-
-class EventEditForm(EventFormBase):
-    pass
-
-# Article Forms
-class AuthorField(SelectField):
-    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
-        super(SelectField, self).__init__(label, validators, **kwargs)
-        self.coerce = int
-        self.choices = User.query.all()
-
-    def iter_choices(self):
-        yield (None, 'Please select an author.', not self.data)
-        if not self.data:
-            self.data = -1
-        for user in self.choices:
-            yield (user.id, u'%s' % user, user.id == self.coerce(self.data))
-
+class ForeignKeyField(SelectField):
     def pre_validate(self, form):
         if not self.data:
             return False
@@ -76,6 +35,13 @@ class AuthorField(SelectField):
         else:
             raise ValueError(self.gettext(u'Not a valid choice'))
 
+    def iter_choices(self):
+        yield (None, 'Please select...', not self.data)
+        if not self.data:
+            self.data = -1
+        for choice in self.choices:
+            yield (choice.id, u'%s' % choice, choice.id == self.coerce(self.data))
+
     def process_formdata(self, valuelist):
         if not valuelist:
             return False
@@ -84,6 +50,62 @@ class AuthorField(SelectField):
                 self.data = self.coerce(valuelist[0])
             except ValueError:
                 raise ValueError(self.gettext(u'Not a valid choice'))
+
+
+# Page Forms
+PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
+    'title': {
+        'validators': [
+            Unique(Page, Page.title),
+            Required()
+        ]
+    },
+    'slug': {
+        'validators': [
+            Unique(Page, Page.slug),
+            Required()
+        ]
+    }
+})
+
+class SectionField(ForeignKeyField):
+    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
+        super(SelectField, self).__init__(label, validators, **kwargs)
+        self.coerce = int
+        self.choices = Section.query.all()
+
+    def iter_choices(self):
+        if not self.data:
+            self.data = 1
+        for choice in self.choices:
+            yield (choice.id, u'%s' % choice, choice.id == self.coerce(self.data))
+
+
+class PageEditForm(PageFormBase):
+    section_id = SectionField(label='Section')
+    status = SelectField(label='Page Status', choices=[
+        ('draft', 'Draft'),
+        ('live', 'Live'),
+        ('binned', 'Binned')
+    ])
+
+    def __init__(self, form, page, *args, **kwargs):
+        self._model = page
+        super(PageEditForm, self).__init__(form, page, *args, **kwargs)
+
+# Event Forms
+EventFormBase = model_form(Event, PageEditForm)
+
+class EventEditForm(EventFormBase):
+    pass
+
+# Article Forms
+class AuthorField(ForeignKeyField):
+    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
+        super(SelectField, self).__init__(label, validators, **kwargs)
+        self.coerce = int
+        self.choices = User.query.all()
+
 
 class ArticleStatusField(SelectField):
     def __init__(self, label=u'', validators=None, choices=None, **kwargs):

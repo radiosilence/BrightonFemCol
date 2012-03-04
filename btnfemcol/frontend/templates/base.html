@@ -35,16 +35,23 @@
 		</div>
 		<nav class="sixteen columns alpha omega">
 			<ul class="primary">
-				<li class="selected"><a href="#">Home</a>
-				</li>
-<!--				<li class="selected"><a href="#">Articles</a>
-				</li>
-
-				<li><a href="#">About Us</a>
-				</li>-->
+				{% for section in g.sections %}
+					<li class="
+						{%- if section.slug == selected_section_slug: -%}
+							selected
+						{%- endif -%}"
+					><a href="{{ section.url }}">{{ section.title }}</a>
+				{% endfor %}
 			</ul>
 			<ul class="secondary">
-				<li class="selected"><a href="#">Coming Soon</a></li>
+				{% for item in g.secondary_nav %}
+					<li class="
+						{%- if item.slug == selected_secondary_slug: -%}
+							selected
+						{%- endif -%}"
+					><a href="{{ item.url }}">{{ item.title }}</a></li>
+				{% endfor %}
+				<li><a href="#">Coming Soon</a></li>
 <!--				<li><a href="#">Feminism</a></li>
 				<li><a href="#">Opinions</a></li>-->	
 			</ul>

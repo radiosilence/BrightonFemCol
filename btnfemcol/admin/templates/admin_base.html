@@ -1,10 +1,10 @@
 {% extends 'admin_boilerplate.html' %}
 
-{% macro menu_article_filter() %}
+{% macro menu_filter() %}
     <h2>Filter</h2>
     <form>
     <br/>
-      <input type="text" placeholder="Enter Search Query" id="article-search"/>
+      <input type="text" placeholder="Enter Search Query" id="filter"/>
       <input type="text" value="Slider bullshit" />
       <input type="submit" value="Filter" />
     </form>
@@ -17,7 +17,7 @@
     <li><a href="{{ url_for('admin.list_articles') }}">Your Articles</a></li>
   </ul>
   <div class="inner">
-    {{ menu_article_filter() }}
+    {{ menu_filter() }}
   </div>
 {% endmacro %}
 
@@ -27,7 +27,7 @@
     <li><a href="{{ url_for('admin.dashboard_editor') }}">Manage Articles</a></li>
   </ul>
   <div class="inner">
-    {{ menu_article_filter() }}
+    {{ menu_filter() }}
   </div>
 {% endmacro %}
 
@@ -48,6 +48,14 @@
   <ul class="actions square">
     <li><a href="{{ url_for('admin.list_pages') }}">Manage Pages</a></li>
   </ul>
+  <div class="inner">
+    <ul class="actions square">
+      <li><a href="{{ url_for('admin.create_page') }}">Create a Page</a></li>
+    </ul>
+  </div>
+  <div class="inner">
+    {{ menu_filter() }}
+  </div>
 {% endmacro %}
 
 {% macro menu_site() %}

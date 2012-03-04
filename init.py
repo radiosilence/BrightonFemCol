@@ -4,7 +4,7 @@ from btnfemcol import create_app, db
 db.create_all(app=create_app())
 print "Created database."
 
-from btnfemcol.models import User, Group, Permission, Section
+from btnfemcol.models import User, Group, Permission, Section, Page
 
 # Add sections
 
@@ -19,12 +19,50 @@ sections = [
 
 i = 0
 for s in sections:
-    section = Section(s[0], s[1], i, live=s[2])
+    section = Section(s[1], s[0], i, live=s[2])
     db.session.add(section)
     i += 1
 
 db.session.commit()
 print "Added sections."
+
+# Add a home page
+default_body = """Welcome to DapperCMS. This is a default page, please delete
+or edit it.
+
+You can use **Markdown** to edit your pages, so it's easy to make text *italic*
+or **bold** or ***both***.
+
+You can also do quotes like this:
+
+> This is a quote.
+
+Indented code blocks:
+
+    this is some code()
+
+Bullet points:
+
+* One
+* Two
+* Three
+
+Links - [I am a link](http://www.google.com/)
+
+and even subheadings:
+
+## Bleep bloop
+
+Amazing, no?
+"""
+home = Section.query.filter_by(slug='home').first()
+welcome = Page(section=home, title="Welcome", slug='welcome', body=default_body,
+    status='live')
+
+db.session.add(welcome)
+db.session.commit()
+
+print "Added default page."
 
 # Add permissions
 perms = [

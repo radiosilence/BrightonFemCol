@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+        {% block header %}
         <header class="ten columns alpha omega offset-by-one">
             <h1>{{ page.title }}</h1>
             <span class="subtitle">{{ page.subtitle }}</span>
         </header>
+        {% endblock %}
         <div class="ten columns offset-by-one alpha">
             {{ page.body|markdown }}
         </div>

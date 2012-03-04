@@ -3,8 +3,8 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase
 
 from flask import url_for, abort
 
-from btnfemcol import db
-from btnfemcol import cache
+from btnfemcol import db, cache
+
 from btnfemcol.utils import Hasher
 
 
@@ -25,9 +25,10 @@ class SiteEntity(object):
 class Displayable(SiteEntity):
     body = db.Column(db.Text)
 
-    def __init__(self, title=None, slug=None, body=None):
+    def __init__(self, title=None, slug=None, body=None, status='draft'):
         self.body = body
-        super(Displayable, self).__init__(title=title, slug=slug)
+        super(Displayable, self).__init__(title=title, slug=slug,
+            status=status)
 
 
 class Category(SiteEntity, db.Model):
@@ -41,19 +42,62 @@ class Category(SiteEntity, db.Model):
 
 class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    pages = db.relationship('Page', backref='section')
+    pages = db.relationship('Page',
+        backref='section', order_by='Page.order', lazy='dynamic')
 
     def __init__(self, title, slug, order, live=True):
         self.title = title
         self.slug = slug
         self.order = order
 
+        if live:
+            self.status = 'live'
+        else:
+            self.status = 'draft'
+
+    @property
+    def url(self):
+        return url_for('frontend.show_section', slug=self.slug)
+
+    def __repr__(self):
+        return '<Section: %s>' % self.title
+
+    def __unicode__(self):
+        return self.title
+
+    @classmethod
+    @cache.memoize(20)
+    def get_live(cls):
+        return cls.query.filter_by(status='live') \
+            .order_by(Section.order).all()
+
 
 class Page(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
     section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+
+    def __init__(self, section=None, title=None, slug=None, body=None,
+        status='draft'):
+
+        self.body = body
+        if section:
+            self.section = section
+
+        super(Page, self).__init__(title=title, slug=slug, body=body,
+            status=status)
+
+    @property
+    def url(self):
+        if self.slug == 'welcome' and self.section.slug == 'home':
+            return url_for('frontend.home')
+
+        elif self.section.pages.filter_by(status='live').first() == self:
+            return url_for('frontend.show_section', slug=self.section.slug)
+        
+        return url_for('frontend.show_page',
+            section_slug=self.section.slug,
+            page_slug=self.slug)
+
 
     @property
     def excerpt(self):
@@ -65,6 +109,9 @@ class Page(Displayable, db.Model):
     def __repr__(self):
         return '<Page: %r>' % self.title
 
+    def __unicode__(self):
+        return unicode(self.title)
+
 tags = db.Table('tags',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
     db.Column('article_id', db.Integer, db.ForeignKey('article.id'))
@@ -75,7 +122,7 @@ class Article(Displayable, db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User',
-        backref=db.backref('articles', lazy='dynamic'))
+        backref='articles')
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.Text)
     revision = db.Column(db.Integer)
@@ -85,13 +132,14 @@ class Article(Displayable, db.Model):
 
 
     def __init__(self, title=None, body=None, pub_date=None, slug=None,
-        author=None, subtitle=None):
+        author=None, subtitle=None, status=None ):
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
         self.author = author
         self.subtitle = subtitle
-        super(Article, self).__init__(title=title, body=body, slug=slug)
+        super(Article, self).__init__(title=title, body=body, slug=slug,
+            status=status)
 
     @property
     def json_dict(self, exclude=[]):
