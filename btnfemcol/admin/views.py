@@ -183,10 +183,8 @@ def json_pages(*args, **kwargs):
         start = per_page * (page - 1)
         end = per_page * page
 
-
-
         if filter and status != 'any':
-            q = base.filter_by(status=status).filter(
+            q = Page.query.filter_by(status=status).filter(
                 Page.title.like('%' + filter + '%'))
         elif filter:
             q = Page.query.filter(
