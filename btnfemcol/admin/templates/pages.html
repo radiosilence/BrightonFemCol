@@ -1,14 +1,14 @@
 {% extends 'admin_base.html' %}
 {% block js %}
-  <script src="{{url_for('static', filename='admin/js/articles.js') }}"></script>
-  <script id="article_row" type="text/html">
+  <script src="{{url_for('static', filename='admin/js/pages.js') }}"></script>
+  <script id="table_row" type="text/html">
   {% raw %}
   <tr article_id="1">
     <td class="checkbox">
       <input type="checkbox"/>
     </td>
     <td class="title">
-      <a href="{{ urls.edit }}">{{ title }}</a>
+      <a href="{{ urls.edit }}">{{ title }}</a> (<a href="{{ urls.view }}">View</a>)
     </td>
     <td class="actions">
       <a href="{{ urls.edit }}">Edit</a> / <a href="{{ urls.bin }}">Bin</a>
@@ -18,9 +18,9 @@
   </script>
   <script>
   $(function() {
-    user_articles_url = "{{ url_for('admin.json_user_articles') }}";
-    populate_table(user_articles_url, '#published-articles table', 'published');
-    populate_table(user_articles_url, '#draft-articles table', 'draft');
+    pages_url = "{{ url_for('admin.json_pages') }}";
+    populate_table(pages_url, '#pages-live table', 'live');
+    populate_table(pages_url, '#pages-draft table', 'draft');
   });
   </script>
 {% endblock %}
@@ -31,8 +31,6 @@
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
-            <th>Revision</th>
-            <th>Published On</th>
             <th>Actions</th>
           </tr>
         </table>
@@ -43,8 +41,6 @@
           <tr class="header">
             <th>&nbsp;</th>
             <th class="title">Title</th>
-            <th>Revision</th>
-            <th>Published On</th>
             <th>Actions</th>
           </tr>
         </table>

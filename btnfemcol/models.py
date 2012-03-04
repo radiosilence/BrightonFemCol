@@ -42,8 +42,6 @@ class Category(SiteEntity, db.Model):
 
 class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    pages = db.relationship('Page',
-        backref='section', order_by='Page.order', lazy='dynamic')
 
     def __init__(self, title, slug, order, live=True):
         self.title = title
@@ -75,6 +73,8 @@ class Section(SiteEntity, db.Model):
 class Page(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+    section = db.relationship('Section',
+        backref=db.backref('pages', lazy='dynamic'), order_by='Page.order')
 
     def __init__(self, section=None, title=None, slug=None, body=None,
         status='draft'):
@@ -112,6 +112,25 @@ class Page(Displayable, db.Model):
     def __unicode__(self):
         return unicode(self.title)
 
+
+    @property
+    def json_dict(self, exclude=[]):
+        """This is a form of serialisation but specifically for the output to
+        JSON for asyncronous requests."""
+        d = {
+            'id': self.id,
+            'title': self.title,
+            'urls': {
+                'edit': url_for('admin.edit_page', id=self.id),
+                'bin': '#',
+                'view': self.url
+            },
+            'status': self.status
+        }
+        for key in exclude:
+            del d[key]
+        return d
+
 tags = db.Table('tags',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
     db.Column('article_id', db.Integer, db.ForeignKey('article.id'))
@@ -122,7 +141,7 @@ class Article(Displayable, db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User',
-        backref='articles')
+        backref=db.backref('articles', lazy='dynamic'))
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.Text)
     revision = db.Column(db.Integer)

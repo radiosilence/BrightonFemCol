@@ -90,7 +90,7 @@ def json_articles_inner(user=None, status='any', page=1, per_page=20, filter=Non
     else:
         articles = base.filter_by(status=status)[start:end]
     
-    return json.dumps({'articles': [a.json_dict for a in articles]})
+    return json.dumps({'items': [a.json_dict for a in articles]})
 
 
 @admin.route('/async/user_articles')
@@ -138,19 +138,17 @@ def json_articles(*args, **kwargs):
 def list_pages():
     return render_template('pages.html')
 
-@admin.route('/article/<int:id>', methods=['GET', 'POST'])
+@admin.route('/page/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
 @auth_allowed_to('manage_pages')
 @section('pages')
 def edit_page(id=None):
     if id:
         page = Page.query.filter_by(id=id).first()
-        if not article:
+        if not page:
             return abort(404)
         submit = 'Update'
 
-        if g.user != article.author and not g.user.allowed_to('manage_articles'):
-            return abort(403)
     else:
         page = Page()
         submit = 'Create'
@@ -161,6 +159,40 @@ def edit_page(id=None):
     if created:
         return redirect(url_for('admin.edit_page', id=created))
     return render_template('edit_page.html', form=form, submit=submit)
+
+
+
+@admin.route('/async/pages')
+@auth_logged_in
+@auth_allowed_to('manage_pages')
+@section('pages')
+def json_pages(*args, **kwargs):
+    
+    def inner(status='any', page=1, per_page=20, filter=None):
+        """This function handles getting json for articles once arguments have
+        already been decided.
+        """
+        start = per_page * (page - 1)
+        end = per_page * page
+
+
+        if filter:
+            pages = Page.query.filter(
+                Page.title.like('%' + filter + '%'))[start:end]
+        elif status == 'any':
+            pages = Page.query[start:end]
+        else:
+            pages = Page.query.filter_by(status=status)[start:end]
+        
+        return json.dumps({'items': [p.json_dict for p in pages]})
+
+
+    return inner(
+        status=request.args.get('status', default='any'),
+        page=request.args.get('page', default=1, type=int),
+        per_page=request.args.get('per_page', default=20, type=int),
+        filter=request.args.get('filter', default=None),
+        *args, **kwargs)
 
 
 @admin.route('/page/new', methods=['GET', 'POST'])

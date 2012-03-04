@@ -38,6 +38,40 @@ var string_to_slug = function(str) {
   return str;
 }
 
+var populate_table = function(url, selector, status, page, filter) {
+    /**
+     * Populate a table with articles.
+     */
+//    console.log(url, selector, "status:", status, "PAGE:", page, "filter:", filter);
+    var table = $(selector);
+    if(status == undefined) {
+        status = 'any';
+    }
+    if(page == undefined) {
+        page = 1;
+    }
+    var d = {
+        page: page,
+        status: status
+    };
+    if(filter != undefined) {
+        d['filter'] = filter;
+    }
+    $('tr', table).each(function() {
+        tr = $(this);
+        if(!tr.hasClass('header')) {
+            tr.remove();
+        }
+    });
+    $.getJSON(url, d, function(data) {
+        for(a in data['items']) {
+            a = data['items'][a];
+            tr = ich.table_row(a);
+            table.append(tr);
+//            console.log("ADDING,", table.parent(), tr)
+        }
+    }); 
+}
 $(function() {
     // Slug autogeneration
     if($('input#slug').val() == '') {
