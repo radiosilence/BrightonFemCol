@@ -12,8 +12,7 @@ import btnfemcol
 from btnfemcol.admin import admin
 
 from btnfemcol import uploaded_images, uploaded_avatars
-from btnfemcol import db
-from btnfemcol import cache
+from btnfemcol import db, cache
 
 from btnfemcol.models import User, Article, Page, Event, Section, Category, \
     Group
@@ -86,7 +85,7 @@ def json_user_articles(username=None, *args, **kwargs):
     if g.user != user and not g.user.allowed_to('manage_articles'):
         return abort(403)
 
-    return json_inner(user.articles)
+    return json_inner(Article, user.articles)
 
 
 @admin.route('/async/articles')
@@ -94,7 +93,7 @@ def json_user_articles(username=None, *args, **kwargs):
 @auth_allowed_to('manage_articles')
 @section('articles')
 def json_articles():
-    return json_inner(Article.query)
+    return json_inner(Article, Article.query)
 
 
 # Page Views
@@ -118,7 +117,7 @@ def edit_page(id=None):
 @auth_allowed_to('manage_pages')
 @section('pages')
 def json_pages():
-    return json_inner(Page.query,
+    return json_inner(Page, Page.query,
         order=[Page.section_id.asc(), Page.order.asc()])
 
 
@@ -142,7 +141,7 @@ def list_events():
 @auth_allowed_to('manage_events')
 @section('event')
 def edit_event(id=None):
-    return edit_instance(Event, EventEditForm, id=id)
+    return edit_instance(Event, EventEditForm, edit_template='edit_event.html', id=id)
 
 
 @admin.route('/async/events')
@@ -150,7 +149,7 @@ def edit_event(id=None):
 @auth_allowed_to('manage_events')
 @section('events')
 def json_events():
-    return json_inner(Event.query, order=[Event.start.desc()])
+    return json_inner(Event, Event.query, order=[Event.start.desc()])
 
 
 @admin.route('/event/new', methods=['GET', 'POST'])
@@ -182,8 +181,7 @@ def create_user():
 @section('users')
 def edit_user(id=None):
     group = Group.query.filter_by(name='Writer').first()
-    default = User(group)
-    return edit_instance(User, UserEditForm, id=id, default=default)
+    return edit_instance(User, UserEditForm, id=id)
 
 
 @admin.route('/async/users')
@@ -191,7 +189,7 @@ def edit_user(id=None):
 @auth_allowed_to('manage_users')
 @section('users')
 def json_users():
-    return json_inner(User.query)
+    return json_inner(User, User.query)
 
 
 

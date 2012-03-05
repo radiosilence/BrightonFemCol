@@ -1,7 +1,12 @@
 {% extends 'page.html' %}
 {% macro article_block(article, event=False) %}
     <article class="home listed">
-        <a class="category" href="{{ article.category.url }}">
+        <a class="category" href="
+        {%- if event: -%}
+            {{ url_for('frontend.show_events')}}
+        {%- else -%}
+            {{ article.category.url }}
+        {%- endif -%}">
             {% if event: %}
                 Event
             {% else %}
@@ -11,13 +16,15 @@
         <img/>
         <header>
             <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
-            <span class="author">by {{ article.author.fullname }}</span>
+            {% if not event %}
+                <span class="author">by {{ article.author.fullname }}</span>
+            {% endif %}
         </header>
         <p>{{ article.excerpt }}&hellip;</p>
     </article>
 {% endmacro %}
 {% block header %}
-    <div class="twelve columns alpha omega" id="home-banner">
+    <div class="twelve columns alpha omega" id="black-bloc">
         <p class="six columns">Here would be some excellent, catchy, introductory text for the group.</p>
         <p class="six columns quote">&ldquo;Perhaps, a pretentious quote, would go well here.&rdquo; &mdash; Ron Paul</p>
     </div>
@@ -27,35 +34,10 @@
         {% endfor %}
     </div><div class="six columns omega events">
         
-            
-    <article class="home listed">
-        <a class="category" href="/articles/news">
-            
-                Event
-            
-        
-        <img>
-        </a><header><a class="category" href="/articles/news">
-            </a><h1><a class="category" href="/articles/news"></a><a href="/articles/news/first-article">Reclaim the Dancefloor</a></h1>
-        </header>
-        <p>Bacon ipsum dolor sit amet hamburger dolore drumstick ribeye, deserunt nisi jowl fatback short ribs. Enim proident short loin incididunt, do…</p>
-    </article>
 
-        
-            
-    <article class="home listed">
-        <a class="category" href="/articles/feminism">
-            
-                Event
-            
-        
-        <img>
-        </a><header><a class="category" href="/articles/feminism">
-            </a><h1><a class="category" href="/articles/feminism"></a><a href="/articles/feminism/another-article">40 Days of Treats</a></h1>
-        </header>
-        <p>Tongue pork belly exercitation, pig tri-tip dolore ribeye pancetta. Meatball aute ex t-bone, incididunt pork labore commodo et nulla laboris…</p>
-    </article>
-
+        {% for event in events %}
+            {{ article_block(event, event=True) }}
+        {% endfor %}
         
     </div>
     <hr />

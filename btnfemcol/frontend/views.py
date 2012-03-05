@@ -9,7 +9,7 @@ from btnfemcol import uploaded_images, uploaded_avatars
 
 from btnfemcol import db, cache
 
-from btnfemcol.models import Article, User, Page, Section, Category
+from btnfemcol.models import Article, User, Page, Section, Category, Event
 
 @frontend.before_request
 def before_request():
@@ -33,6 +33,11 @@ def secondary_nav_pages(section_slug):
 
 def secondary_nav_categories():
     return Category.query.filter_by(status='live').all()
+
+@frontend.route('/events')
+@frontend.route('/events/<string:type>')
+def show_events(type='upcoming'):
+    return "EVVENTS"
 
 @frontend.route('/articles/<string:category_slug>')
 def show_category(category_slug):
@@ -99,7 +104,9 @@ def show_page(section_slug, page_slug, template='page.html',
 def home():
 #    @cache.memoize(20)
     def articles():
-        return Article.query.filter_by(status='published').all()
+        return Article.query.filter_by(status='published')[:2]
+    def events():
+        return Event.query.filter_by(status='live')[:2]
 
     first_section = Section.query.filter_by(status='live').first()
     first_page = first_section.pages.filter_by(status='live').first()
@@ -108,5 +115,5 @@ def home():
         first_page.slug,
         template='home.html',
         articles=articles(),
-        events=[]
+        events=events()
     )

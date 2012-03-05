@@ -9,20 +9,14 @@ from btnfemcol import db
 from btnfemcol import cache
 
 
-def edit_instance(cls, form_cls, edit_template='form.html', id=None,
-    default=None):
+def edit_instance(cls, form_cls, edit_template='form.html', id=None):
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
             return abort(404)
         submit = 'Update'
-
     else:
-        if default:
-            instance = default
-        else:
-            instance = cls()
-
+        instance = cls()
         submit = 'Create'
     
     form = form_cls(request.form, instance)
@@ -42,7 +36,8 @@ def save_instance(form, instance, message=u"%s saved."):
             flash("There were errors saving, see below.", 'error')
             return False
         form.populate_obj(instance)
-        db.session.add(instance)
+        if not instance.id:
+            db.session.add(instance)
         db.session.commit()
         flash(message % instance.__unicode__(), 'success')
         return instance.id
@@ -90,7 +85,8 @@ def calc_pages(results, per_page):
     return int(math.ceil(float(results) / float(per_page)))
 
 
-def json_inner(base, status=None, page=None, per_page=None, filter=None, order=None):
+def json_inner(cls, base, status=None, page=None, per_page=None, filter=None,
+    order=None):
     """This function handles getting json for instances once arguments have
     already been decided.
     """
@@ -108,10 +104,10 @@ def json_inner(base, status=None, page=None, per_page=None, filter=None, order=N
 
     if filter and status != 'any':
         q = base.filter_by(status=status).filter(
-            Article.title.like('%' + filter + '%'))
+            cls.title.like('%' + filter + '%'))
     elif filter:
         q = base.filter(
-            Article.title.like('%' + filter + '%'))
+            cls.title.like('%' + filter + '%'))
     elif status == 'any':
         q = base
     else:

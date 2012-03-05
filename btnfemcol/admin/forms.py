@@ -105,15 +105,21 @@ class PageEditForm(PageFormBase):
         super(PageEditForm, self).__init__(form, page, *args, **kwargs)
 
 # Event Forms
-EventFormBase = model_form(Event, PageEditForm, exclude=['id'])
+EventFormBase = model_form(Event, Form, exclude=['id'])
 
 class EventEditForm(EventFormBase):
-    pass
+    start = DateTimeField()
+    end = DateTimeField()
+    status = SelectField(label='Event Status', choices=[
+        ('draft', 'Draft'),
+        ('live', 'Live'),
+        ('binned', 'Binned')
+    ])
 
 # Article Forms
 class ArticleStatusField(SelectField):
-    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
-        super(SelectField, self).__init__(label, validators, **kwargs)
+    def __init__(self, **kwargs):
+        super(ArticleStatusField, self).__init__(*args, **kwargs)
         self.coerce = str
         self.choices = [
             ('draft', u'Draft'),
@@ -154,7 +160,7 @@ ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'], field_args={
 class ArticleEditForm(ArticleFormBase):
     author_id = ForeignKeyField(User.query, label='Author')
     status = ArticleStatusField(label='Publish Status')
-    pub_date = DateTimeField(label='Publication Date')
+    pub_date = DateField(label='Publication Date')
 
     def __init__(self, form, article, *args, **kwargs):
         self._model = article
@@ -182,8 +188,11 @@ UserFormBase = model_form(User, Form, exclude=['id'], field_args={
         ],
         'description': 'Eg. Derp'
     },
-    'url': {
+    'website': {
         'label': u'URL',
+        'validators': [
+            url(),
+        ],
         'description': 'Eg. http://www.derpsworth.com'
     },
     'email': {

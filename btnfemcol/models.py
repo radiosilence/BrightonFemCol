@@ -23,12 +23,20 @@ class SiteEntity(object):
         self.status = status
         self.order = order
 
+    def __unicode__(self):
+        return unicode(self.title)
+
 class Displayable(SiteEntity):
     body = db.Column(db.Text)
 
     def __init__(self, body=None, *args, **kwargs):
         self.body = body
         super(Displayable, self).__init__(*args, **kwargs)
+
+
+    @property
+    def excerpt(self):
+        return self.body[:140]
 
 
 class Category(SiteEntity, db.Model):
@@ -90,11 +98,6 @@ class Page(Displayable, db.Model):
         return url_for('frontend.show_page',
             section_slug=self.section.slug,
             page_slug=self.slug)
-
-
-    @property
-    def excerpt(self):
-        return self.body[:140]
 
     def _generate_slug(self):
         pass
@@ -191,13 +194,6 @@ class Article(Displayable, db.Model):
             del d[key]
         return d
 
-    @property
-    def excerpt(self):
-        return self.body[:140]
-
-    def __unicode__(self):
-        return self.title
-
 
 class Event(Displayable, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -206,7 +202,7 @@ class Event(Displayable, db.Model):
     end = db.Column(db.DateTime)
     location = db.Column(db.String(255))
 
-    def __init__(start=None, end=None, location=None, *args, **kwargs):
+    def __init__(self, start=None, end=None, location=None, *args, **kwargs):
         if start is None:
             start = datetime.utcnow()
         if end is None:
@@ -219,7 +215,7 @@ class Event(Displayable, db.Model):
     @property
     def url(self):
         return '#'
-        return url_for('frontend.show_event', slug=self.slug)
+#        return url_for('frontend.show_event', slug=self.slug)
 
     @property
     def json_dict(self, exclude=[]):
@@ -241,6 +237,7 @@ class Event(Displayable, db.Model):
             del d[key]
         return d
 
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -260,13 +257,16 @@ class User(db.Model):
     group = db.relationship('Group',
         backref=db.backref('users', lazy='dynamic'))
 
-    def __init__(self, group, username=None, email=None, firstname=None,
+    def __init__(self, group=None, username=None, email=None, firstname=None,
         surname=None, password=None, website=None, phone=None, twitter=None,
         *args, **kwargs):
         
         if password:
             h = Hasher()
             self.password = h.hash(password)
+
+        if not group:
+            group = Group.query.filter_by(name='Writer').first()
 
         self.username = username
         self.firstname = firstname
@@ -277,6 +277,7 @@ class User(db.Model):
         self.website = website
         self.twitter = twitter
         self.phone = phone
+        super(User, self).__init__(*args, **kwargs)
 
 #    @cache.memoize(20)
     def allowed_to(self, name):

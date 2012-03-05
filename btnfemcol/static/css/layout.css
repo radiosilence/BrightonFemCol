@@ -171,7 +171,7 @@ div.container>aside {
 	padding: 10px;
 }
 
-#home-banner {
+#black-bloc {
 	color: white;
 	display: block;
 	height: 200px;
@@ -180,14 +180,14 @@ div.container>aside {
 	margin-top: 10px;
 }
 
-#home-banner p {
+#black-bloc p {
 	margin-top: 10px;
 	font-family: facitweb, sans-serif;
 	text-transform: uppercase;
 }
 
 
-#home-banner p.quote {
+#black-bloc p.quote {
 	margin-top: 10px;
 	font-size: 24px;
 	font-style: italic;
@@ -372,7 +372,7 @@ div.article-body p:nth-child(even) img {
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 	@media only screen and (min-width: 480px) and (max-width: 767px) {
-		#home-banner {	
+		#black-bloc {	
 			height: auto;
 			background: #080808;
 			padding-bottom: 10px;
@@ -382,7 +382,7 @@ div.article-body p:nth-child(even) img {
 
 	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 	@media only screen and (max-width: 479px) {
-		#home-banner {	
+		#black-bloc {	
 			height: auto;
 			background: #080808;
 			padding-bottom: 10px;
