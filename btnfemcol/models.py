@@ -15,20 +15,20 @@ class SiteEntity(object):
     status = db.Column(db.String(255))
     order = db.Column(db.Integer)
 
-    def __init__(self, title=None, slug=None, body=None, order=0, status=None):
+    def __init__(self, title=None, slug=None, body=None, order=0,
+        status='draft'):
+        
         self.slug = slug
         self.title = title
         self.status = status
         self.order = order
 
-
 class Displayable(SiteEntity):
     body = db.Column(db.Text)
 
-    def __init__(self, title=None, slug=None, body=None, status='draft'):
+    def __init__(self, body=None, *args, **kwargs):
         self.body = body
-        super(Displayable, self).__init__(title=title, slug=slug,
-            status=status)
+        super(Displayable, self).__init__(*args, **kwargs)
 
 
 class Category(SiteEntity, db.Model):
@@ -41,16 +41,6 @@ class Category(SiteEntity, db.Model):
 
 class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    def __init__(self, title, slug, order, live=True):
-        self.title = title
-        self.slug = slug
-        self.order = order
-
-        if live:
-            self.status = 'live'
-        else:
-            self.status = 'draft'
 
     @property
     def url(self):
@@ -82,15 +72,12 @@ class Page(Displayable, db.Model):
     section = db.relationship('Section',
         backref=db.backref('pages', lazy='dynamic'), order_by='Page.order')
 
-    def __init__(self, section=None, title=None, slug=None, body=None,
-        status='draft'):
+    def __init__(self, section=None, *args, **kwargs):
 
-        self.body = body
         if section:
             self.section = section
 
-        super(Page, self).__init__(title=title, slug=slug, body=body,
-            status=status)
+        super(Page, self).__init__(*args, **kwargs)
 
     @property
     def url(self):
@@ -162,8 +149,8 @@ class Article(Displayable, db.Model):
         backref=db.backref('articles', lazy='dynamic'))
 
 
-    def __init__(self, title=None, body=None, pub_date=None, slug=None,
-        author=None, subtitle=None, status=None, category=None):
+    def __init__(self, pub_date=None, author=None, subtitle=None,
+        category=None, *args, **kwargs):
 
         if pub_date is None:
             pub_date = datetime.utcnow()
@@ -171,8 +158,7 @@ class Article(Displayable, db.Model):
         self.author = author
         self.subtitle = subtitle
         self.category = category
-        super(Article, self).__init__(title=title, body=body, slug=slug,
-            status=status)
+        super(Article, self).__init__(*args, **kwargs)
 
     @property
     def url(self):
@@ -220,6 +206,21 @@ class Event(Displayable, db.Model):
     end = db.Column(db.DateTime)
     location = db.Column(db.String(255))
 
+    def __init__(start=None, end=None, location=None, *args, **kwargs):
+        if start is None:
+            start = datetime.utcnow()
+        if end is None:
+            end = datetime.utcnow()
+        self.start = start
+        self.end = end
+        self.location = location
+        super(Event, self).__init__(*args, **kwargs)
+
+    @property
+    def url(self):
+        return '#'
+        return url_for('frontend.show_event', slug=self.slug)
+
     @property
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
@@ -241,13 +242,14 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 
-class User(db.Model):
+class User(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
     firstname = db.Column(db.String(80), nullable=False)
+    location = db.Column(db.String(80))
     surname = db.Column(db.String(80), nullable=False)
-    url = db.Column(db.String(255))
+    website = db.Column(db.String(255))
     email = db.Column(db.String(120), nullable=False)
     phone = db.Column(db.String(80))
     twitter = db.Column(db.String(80))
@@ -256,7 +258,8 @@ class User(db.Model):
         backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, group, username=None, email=None, firstname=None,
-        surname=None, password=None):
+        surname=None, password=None, website=None, phone=None, twitter=None,
+        *args, **kwargs):
         
         if password:
             h = Hasher()
@@ -267,7 +270,11 @@ class User(db.Model):
         self.surname = surname
         self.email = email
         self.group = group
-        self.group_id = group.id
+        self.website = website
+        self.twitter = twitter
+        self.phone = phone
+        
+        super(User, self).__init__(*args, **kwargs)
 
 #    @cache.memoize(20)
     def allowed_to(self, name):
@@ -289,6 +296,25 @@ class User(db.Model):
             self.username,
             self.email
         )
+    @property
+    def json_dict(self, exclude=[]):
+        """This is a form of serialisation but specifically for the output to
+        JSON for asyncronous requests."""
+        d = {
+            'id': self.id,
+            'username': self.username,
+            'firstname': self.firstname,
+            'surname': self.surname,
+            'location': self.location,
+            'website': self.website,
+            'twitter': self.twitter,
+            'group': self.group.name,
+            'urls': {
+                'edit': url_for('admin.edit_user', id=self.id),
+                'bin': '#'
+            }
+        }
+
 
 
 permissions = db.Table('permissions',

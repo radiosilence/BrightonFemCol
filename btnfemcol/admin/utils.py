@@ -3,10 +3,30 @@ import math
 import json
 
 from functools import wraps
-from flask import g, redirect, flash, url_for, abort, request
+from flask import g, redirect, flash, url_for, abort, request, render_template
 
 from btnfemcol import db
 from btnfemcol import cache
+
+
+def edit_object(cls, form_cls, edit_template='form.html', id=None):
+    if id:
+        object = cls.query.filter_by(id=id).first()
+        if not object:
+            return abort(404)
+        submit = 'Update'
+
+    else:
+        object = cls()
+        submit = 'Create'
+    
+    form = form_cls(request.form, object)
+    
+    created = save_object(form, object)
+    if created:
+        return redirect(url_for('admin.edit', cls=cls, id=created))
+    return render_template(edit_template, form=form, submit=submit)
+
 
 def save_object(form, object, message=u"%s saved."):
     """This function handles the simple cyle of testing if an object's form

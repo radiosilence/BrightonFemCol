@@ -94,7 +94,7 @@ class PageEditForm(PageFormBase):
         super(PageEditForm, self).__init__(form, page, *args, **kwargs)
 
 # Event Forms
-EventFormBase = model_form(Event, PageEditForm)
+EventFormBase = model_form(Event, PageEditForm, exclude=['id'])
 
 class EventEditForm(EventFormBase):
     pass

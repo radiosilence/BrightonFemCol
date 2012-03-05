@@ -26,7 +26,13 @@
 {% macro menu_events() %}
   <h1>Events</h1>
   <ul class="actions square">
+    <li><a href="{{ url_for('admin.list_events') }}">Manage Events</a></li>
   </ul>
+  <div class="inner">
+    <ul class="actions square">
+      <li><a href="{{ url_for('admin.create_event') }}">Create an Event</a></li>
+    </ul>
+  </div>
 {% endmacro %}
 
 {% macro menu_moderation() %}
@@ -56,7 +62,13 @@
 {% macro menu_users() %}
   <h1>Users</h1>
   <ul class="actions square">
+    <li><a href="{{ url_for('admin.list_users') }}">Manage Users</a></li>
   </ul>
+  <div class="inner">
+    <ul class="actions square">
+      <li><a href="{{ url_for('admin.create_user') }}">Create a User</a></li>
+    </ul>
+  </div>
 {% endmacro %}
 
 {% macro menu() %}

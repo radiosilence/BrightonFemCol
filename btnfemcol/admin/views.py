@@ -22,7 +22,7 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 from btnfemcol.utils import Auth, AuthError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
-    save_object, calc_pages, json_inner
+    edit_object, save_object, calc_pages, json_inner
 
 # Article Views
 @admin.route('/articles')
@@ -109,23 +109,7 @@ def list_pages():
 @auth_allowed_to('manage_pages')
 @section('pages')
 def edit_page(id=None):
-    if id:
-        page = Page.query.filter_by(id=id).first()
-        if not page:
-            return abort(404)
-        submit = 'Update'
-
-    else:
-        page = Page()
-        submit = 'Create'
-    
-    form = PageEditForm(request.form, page)
-    
-    created = save_object(form, page)
-    if created:
-        return redirect(url_for('admin.edit_page', id=created))
-    return render_template('edit_page.html', form=form, submit=submit)
-
+    return edit_object(Page, PageEditForm, 'edit_page.html', id)
 
 
 @admin.route('/async/pages')
@@ -157,23 +141,7 @@ def list_events():
 @auth_allowed_to('manage_events')
 @section('event')
 def edit_event(id=None):
-    if id:
-        event = Event.query.filter_by(id=id).first()
-        if not event:
-            return abort(404)
-        submit = 'Update'
-
-    else:
-        event = Event()
-        submit = 'Create'
-    
-    form = EventEditForm(request.form, event)
-    
-    created = save_object(form, event)
-    if created:
-        return redirect(url_for('admin.edit_event', id=created))
-    return render_template('edit_event.html', form=form, submit=submit)
-
+    return edit_object(Event, EventEditForm, id=id)
 
 
 @admin.route('/async/events')
@@ -181,10 +149,10 @@ def edit_event(id=None):
 @auth_allowed_to('manage_events')
 @section('events')
 def json_events():
-    return json_inner(Event.query,order=[Event.date_start.desc()])
+    return json_inner(Event.query, order=[Event.date_start.desc()])
 
 
-@admin.route('/event/event', methods=['GET', 'POST'])
+@admin.route('/event/new', methods=['GET', 'POST'])
 @auth_logged_in
 @auth_allowed_to('manage_events')
 def create_event():
@@ -193,28 +161,34 @@ def create_event():
 
 
 # User Views
+@admin.route('/users')
+@auth_logged_in
+@auth_allowed_to('manage_users')
+@section('users')
+def list_users():
+    return render_template('users.html')
+
 @admin.route('/user/new', methods=['GET', 'POST'])
 @auth_logged_in
+@auth_allowed_to('manage_users')
 @section('users')
 def create_user():
     return edit_user()
 
 @admin.route('/user/<int:id>', methods=['GET', 'POST'])
 @auth_logged_in
+@auth_allowed_to('manage_users')
 @section('users')
 def edit_user(id=None):
-    if id:
-        user = User.query.filter_by(id=id).first()
-        submit = 'Save'
-    else:    
-        user = User()
-        submit = 'Create'
-    if not user:
-        abort(404)
-    form = UserEditForm(request.form, user)
-    if save_object(form, user):
-        return redirect(url_for('admin.home'))
-    return render_template('form.html', form=form, submit=submit)
+    return edit_object(User, UserEditForm, id=id)
+
+
+@admin.route('/async/users')
+@auth_logged_in
+@auth_allowed_to('manage_users')
+@section('users')
+def json_events():
+    return json_inner(User.query)
 
 
 
