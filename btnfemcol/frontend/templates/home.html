@@ -1,7 +1,7 @@
 {% extends 'page.html' %}
 {% macro article_block(article, event=False) %}
     <article class="home listed">
-        <span class="category">
+        <a class="category" href="{{ article.category.url }}">
             {% if event: %}
                 Event
             {% else %}
@@ -21,7 +21,7 @@
         <p class="six columns">Here would be some excellent, catchy, introductory text for the group.</p>
         <p class="six columns quote">&ldquo;Perhaps, a pretentious quote, would go well here.&rdquo; &mdash; Ron Paul</p>
     </div>
-    <div class="six columns alpha">
+    <div class="six columns alpha articles">
         {% for article in articles %}
             {{ article_block(article) }}
         {% endfor %}
@@ -31,4 +31,5 @@
             {{ article_block(event) }}
         {% endfor %}
     </div>
+    <hr />
 {% endblock %}

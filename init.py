@@ -208,7 +208,7 @@ a = Article(title='Shankle Sirloin Short', body=body, slug='first-article',
         category=Category.query.first())
 a2 = Article(title='Drumstick Officia Biltong', body=body2, slug='another-article',
         author=u2, subtitle='Minim short loin deserunt tenderloin commodo consectetur, ad ut jerky do ullamco ut pork chop shank.', status='published',
-        category=Category.query.first())
+        category=Category.query[1])
 
 db.session.add(a)
 db.session.add(a2)

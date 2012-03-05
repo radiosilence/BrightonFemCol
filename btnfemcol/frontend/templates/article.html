@@ -2,7 +2,7 @@
 {% block content %}
     <header class="ten columns article-header alpha omega offset-by-one">
         {{ article.tags_html }}
-        <span class="category"><a href="{{ article.category.url }}">{{ article.category.title }}</a></span>
+        <a href="{{ article.category.url }}" class="category">{{ article.category.title }}</a>
         <h1><span>{{ article.title }}</span></h1>
         <span class="subtitle">{{ article.subtitle }}</span>
         <span class="author">By {{ user_link(article.author) }}</span>

@@ -73,6 +73,7 @@ body>div>header h1 {
 
 #main>header h1 {
 	font-size: 32px;
+	color: black;
 	margin-top: 0px;
 }
 #main>header span.tags {
@@ -174,7 +175,7 @@ div.container>aside {
 	color: white;
 	display: block;
 	height: 200px;
-	background: url(../images/bannerbg.png) #080808;
+	background: url(../images/bannerbg.png) #080808 right;
 	padding: 0px;
 	margin-top: 10px;
 }
@@ -252,12 +253,14 @@ article header h1 a {
 	font-family: octin-vintage, serif !important;
 	text-decoration: none;
 	font-weight: normal;
+
 }
 article.listed {
 	margin-top: 10px;
 }
 
-article.listed span.category {
+a.category {
+	text-decoration: none;
 	display: block;
 	color: white;
 	background: #080808;
@@ -267,14 +270,14 @@ article.listed span.category {
 	font-family: facitweb, sans-serif;
 	padding: 0px 5px 0px 5px;
 }
+
 article.listed img {
 	float: left;
 }
-header.article-header span.category a {
+header.article-header a.category  {
 	color: black;
-	font-weight: bold;
-	text-transform: uppercase;
-	text-decoration: none;
+	background-color: white;
+	border-top: 3px solid black;
 
 }
 header.article-header span.author {
@@ -368,10 +371,24 @@ div.article-body p:nth-child(even) img {
 	@media only screen and (max-width: 767px) {}
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+		#home-banner {	
+			height: auto;
+			background: #080808;
+			padding-bottom: 10px;
+			
+		}		
+	}
 
 	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-	@media only screen and (max-width: 479px) {}
+	@media only screen and (max-width: 479px) {
+		#home-banner {	
+			height: auto;
+			background: #080808;
+			padding-bottom: 10px;
+			
+		}		
+	}
 
 
 /* #Font-Face
