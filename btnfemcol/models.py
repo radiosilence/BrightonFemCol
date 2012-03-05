@@ -218,6 +218,24 @@ class Event(Displayable, db.Model):
 
     start = db.Column(db.DateTime)
     end = db.Column(db.DateTime)
+    location = db.Column(db.String(255))
+
+    @property
+    def json_dict(self, exclude=[]):
+        """This is a form of serialisation but specifically for the output to
+        JSON for asyncronous requests."""
+        d = {
+            'id': self.id,
+            'title': self.title,
+            'start': self.start.strftime('%B %d, %Y at %H%M'),
+            'end': self.end.strftime('%B %d, %Y at %H%M'),
+            'location': self.location,
+            'urls': {
+                'edit': url_for('admin.edit_event', id=self.id),
+                'bin': '#'
+            },
+            'status': self.status
+        }
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)

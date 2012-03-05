@@ -22,7 +22,7 @@ from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
 from btnfemcol.utils import Auth, AuthError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
-    save_object, calc_pages
+    save_object, calc_pages, json_inner
 
 # Article Views
 @admin.route('/articles')
@@ -69,38 +69,6 @@ def edit_article(id=None):
 def create_article():
     return edit_article()
 
-
-def json_articles_inner(user=None, status='any', page=1, per_page=20, filter=None):
-    """This function handles getting json for articles once arguments have
-    already been decided.
-    """
-    start = per_page * (page - 1)
-    end = per_page * page
-
-    if user:
-        base = user.articles
-    else:
-        base = Article.query
-
-    if filter and status != 'any':
-        q = base.filter_by(status=status).filter(
-            Article.title.like('%' + filter + '%'))
-    elif filter:
-        q = base.filter(
-            Article.title.like('%' + filter + '%'))
-    elif status == 'any':
-        q = base[start:end]
-    else:
-        q = base.filter_by(status=status)
-    
-    articles = q[start:end]
-    num_pages = calc_pages(q.count(), per_page)
-    return json.dumps({
-        'items': [a.json_dict for a in articles],
-        'num_pages': num_pages
-    })
-
-
 @admin.route('/async/user_articles')
 @admin.route('/async/user_articles/<string:username>')
 @auth_logged_in
@@ -117,25 +85,15 @@ def json_user_articles(username=None, *args, **kwargs):
     if g.user != user and not g.user.allowed_to('manage_articles'):
         return abort(403)
 
-    return json_articles_inner(user,
-        status=request.args.get('status', default='any'),
-        page=request.args.get('page', default=1, type=int),
-        per_page=request.args.get('per_page', default=20, type=int),
-        filter=request.args.get('filter', default=None),
-        *args, **kwargs)
+    return json_inner(user.articles)
 
 
 @admin.route('/async/articles')
 @auth_logged_in
 @auth_allowed_to('manage_articles')
-@section('manage_articles')
-def json_articles(*args, **kwargs):
-    return json_articles_inner(None,
-        status=request.args.get('status', default='any'),
-        page=request.args.get('page', default=1, type=int),
-        per_page=request.args.get('per_page', default=20, type=int),
-        filter=request.args.get('filter', default=None),
-        *args, **kwargs)
+@section('articles')
+def json_articles():
+    return json_inner(Article.query)
 
 
 # Page Views
@@ -174,41 +132,9 @@ def edit_page(id=None):
 @auth_logged_in
 @auth_allowed_to('manage_pages')
 @section('pages')
-def json_pages(*args, **kwargs):
-    
-    def inner(status='any', page=1, per_page=20, filter=None):
-        """This function handles getting json for articles once arguments have
-        already been decided.
-        """
-        start = per_page * (page - 1)
-        end = per_page * page
-
-        if filter and status != 'any':
-            q = Page.query.filter_by(status=status).filter(
-                Page.title.like('%' + filter + '%'))
-        elif filter:
-            q = Page.query.filter(
-                Page.title.like('%' + filter + '%'))
-        elif status == 'any':
-            q = Page.query
-        else:
-            q = Page.query.filter_by(status=status)
-        
-        pages = q.order_by(Page.section_id.asc(), Page.order.asc())[start:end]
-        num_pages = calc_pages(q.count(), per_page)
-        
-        return json.dumps({
-            'items': [p.json_dict for p in pages],
-            'num_pages': num_pages
-        })
-
-
-    return inner(
-        status=request.args.get('status', default='any'),
-        page=request.args.get('page', default=1, type=int),
-        per_page=request.args.get('per_page', default=20, type=int),
-        filter=request.args.get('filter', default=None),
-        *args, **kwargs)
+def json_pages():
+    return json_inner(Page.query,
+        order=[Page.section_id.asc(), Page.order.asc()])
 
 
 @admin.route('/page/new', methods=['GET', 'POST'])
@@ -216,6 +142,54 @@ def json_pages(*args, **kwargs):
 @auth_allowed_to('manage_pages')
 def create_page():
     return edit_page()
+
+
+# Event Views
+@admin.route('/events')
+@auth_logged_in
+@auth_allowed_to('manage_events')
+@section('events')
+def list_events():
+    return render_template('events.html')
+
+@admin.route('/event/<int:id>', methods=['GET', 'POST'])
+@auth_logged_in
+@auth_allowed_to('manage_events')
+@section('event')
+def edit_event(id=None):
+    if id:
+        event = Event.query.filter_by(id=id).first()
+        if not event:
+            return abort(404)
+        submit = 'Update'
+
+    else:
+        event = Event()
+        submit = 'Create'
+    
+    form = EventEditForm(request.form, event)
+    
+    created = save_object(form, event)
+    if created:
+        return redirect(url_for('admin.edit_event', id=created))
+    return render_template('edit_event.html', form=form, submit=submit)
+
+
+
+@admin.route('/async/events')
+@auth_logged_in
+@auth_allowed_to('manage_events')
+@section('events')
+def json_events():
+    return json_inner(Event.query,order=[Event.date_start.desc()])
+
+
+@admin.route('/event/event', methods=['GET', 'POST'])
+@auth_logged_in
+@auth_allowed_to('manage_events')
+def create_event():
+    return edit_event()
+
 
 
 # User Views

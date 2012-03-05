@@ -1,5 +1,7 @@
 """Admin specific utility functions and classes."""
 import math
+import json
+
 from functools import wraps
 from flask import g, redirect, flash, url_for, abort, request
 
@@ -61,3 +63,41 @@ def section(name):
 
 def calc_pages(results, per_page):
     return int(math.ceil(float(results) / float(per_page)))
+
+
+def json_inner(base, status=None, page=None, per_page=None, filter=None, order=None):
+    """This function handles getting json for objects once arguments have
+    already been decided.
+    """
+    if not status:
+        status = request.args.get('status', default='any')
+    if not page:
+        page = request.args.get('page', default=1, type=int)
+    if not per_page:
+        per_page = request.args.get('per_page', default=20, type=int)
+    if not filter:
+        filter = request.args.get('filter', default=None)
+
+    start = per_page * (page - 1)
+    end = per_page * page
+
+    if filter and status != 'any':
+        q = base.filter_by(status=status).filter(
+            Article.title.like('%' + filter + '%'))
+    elif filter:
+        q = base.filter(
+            Article.title.like('%' + filter + '%'))
+    elif status == 'any':
+        q = base[start:end]
+    else:
+        q = base.filter_by(status=status)
+    
+    if order:
+        q = q.order_by(*order)
+
+    objects = q[start:end]
+    num_pages = calc_pages(q.count(), per_page)
+    return json.dumps({
+        'items': [o.json_dict for o in objects],
+        'num_pages': num_pages
+    })
