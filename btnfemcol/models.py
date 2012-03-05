@@ -125,7 +125,7 @@ class Page(Displayable, db.Model):
         JSON for asyncronous requests."""
         d = {
             'id': self.id,
-            'title': self.title,
+            'title': '%s &mdash; %s' % (self.section.title, self.title),
             'urls': {
                 'edit': url_for('admin.edit_page', id=self.id),
                 'bin': '#',
