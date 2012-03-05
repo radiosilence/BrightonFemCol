@@ -15,7 +15,7 @@ from btnfemcol import uploaded_images, uploaded_avatars
 from btnfemcol import db
 from btnfemcol import cache
 
-from btnfemcol.models import User, Article, Page, Event
+from btnfemcol.models import User, Article, Page, Event, Section, Category
 from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
     ArticleEditForm, LoginForm, PageEditForm, EventEditForm
 
@@ -194,7 +194,7 @@ def json_pages(*args, **kwargs):
         else:
             q = Page.query.filter_by(status=status)
         
-        pages = q[start:end]
+        pages = q.order_by(Page.section_id.asc(), Page.order.asc())[start:end]
         num_pages = calc_pages(q.count(), per_page)
         
         return json.dumps({
