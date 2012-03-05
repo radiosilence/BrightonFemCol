@@ -1,10 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'page.html' %}
 {% block content %}
         {% block header %}
         <header class="twelve columns alpha omega ">
             <h1>{{ category.title }}</h1>
         </header>
         {% endblock %}
+        {% block posthead %}
         <div class="twelve columns alpha omega">
             {% if articles %}
                 {% for article in articles %}
@@ -21,4 +22,5 @@
             {% endif %}
 
         </div>
+        {% endblock %}
 {% endblock %}

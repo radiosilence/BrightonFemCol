@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import Blueprint, request, session, g, redirect, url_for, abort, \
      render_template, flash, current_app
 
@@ -16,17 +18,23 @@ def before_request():
     g.sections = Section.get_live()
 
 
+def get(cls, slug, status='live'):
+    return cls.query.filter_by(status=status, slug=slug).first()
+
 def get_page(slug):
-    return Page.query.filter_by(slug=slug, status='live').first()
+    return get(Page, slug)
 
 def get_section(slug):
-    return Section.query.filter_by(slug=slug, status='live').first()
+    return get(Section, slug)
 
 def get_article(slug):
-    return Article.query.filter_by(slug=slug, status='published').first()
+    return get(Article, slug, status='published')
 
 def get_category(slug):
-    return Category.query.filter_by(slug=slug, status='live').first()
+    return get(Category, slug)
+
+def get_event(slug):
+    return get(Event, slug)
 
 def secondary_nav_pages(section_slug):
     return get_section(section_slug).pages.filter_by(status='live').all()
@@ -37,7 +45,31 @@ def secondary_nav_categories():
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
 def show_events(type='upcoming'):
-    return "EVVENTS"
+    def inner(type, limit=10):
+        q = Event.query.filter_by(status='live')
+        if type == 'upcoming':
+            q = q.order_by(Event.start.asc()).filter( \
+                Event.end > datetime.utcnow())
+        else:
+            q = q.order_by(Event.start.desc()).filter( \
+                Event.start < datetime.utcnow())
+        return q[:limit]
+
+    return show_page('events', type, template='event_listing.html', events=inner(type))
+
+@frontend.route('/event/<string:slug>')
+def show_event(slug):
+    event = get_event(slug)
+    if not event:
+        return abort(404)
+    
+    g.secondary_nav = secondary_nav_pages('events')
+    return render_template('event.html',
+        page=event,
+        selected_section_slug='events',
+        selected_secondary_slug='changeme'
+    )
+
 
 @frontend.route('/articles/<string:category_slug>')
 def show_category(category_slug):

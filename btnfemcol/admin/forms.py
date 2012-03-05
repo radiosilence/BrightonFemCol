@@ -81,6 +81,11 @@ PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
             Unique(Page, Page.slug),
             Required()
         ]
+    },
+    'body': {
+        'validators': [
+            Required()
+        ]
     }
 })
 
@@ -105,7 +110,25 @@ class PageEditForm(PageFormBase):
         super(PageEditForm, self).__init__(form, page, *args, **kwargs)
 
 # Event Forms
-EventFormBase = model_form(Event, Form, exclude=['id'])
+EventFormBase = model_form(Event, Form, exclude=['id'], field_args={
+    'title': {
+        'validators': [
+            Unique(Page, Page.title),
+            Required()
+        ]
+    },
+    'slug': {
+        'validators': [
+            Unique(Page, Page.slug),
+            Required()
+        ]
+    },
+    'body': {
+        'validators': [
+            Required()
+        ]
+    }
+})
 
 class EventEditForm(EventFormBase):
     start = DateTimeField()
@@ -118,7 +141,7 @@ class EventEditForm(EventFormBase):
 
 # Article Forms
 class ArticleStatusField(SelectField):
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(ArticleStatusField, self).__init__(*args, **kwargs)
         self.coerce = str
         self.choices = [
@@ -154,6 +177,11 @@ ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'], field_args={
             Required()
         ],
         'label': 'Permalink'
+    },
+    'body': {
+        'validators': [
+            Required()
+        ]
     }
 })
 
@@ -189,7 +217,7 @@ UserFormBase = model_form(User, Form, exclude=['id'], field_args={
         'description': 'Eg. Derp'
     },
     'website': {
-        'label': u'URL',
+        'label': u'url',
         'validators': [
             url(),
         ],

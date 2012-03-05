@@ -1,0 +1,19 @@
+{% extends 'page.html' %}
+{% block posthead %}
+        <div class="twelve columns alpha omega">
+            {% if events %}
+                {% for event in events %}
+                    <article>
+                        <header>
+                            <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
+                            <span class="date">{{ event.start.strftime('%c') }} &lsquo;till {{ event.start.strftime('%c') }}</span>
+                        </header>
+                        <p>{{ event.excerpt }}</p>
+                    </article>
+                {% endfor %}
+            {% else %}
+            <p>There are no events to see.</p>
+            {% endif %}
+
+        </div>
+{% endblock %}

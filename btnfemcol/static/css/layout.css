@@ -168,7 +168,7 @@ sup {
 
 div.container>aside {
 	background: #0a0a0a;
-	padding: 10px;
+	padding: 0px;
 }
 
 #black-bloc {
@@ -328,9 +328,8 @@ div.article-body p:nth-child(even) img {
 
 .tweet_list li {
 	overflow: hidden;
-	padding: .5em;
+	padding: 10px;
 	list-style-type: none;
-	padding-right: .5em;
 	margin: 0px;
 	font-size: 12px;
 	color: #aaa;
@@ -345,7 +344,9 @@ div.article-body p:nth-child(even) img {
 .tweet_list .tweet_even {
 	background-color: #0c0c0c;
 }
-
+.tweet_list .tweet_odd {
+	background-color: #080808;
+}
 .tweet_list .tweet_avatar {
 	padding-right: .5em; float: left;
 }

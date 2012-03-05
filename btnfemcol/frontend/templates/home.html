@@ -16,7 +16,9 @@
         <img/>
         <header>
             <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
-            {% if not event %}
+            {% if event: %}
+                <span class="author">{{ article.start.strftime('%B %d, %Y @ %I:%M%p') }} &mdash; {{ article.end.strftime('%I:%M%p') }}</span>
+            {% else %}
                 <span class="author">by {{ article.author.fullname }}</span>
             {% endif %}
         </header>

@@ -10,8 +10,8 @@ from btnfemcol.utils import Hasher
 
 class SiteEntity(object):
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(120), unique=True)
-    title = db.Column(db.String(120), unique=True)
+    slug = db.Column(db.String(120), unique=True, nullable=False)
+    title = db.Column(db.String(120), unique=True, nullable=False)
     status = db.Column(db.String(255))
     order = db.Column(db.Integer)
 
@@ -27,7 +27,7 @@ class SiteEntity(object):
         return unicode(self.title)
 
 class Displayable(SiteEntity):
-    body = db.Column(db.Text)
+    body = db.Column(db.Text, nullable=False)
 
     def __init__(self, body=None, *args, **kwargs):
         self.body = body
@@ -36,6 +36,8 @@ class Displayable(SiteEntity):
 
     @property
     def excerpt(self):
+        if not self.body:
+            return ''
         return self.body[:140]
 
 
@@ -56,7 +58,7 @@ class Section(SiteEntity, db.Model):
             top_cat = Category.query.filter_by(status='live').first()
             if top_cat:
                 return top_cat.url
-            
+
         if self.pages.count() == 0:
             return '#'
         return self.pages.first().url
@@ -214,8 +216,7 @@ class Event(Displayable, db.Model):
 
     @property
     def url(self):
-        return '#'
-#        return url_for('frontend.show_event', slug=self.slug)
+        return url_for('frontend.show_event', slug=self.slug)
 
     @property
     def json_dict(self, exclude=[]):

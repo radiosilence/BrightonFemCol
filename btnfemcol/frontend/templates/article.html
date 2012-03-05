@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'page.html' %}
 {% block content %}
-    <header class="ten columns article-header alpha omega offset-by-one">
-        {{ article.tags_html }}
-        <a href="{{ article.category.url }}" class="category">{{ article.category.title }}</a>
-        <h1><span>{{ article.title }}</span></h1>
-        <span class="subtitle">{{ article.subtitle }}</span>
-        <span class="author">By {{ user_link(article.author) }}</span>
-        <span class="date tk-octin-vintage">{{ article.pub_date.strftime('%B %d, %Y') }}</span>
-    </header>
-    <div class="ten columns offset-by-one alpha article-body">
-        {{ article.body|markdown }}
-    </div>
+    {% block header %}
+        <header class="ten columns article-header alpha omega offset-by-one">
+            {{ article.tags_html }}
+            <a href="{{ article.category.url }}" class="category">{{ article.category.title }}</a>
+            <h1><span>{{ article.title }}</span></h1>
+            <span class="subtitle">{{ article.subtitle }}</span>
+            <span class="author">By {{ user_link(article.author) }}</span>
+            <span class="date tk-octin-vintage">{{ article.pub_date.strftime('%B %d, %Y') }}</span>
+        </header>
+    {% endblock %}
+    {% block body %}
+        <div class="ten columns offset-by-one alpha article-body">
+            {{ article.body|markdown }}
+        </div>
+    {% endblock %}
 {% endblock %}
