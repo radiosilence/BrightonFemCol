@@ -29,7 +29,7 @@ span.date, h1, h2 {
 }
 
 code {
-	fong-family: 'Dejavu Sans Mono', monospace;
+	font-family: 'Dejavu Sans Mono', monospace;
 }
 
 ul li {
@@ -48,7 +48,19 @@ div.container {
 	color: black;
 }
 
+#main-container>header {
+	overflow: hidden;
+	background: url(../images/headerbg.png);
+}
 
+#main-container>header h1 {
+	display: block;
+	font-size: 24px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	padding: 0px;
+	line-height: .8;
+}
 
 body>div>header h1 {
 	color: white;
@@ -63,7 +75,6 @@ body>div>header h1 {
 	font-size: 32px;
 	margin-top: 0px;
 }
-
 #main>header span.tags {
 	font-size: 10px;
 	text-transform: uppercase;
@@ -159,6 +170,29 @@ div.container>aside {
 	padding: 10px;
 }
 
+#home-banner {
+	color: white;
+	display: block;
+	height: 200px;
+	background: url(../images/bannerbg.png) #080808;
+	padding: 0px;
+	margin-top: 10px;
+}
+
+#home-banner p {
+	margin-top: 10px;
+	font-family: facitweb, sans-serif;
+	text-transform: uppercase;
+}
+
+
+#home-banner p.quote {
+	margin-top: 10px;
+	font-size: 24px;
+	font-style: italic;
+	font-family: ff-meta-serif-web-pro, serif;
+	text-transform: none;
+}
 div.container>footer {
 	padding: 10px;
 	background: #080808;

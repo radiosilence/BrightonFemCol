@@ -195,8 +195,9 @@ print "Added categories."
 body = """Bacon ipsum dolor sit amet hamburger dolore drumstick ribeye, deserunt nisi jowl fatback short ribs. Enim proident short loin incididunt, dolore frankfurter jowl strip steak eu occaecat. In sed dolore aute flank exercitation, ex t-bone ea andouille venison qui commodo ut. Meatball occaecat shoulder ribeye sunt, ut irure chuck elit cillum.
 
 Beef ribs chicken short loin, nisi ground round t-bone elit jerky shankle exercitation voluptate ex. Leberkas id meatball pancetta. Commodo sint aute capicola labore, tri-tip eiusmod rump ham anim qui pork loin deserunt reprehenderit pariatur. Meatball rump tri-tip culpa leberkas t-bone. Adipisicing tongue short loin aliquip venison, ut flank et elit pork loin shoulder. Leberkas cupidatat eu, commodo shankle pastrami adipisicing ullamco nulla laboris laborum irure proident. Do sausage jerky, hamburger swine brisket tenderloin sint laboris leberkas pork loin reprehenderit flank short loin boudin.
+"""
 
-Tongue pork belly exercitation, pig tri-tip dolore ribeye pancetta. Meatball aute ex t-bone, incididunt pork labore commodo et nulla laboris capicola. Bresaola enim quis, tongue consectetur pork belly shoulder swine ut nostrud esse reprehenderit in. Officia cillum esse, filet mignon veniam pariatur adipisicing meatloaf.
+body2 = """Tongue pork belly exercitation, pig tri-tip dolore ribeye pancetta. Meatball aute ex t-bone, incididunt pork labore commodo et nulla laboris capicola. Bresaola enim quis, tongue consectetur pork belly shoulder swine ut nostrud esse reprehenderit in. Officia cillum esse, filet mignon veniam pariatur adipisicing meatloaf.
 
 Prosciutto sirloin laboris consequat. Minim short loin deserunt tenderloin commodo consectetur, ad ut jerky do ullamco ut pork chop shank. Consequat quis in boudin, turkey pig sed tongue nostrud ad pork loin adipisicing. Do adipisicing consectetur, dolore ham meatloaf ad. Biltong sed drumstick, nulla minim hamburger sint. Shankle sirloin short loin biltong culpa, drumstick fugiat ut chuck aute reprehenderit hamburger pork belly. Ham occaecat pastrami pork.
 
@@ -205,7 +206,7 @@ T-bone enim turducken ham, eiusmod tempor reprehenderit anim et adipisicing bilt
 a = Article(title='Shankle Sirloin Short', body=body, slug='first-article',
         author=u, subtitle='T-bone enim turducken ham, eiusmod tempor reprehenderit anim et adipisicing biltong.', status='published',
         category=Category.query.first())
-a2 = Article(title='Drumstick Officia Biltong', body=body, slug='another-article',
+a2 = Article(title='Drumstick Officia Biltong', body=body2, slug='another-article',
         author=u2, subtitle='Minim short loin deserunt tenderloin commodo consectetur, ad ut jerky do ullamco ut pork chop shank.', status='published',
         category=Category.query.first())
 
