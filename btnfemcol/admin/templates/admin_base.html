@@ -14,9 +14,6 @@
     <li><a href="{{ url_for('admin.create_article') }}" class="write-new">Write an article&hellip;</a></li>
     <li><a href="{{ url_for('admin.list_articles') }}">Your Articles</a></li>
   </ul>
-  <div class="inner">
-    {{ menu_filter() }}
-  </div>
 {% endmacro %}
 
 {% macro menu_editor() %}
@@ -24,9 +21,6 @@
   <ul class="actions square">
     <li><a href="{{ url_for('admin.dashboard_editor') }}">Manage Articles</a></li>
   </ul>
-  <div class="inner">
-    {{ menu_filter() }}
-  </div>
 {% endmacro %}
 
 {% macro menu_events() %}
@@ -51,9 +45,6 @@
       <li><a href="{{ url_for('admin.create_page') }}">Create a Page</a></li>
     </ul>
   </div>
-  <div class="inner">
-    {{ menu_filter() }}
-  </div>
 {% endmacro %}
 
 {% macro menu_site() %}
@@ -69,6 +60,7 @@
 {% endmacro %}
 
 {% macro menu() %}
+    {{ menu_filter() }}
   {% if g.user.allowed_to('manage_articles') %}
     <div class="editor">
       {{ menu_editor() }}

@@ -22,11 +22,9 @@ body {
 	color: white;
 }
 
-a:hover {
-	color: white;
-	background: black;
+a, a:visited {
+	color: black
 }
-
 span.date, h1, h2 {
 }
 
@@ -58,12 +56,12 @@ body>div>header h1 {
 
 #main>header {
 	margin-bottom: 10px;
-	margin-top: 30px;
+	margin-top: 60px;
 }
 
 #main>header h1 {
-	font-size: 48px;
-	margin-top: 20px;
+	font-size: 32px;
+	margin-top: 0px;
 }
 
 #main>header span.tags {
@@ -89,23 +87,13 @@ body>div>header h1 {
 	display: block;
 }
 
-#main>header span.author {
-	font-size: 16px;
-	margin-bottom: 15px;
-	display: block;
-}
-
-#main>header span.author a {
-	font-weight: bold;
-}
-
 #main div p {
 	line-height: 1;
 	font-size: 14px;
 }
 
-#main div.article p {
-	line-height: 1.9;
+#main div.article-body p {
+	line-height: 1.8;
 	font-size: 16px;
 }
 
@@ -225,6 +213,48 @@ div.container>header nav>ul.secondary>li.selected {
 }
 
 /* Article related */
+article header h1 a {
+	font-size: 24px;
+	font-family: octin-vintage, serif !important;
+	text-decoration: none;
+	font-weight: normal;
+}
+article.listed {
+	margin-top: 10px;
+}
+
+article.listed span.category {
+	display: block;
+	color: white;
+	background: #080808;
+	text-align: right;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-family: facitweb, sans-serif;
+	padding: 0px 5px 0px 5px;
+}
+article.listed img {
+	float: left;
+}
+header.article-header span.category a {
+	color: black;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+
+}
+header.article-header span.author {
+	font-size: 14px;
+	margin-bottom: 15px;
+	font-family: octin-vintage, serif;
+	display: block;
+
+}
+
+header.article-header span.author a {
+	text-decoration: none;
+}
+
 
 div.article-body p img {
 	max-width: 200px;
@@ -242,12 +272,11 @@ div.article-body p:nth-child(even) img {
 }
 
 #main>div article h1 {
-	font-size: 18px;
-	display: block;
+	font-size: 16px;
+	display: bl3d1111ock;
 	margin: 0px;
-	border-top: 1px solid #521717;
 	overflow: hidden;
-	padding: 5px;
+	padding: 5px 0 0 0;
 	line-height: 1;
 	font-weight: bold;
 }

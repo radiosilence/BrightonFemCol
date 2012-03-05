@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+        {% block header %}
+        <header class="twelve columns alpha omega ">
+            <h1>{{ category.title }}</h1>
+        </header>
+        {% endblock %}
+        <div class="twelve columns alpha omega">
+            {% if articles %}
+                {% for article in articles %}
+                    <article>
+                        <header>
+                            <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
+                            <span class="date">{{ article.pub_date.strftime('%c') }}</span>
+                        </header>
+                        <p>{{ article.excerpt }}</p>
+                    </article>
+                {% endfor %}
+            {% else %}
+            <p>There are no articles in this category.</p>
+            {% endif %}
+
+        </div>
+{% endblock %}

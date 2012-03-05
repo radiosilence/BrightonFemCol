@@ -1,25 +1,28 @@
 {% extends 'page.html' %}
-{% macro article_block(article) %}
-    <article>
+{% macro article_block(article, event=False) %}
+    <article class="home listed">
+        <span class="category">
+            {% if event: %}
+                Event
+            {% else %}
+                {{ article.category.title }}
+            {% endif %}
+        </span>
+        <img/>
         <header>
-            <h1>{{ article.title }}</h1>
+            <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
+            <span class="author">by {{ article.author.fullname }}</span>
         </header>
-        <img />
-        <p>{{ article.excerpt }}</p>
+        <p>{{ article.excerpt }}&hellip;</p>
     </article>
 {% endmacro %}
 {% block header %}
-    <div class="twelve columns alpha omega">
-        Slideshow thing?
-    </div>
     <div class="six columns alpha">
-        <h1>Articles</h1>
         {% for article in articles %}
             {{ article_block(article) }}
         {% endfor %}
     </div>
     <div class="six columns omega">
-        <h1>Events</h1>
         {% for event in events %}
             {{ article_block(event) }}
         {% endfor %}

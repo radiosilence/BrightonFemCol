@@ -34,10 +34,9 @@ class Displayable(SiteEntity):
 class Category(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    def __init__(self, title, slug, order, live=True):
-        self.title = title
-        self.slug = slug
-        self.order = order
+    @property
+    def url(self):
+        return url_for('frontend.show_category', category_slug=self.slug)
 
 
 class Section(SiteEntity, db.Model):
@@ -55,9 +54,11 @@ class Section(SiteEntity, db.Model):
 
     @property
     def url(self):
-        print self
-        print self.pages.all()
-        print self.pages.count()
+        if self.slug == 'articles':
+            top_cat = Category.query.filter_by(status='live').first()
+            if top_cat:
+                return top_cat.url
+            
         if self.pages.count() == 0:
             return '#'
         return self.pages.first().url
@@ -146,24 +147,39 @@ class Article(Displayable, db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User',
-        backref=db.backref('articles', lazy='dynamic'))
+        backref=db.backref('articles', lazy='dynamic'),
+        order_by='Article.pub_date.desc()')
     pub_date = db.Column(db.DateTime)
     subtitle = db.Column(db.Text)
     revision = db.Column(db.Integer)
+
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category = db.relationship('Category',
+        backref=db.backref('articles', lazy='dynamic'),
+        order_by='Article.pub_date.desc()')
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))
 
 
     def __init__(self, title=None, body=None, pub_date=None, slug=None,
-        author=None, subtitle=None, status=None ):
+        author=None, subtitle=None, status=None, category=None):
+
         if pub_date is None:
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
         self.author = author
         self.subtitle = subtitle
+        self.category = category
         super(Article, self).__init__(title=title, body=body, slug=slug,
             status=status)
+
+    @property
+    def url(self):
+        return url_for('frontend.show_article',
+            category_slug=self.category.slug,
+            article_slug=self.slug
+        )
 
     @property
     def json_dict(self, exclude=[]):
@@ -188,6 +204,10 @@ class Article(Displayable, db.Model):
         for key in exclude:
             del d[key]
         return d
+
+    @property
+    def excerpt(self):
+        return self.body[:140]
 
     def __unicode__(self):
         return self.title
@@ -236,6 +256,10 @@ class User(db.Model):
         """This will check if a user can do a certain action."""
         permission = Permission.query.filter_by(name=name).first()
         return permission in self.group.permissions
+
+    @property
+    def fullname(self):
+        return u'%s %s' % (self.firstname, self.surname)
 
     def __repr__(self):
         return '<User %r>' % self.username
