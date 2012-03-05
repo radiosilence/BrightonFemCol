@@ -108,7 +108,7 @@ def json_inner(base, status=None, page=None, per_page=None, filter=None, order=N
         q = base.filter(
             Article.title.like('%' + filter + '%'))
     elif status == 'any':
-        q = base[start:end]
+        q = base
     else:
         q = base.filter_by(status=status)
     
