@@ -9,38 +9,43 @@ from btnfemcol import db
 from btnfemcol import cache
 
 
-def edit_object(cls, form_cls, edit_template='form.html', id=None):
+def edit_instance(cls, form_cls, edit_template='form.html', id=None,
+    default=None):
     if id:
-        object = cls.query.filter_by(id=id).first()
-        if not object:
+        instance = cls.query.filter_by(id=id).first()
+        if not instance:
             return abort(404)
         submit = 'Update'
 
     else:
-        object = cls()
+        if default:
+            instance = default
+        else:
+            instance = cls()
+
         submit = 'Create'
     
-    form = form_cls(request.form, object)
+    form = form_cls(request.form, instance)
     
-    created = save_object(form, object)
+    created = save_instance(form, instance)
     if created:
-        return redirect(url_for('admin.edit', cls=cls, id=created))
+        return redirect(url_for('admin.edit_%s' % cls.__name__.lower(), id=created))
     return render_template(edit_template, form=form, submit=submit)
 
 
-def save_object(form, object, message=u"%s saved."):
-    """This function handles the simple cyle of testing if an object's form
+def save_instance(form, instance, message=u"%s saved."):
+    """This function handles the simple cyle of testing if an instance's form
     validates and then saving it.
     """
     if request.method == 'POST':
         if not form.validate():
             flash("There were errors saving, see below.", 'error')
             return False
-        form.populate_obj(object)
-        db.session.add(object)
+        form.populate_obj(instance)
+        db.session.add(instance)
         db.session.commit()
-        flash(message % object.__unicode__(), 'success')
-        return object.id
+        flash(message % instance.__unicode__(), 'success')
+        return instance.id
     return False
 
 def auth_logged_in(f):
@@ -86,7 +91,7 @@ def calc_pages(results, per_page):
 
 
 def json_inner(base, status=None, page=None, per_page=None, filter=None, order=None):
-    """This function handles getting json for objects once arguments have
+    """This function handles getting json for instances once arguments have
     already been decided.
     """
     if not status:
@@ -115,9 +120,9 @@ def json_inner(base, status=None, page=None, per_page=None, filter=None, order=N
     if order:
         q = q.order_by(*order)
 
-    objects = q[start:end]
+    instances = q[start:end]
     num_pages = calc_pages(q.count(), per_page)
     return json.dumps({
-        'items': [o.json_dict for o in objects],
+        'items': [o.json_dict for o in instances],
         'num_pages': num_pages
     })

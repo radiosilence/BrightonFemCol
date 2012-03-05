@@ -237,12 +237,15 @@ class Event(Displayable, db.Model):
             },
             'status': self.status
         }
+        for key in exclude:
+            del d[key]
+        return d
 
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
 
-class User(SiteEntity, db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
@@ -270,11 +273,10 @@ class User(SiteEntity, db.Model):
         self.surname = surname
         self.email = email
         self.group = group
+        self.group_id = group.id
         self.website = website
         self.twitter = twitter
         self.phone = phone
-        
-        super(User, self).__init__(*args, **kwargs)
 
 #    @cache.memoize(20)
     def allowed_to(self, name):
@@ -296,6 +298,11 @@ class User(SiteEntity, db.Model):
             self.username,
             self.email
         )
+
+    @property
+    def url(self):
+        return '#'
+
     @property
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
@@ -314,7 +321,9 @@ class User(SiteEntity, db.Model):
                 'bin': '#'
             }
         }
-
+        for key in exclude:
+            del d[key]
+        return d
 
 
 permissions = db.Table('permissions',
@@ -330,6 +339,9 @@ class Group(db.Model):
     def __init__(self, name=None):
         self.name = name
     
+    def __unicode__(self):
+        return u'%s' % self.name
+
     def __repr__(self):
         return '<Group %r>' % self.name
 

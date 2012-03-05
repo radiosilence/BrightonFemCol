@@ -1,4 +1,4 @@
-from btnfemcol.models import User, Page, Article, Event, Section
+from btnfemcol.models import User, Page, Article, Event, Section, Group
 
 from flask import g
 from flaskext.wtf import *
@@ -24,8 +24,24 @@ class Unique(object):
         if check:
             raise ValidationError(self.message)
 
+class PasswordValidator(object):
+    """Validator that throws an error if the password is blank but only if it
+    is a new object"""
+
+    def __init__(self, message=None):
+        if not message:
+            message = "Password must be set."
+        self.message = message
+
+    def __call__(self, form, field):
+        if not form._model.password and len(field.data) < 1:
+            raise ValidationError(self.message)
 
 class ForeignKeyField(SelectField):
+    def __init__(self, query, **kwargs):
+        super(ForeignKeyField, self).__init__(choices=query.all(), **kwargs)
+        self.coerce = int
+
     def pre_validate(self, form):
         if not self.data:
             return False
@@ -69,11 +85,6 @@ PageFormBase = model_form(Page, Form, exclude=['id'], field_args={
 })
 
 class SectionField(ForeignKeyField):
-    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
-        super(SelectField, self).__init__(label, validators, **kwargs)
-        self.coerce = int
-        self.choices = Section.query.all()
-
     def iter_choices(self):
         if not self.data:
             self.data = 1
@@ -82,7 +93,7 @@ class SectionField(ForeignKeyField):
 
 
 class PageEditForm(PageFormBase):
-    section_id = SectionField(label='Section')
+    section_id = SectionField(Section.query, label='Section')
     status = SelectField(label='Page Status', choices=[
         ('draft', 'Draft'),
         ('live', 'Live'),
@@ -100,13 +111,6 @@ class EventEditForm(EventFormBase):
     pass
 
 # Article Forms
-class AuthorField(ForeignKeyField):
-    def __init__(self, label=u'', validators=None, choices=None, **kwargs):
-        super(SelectField, self).__init__(label, validators, **kwargs)
-        self.coerce = int
-        self.choices = User.query.all()
-
-
 class ArticleStatusField(SelectField):
     def __init__(self, label=u'', validators=None, choices=None, **kwargs):
         super(SelectField, self).__init__(label, validators, **kwargs)
@@ -148,7 +152,7 @@ ArticleFormBase = model_form(Article, PageEditForm, exclude=['id'], field_args={
 })
 
 class ArticleEditForm(ArticleFormBase):
-    author_id = AuthorField(label='Author')
+    author_id = ForeignKeyField(User.query, label='Author')
     status = ArticleStatusField(label='Publish Status')
     pub_date = DateTimeField(label='Publication Date')
 
@@ -198,7 +202,8 @@ UserFormBase = model_form(User, Form, exclude=['id'], field_args={
 
 class UserEditForm(UserFormBase):
     password = PasswordField('Password',
-        [optional()])
+        [PasswordValidator()])
+    group_id = ForeignKeyField(Group.query, label='Group')
 
     def __init__(self, form, user, *args, **kwargs):
         self._model = user
@@ -210,8 +215,8 @@ class UserEditForm(UserFormBase):
         else:
             h = Hasher()
             self.password.data = h.hash(self.password.data)
-        x = super(Form, self).populate_obj(user)
-        return x
+        
+        super(UserEditForm, self).populate_obj(user)
 
 class UserRegistrationForm(UserEditForm):
     password = PasswordField('Password',

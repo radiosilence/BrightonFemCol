@@ -9,17 +9,17 @@ from btnfemcol.models import *
 # Add sections
 
 sections = [
-    ('uncategorized', 'Uncategorised', False),
-    ('home', 'Home', True),
-    ('events', 'Events', True),
-    ('articles', 'Articles', True),
-    ('about', 'About', True),
-    ('contact', 'Contact', True)
+    ('uncategorized', 'Uncategorised', 'draft'),
+    ('home', 'Home', 'live'),
+    ('events', 'Events', 'live'),
+    ('articles', 'Articles', 'live'),
+    ('about', 'About', 'live'),
+    ('contact', 'Contact', 'live')
 ]
 
 i = 0
 for s in sections:
-    section = Section(s[1], s[0], i, live=s[2])
+    section = Section(slug=s[0], title=s[1], order=i, status=s[2])
     db.session.add(section)
     i += 1
 

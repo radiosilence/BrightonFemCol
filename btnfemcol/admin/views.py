@@ -15,14 +15,15 @@ from btnfemcol import uploaded_images, uploaded_avatars
 from btnfemcol import db
 from btnfemcol import cache
 
-from btnfemcol.models import User, Article, Page, Event, Section, Category
+from btnfemcol.models import User, Article, Page, Event, Section, Category, \
+    Group
 from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
     ArticleEditForm, LoginForm, PageEditForm, EventEditForm
 
 from btnfemcol.utils import Auth, AuthError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
-    edit_object, save_object, calc_pages, json_inner
+    edit_instance, save_instance, calc_pages, json_inner
 
 # Article Views
 @admin.route('/articles')
@@ -58,7 +59,7 @@ def edit_article(id=None):
         else:
             form.author_id.data = g.user.id
     
-    created = save_object(form, article)
+    created = save_instance(form, article)
     if created:
         return redirect(url_for('admin.edit_article', id=created))
     return render_template('edit_article.html', form=form, submit=submit)
@@ -109,7 +110,7 @@ def list_pages():
 @auth_allowed_to('manage_pages')
 @section('pages')
 def edit_page(id=None):
-    return edit_object(Page, PageEditForm, 'edit_page.html', id)
+    return edit_instance(Page, PageEditForm, 'edit_page.html', id)
 
 
 @admin.route('/async/pages')
@@ -141,7 +142,7 @@ def list_events():
 @auth_allowed_to('manage_events')
 @section('event')
 def edit_event(id=None):
-    return edit_object(Event, EventEditForm, id=id)
+    return edit_instance(Event, EventEditForm, id=id)
 
 
 @admin.route('/async/events')
@@ -149,7 +150,7 @@ def edit_event(id=None):
 @auth_allowed_to('manage_events')
 @section('events')
 def json_events():
-    return json_inner(Event.query, order=[Event.date_start.desc()])
+    return json_inner(Event.query, order=[Event.start.desc()])
 
 
 @admin.route('/event/new', methods=['GET', 'POST'])
@@ -180,14 +181,16 @@ def create_user():
 @auth_allowed_to('manage_users')
 @section('users')
 def edit_user(id=None):
-    return edit_object(User, UserEditForm, id=id)
+    group = Group.query.filter_by(name='Writer').first()
+    default = User(group)
+    return edit_instance(User, UserEditForm, id=id, default=default)
 
 
 @admin.route('/async/users')
 @auth_logged_in
 @auth_allowed_to('manage_users')
 @section('users')
-def json_events():
+def json_users():
     return json_inner(User.query)
 
 

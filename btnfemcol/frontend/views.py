@@ -101,9 +101,11 @@ def home():
     def articles():
         return Article.query.filter_by(status='published').all()
 
+    first_section = Section.query.filter_by(status='live').first()
+    first_page = first_section.pages.filter_by(status='live').first()
     return show_page(
-        'home',
-        'welcome',
+        first_section.slug,
+        first_page.slug,
         template='home.html',
         articles=articles(),
         events=[]
