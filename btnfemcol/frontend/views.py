@@ -42,14 +42,19 @@ def secondary_nav_pages(section_slug):
 def secondary_nav_categories():
     return Category.query.filter_by(status='live').all()
 
+def q_events_upcoming(q=None):
+    if not q:
+        q = Event.query.filter_by(status='live')
+    return q.order_by(Event.start.asc()).filter( \
+        Event.end > datetime.utcnow())
+
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
 def show_events(type='upcoming'):
     def inner(type, limit=10):
         q = Event.query.filter_by(status='live')
         if type == 'upcoming':
-            q = q.order_by(Event.start.asc()).filter( \
-                Event.end > datetime.utcnow())
+            q = q_events_upcoming(q)
         else:
             q = q.order_by(Event.start.desc()).filter( \
                 Event.start < datetime.utcnow())
@@ -138,7 +143,7 @@ def home():
     def articles():
         return Article.query.filter_by(status='published')[:2]
     def events():
-        return Event.query.filter_by(status='live')[:2]
+        return q_events_upcoming()[:2]
 
     first_section = Section.query.filter_by(status='live').first()
     first_page = first_section.pages.filter_by(status='live').first()

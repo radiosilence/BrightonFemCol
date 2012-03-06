@@ -13,8 +13,8 @@ sections = [
     ('home', 'Home', 'live'),
     ('events', 'Events', 'live'),
     ('articles', 'Articles', 'live'),
-    ('about', 'About', 'live'),
-    ('contact', 'Contact', 'live')
+    ('about', 'About', 'draft'),
+    ('contact', 'Contact', 'draft')
 ]
 
 i = 0
@@ -56,15 +56,26 @@ and even subheadings:
 Amazing, no?
 """
 home = Section.query.filter_by(slug='home').first()
+events = Section.query.filter_by(slug='events').first()
 welcome = Page(section=home, title="Welcome", slug='welcome',
     body='This is the home page.',
-    status='live')
+    status='live', order=0)
+db.session.add(welcome)
 
 demo = Page(section=home, title="Demo", slug='demo', body=default_body,
-    status='live')
-
-db.session.add(welcome)
+    status='live', order=0)
 db.session.add(demo)
+
+events_upcoming = Page(section=events, title="Upcoming", slug="upcoming",
+    body="""These are events which are happening in the future.""",
+    status="live", order=0)
+db.session.add(events_upcoming)
+
+events_past = Page(section=events, title="Past", slug="past",
+    body="""These are events which have happend already.""",
+    status="live", order=1)
+db.session.add(events_past)
+
 db.session.commit()
 
 print "Added default page."
@@ -215,3 +226,15 @@ db.session.add(a2)
 db.session.commit()
 
 print "Added article."
+format = '%Y-%m-%d %H:%M'
+event_future = Event(location='The Blind Tiger',
+    start=datetime.strptime('2012-04-05 20:00', format),
+    end=datetime.strptime('2012-04-06 01:00', format),
+    slug='reclaim-the-dancefloor',
+    status='live',
+    title='Reclaim the Dancefloor',
+    body='I hope you like possums.'
+)
+db.session.add(event_future)
+db.session.commit()
+print "Added default events."
