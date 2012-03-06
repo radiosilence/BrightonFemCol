@@ -7,46 +7,19 @@ from flaskext.uploads import (UploadSet, configure_uploads, IMAGES,
                               UploadNotAllowed)
 
 from btnfemcol.frontend import frontend
-from btnfemcol import uploaded_images, uploaded_avatars
 
-from btnfemcol import db, cache
+from btnfemcol import uploaded_images, uploaded_avatars
+from btnfemcol import db, cache, mail
 
 from btnfemcol.models import Article, User, Page, Section, Category, Event
+
+from btnfemcol.frontend.utils import get, secondary_nav_pages, \
+    secondary_nav_categories, q_events_upcoming
 
 @frontend.before_request
 def before_request():
     g.sections = Section.get_live()
 
-
-def get(cls, slug, status='live'):
-    return cls.query.filter_by(status=status, slug=slug).first()
-
-def get_page(slug):
-    return get(Page, slug)
-
-def get_section(slug):
-    return get(Section, slug)
-
-def get_article(slug):
-    return get(Article, slug, status='published')
-
-def get_category(slug):
-    return get(Category, slug)
-
-def get_event(slug):
-    return get(Event, slug)
-
-def secondary_nav_pages(section_slug):
-    return get_section(section_slug).pages.filter_by(status='live').all()
-
-def secondary_nav_categories():
-    return Category.query.filter_by(status='live').all()
-
-def q_events_upcoming(q=None):
-    if not q:
-        q = Event.query.filter_by(status='live')
-    return q.order_by(Event.start.asc()).filter( \
-        Event.end > datetime.utcnow())
 
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
@@ -64,7 +37,7 @@ def show_events(type='upcoming'):
 
 @frontend.route('/event/<string:slug>')
 def show_event(slug):
-    event = get_event(slug)
+    event = get(Event, slug)
     if not event:
         return abort(404)
     
@@ -78,7 +51,7 @@ def show_event(slug):
 
 @frontend.route('/articles/<string:category_slug>')
 def show_category(category_slug):
-    category = get_category(category_slug)
+    category = get(Category, category_slug)
     if not category:
         return abort(404)
 
@@ -95,7 +68,7 @@ def show_category(category_slug):
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
 @cache.memoize(60)
 def show_article(category_slug, article_slug):
-    article = get_article(article_slug)
+    article = get(Article, article_slug, status='published')
     if not article:
         return abort(404)
     
@@ -108,7 +81,7 @@ def show_article(category_slug, article_slug):
 
 @frontend.route('/<string:slug>')
 def show_section(slug):
-    section = get_section(slug)
+    section = get(Section, slug)
     if not section:
         return abort(404)
     page = section.pages.filter_by(status='live').first()
@@ -124,7 +97,7 @@ def show_section(slug):
 def show_page(section_slug, page_slug, template='page.html',
     **kwargs):
     
-    page = get_page(page_slug)
+    page = get(Page, page_slug)
 
     if not page:
         return abort(404)
