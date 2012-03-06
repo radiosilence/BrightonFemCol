@@ -39,7 +39,7 @@ class Displayable(SiteEntity):
         if not self.body:
             return ''
         if len(self.body) > 140:
-            ellip = '&hellip;'
+            ellip = '…'
         else:
             ellip = ''
         return self.body[:140] + ellip
