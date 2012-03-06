@@ -138,6 +138,9 @@ class EventEditForm(EventFormBase):
         ('live', 'Live'),
         ('binned', 'Binned')
     ])
+    def __init__(self, form, event, *args, **kwargs):
+        self._model = event
+        super(EventEditForm, self).__init__(form, event, *args, **kwargs)
 
 # Article Forms
 class ArticleStatusField(SelectField):
