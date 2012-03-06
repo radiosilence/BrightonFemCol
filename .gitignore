@@ -8,6 +8,7 @@ btnfemcol/static/img/event/*.*
 btnfemcol/local_settings.py
 build/
 dist/
+*.db
 config.py
 *.un~
 manage.py
