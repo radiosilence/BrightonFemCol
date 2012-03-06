@@ -166,7 +166,8 @@ u = User(
     password=SU_PASSWORD,
     email=SU_EMAIL,
     firstname=SU_FIRSTNAME,
-    surname=SU_SURNAME
+    surname=SU_SURNAME,
+    status='active'
 )
 
 db.session.add(u)
