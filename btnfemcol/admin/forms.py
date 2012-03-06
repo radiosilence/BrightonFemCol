@@ -113,13 +113,13 @@ class PageEditForm(PageFormBase):
 EventFormBase = model_form(Event, Form, exclude=['id'], field_args={
     'title': {
         'validators': [
-            Unique(Page, Page.title),
+            Unique(Event, Event.title),
             Required()
         ]
     },
     'slug': {
         'validators': [
-            Unique(Page, Page.slug),
+            Unique(Event, Event.slug),
             Required()
         ]
     },
