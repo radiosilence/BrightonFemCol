@@ -38,7 +38,11 @@ class Displayable(SiteEntity):
     def excerpt(self):
         if not self.body:
             return ''
-        return self.body[:140]
+        if len(self.body) > 140:
+            ellip = '&hellip;'
+        else:
+            ellip = ''
+        return self.body[:140] + ellip
 
 
 class Category(SiteEntity, db.Model):
