@@ -266,6 +266,7 @@ class User(db.Model):
 
     def __init__(self, group=None, username=None, email=None, firstname=None,
         surname=None, password=None, website=None, phone=None, twitter=None,
+        status='pending',
         *args, **kwargs):
         
         if password:
@@ -284,6 +285,7 @@ class User(db.Model):
         self.website = website
         self.twitter = twitter
         self.phone = phone
+        self.status = status
         super(User, self).__init__(*args, **kwargs)
 
 #    @cache.memoize(20)
