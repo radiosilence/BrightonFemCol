@@ -211,7 +211,7 @@ event_future = Event(location='The Blind Tiger',
     start=datetime.strptime('2012-04-05 20:00', format),
     end=datetime.strptime('2012-04-06 01:00', format),
     slug='reclaim-the-dancefloor',
-    status='draft0',
+    status='draft',
     title='Reclaim the Dancefloor',
     body='I hope you like possums.'
 )
