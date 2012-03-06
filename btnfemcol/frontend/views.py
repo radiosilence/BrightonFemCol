@@ -93,6 +93,7 @@ def show_category(category_slug):
     )
 
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
+@cache.memoize(60)
 def show_article(category_slug, article_slug):
     article = get_article(article_slug)
     if not article:
@@ -119,7 +120,7 @@ def show_section(slug):
 
 
 @frontend.route('/<string:section_slug>/<string:page_slug>')
-#@cache.memoize(200)
+@cache.memoize(10)
 def show_page(section_slug, page_slug, template='page.html',
     **kwargs):
     
@@ -138,8 +139,8 @@ def show_page(section_slug, page_slug, template='page.html',
     )
 
 @frontend.route('/')
+@cache.memoize(10)
 def home():
-#    @cache.memoize(20)
     def articles():
         return Article.query.filter_by(status='published')[:2]
     def events():

@@ -117,6 +117,10 @@ footer {
 	color: white;
 }
 
+footer a, footer a:visited {
+	color: white;
+}
+
 figure {
 	background: #521717;
 	color: white;
@@ -186,6 +190,9 @@ div.container>aside {
 	text-transform: uppercase;
 }
 
+#black-bloc p a, #black-bloc p a:visited {
+	color: white;
+}
 
 #black-bloc p.quote {
 	margin-top: 10px;
