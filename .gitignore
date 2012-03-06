@@ -10,6 +10,6 @@ build/
 dist/
 config.py
 *.un~
-
+manage.py
 btnfemcol/local_settings.py
 *.egg-info/
