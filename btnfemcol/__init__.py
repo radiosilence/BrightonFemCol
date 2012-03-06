@@ -19,6 +19,7 @@ uploaded_images = UploadSet('images', IMAGES)
 
 db = SQLAlchemy()
 cache = Cache()
+mail = Mail()
 
 def create_app(debug=False):
     # Change static path based on whether we're debugging.
@@ -49,6 +50,9 @@ def create_app(debug=False):
     Markdown(app)
     if not debug:
         configure_logging(app)
+
+    # Initialise Mail
+    mail.init_app(app)
 
     # Sub applications
     from btnfemcol.frontend import frontend

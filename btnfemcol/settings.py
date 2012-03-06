@@ -20,6 +20,14 @@ CACHE_MEMCACHED_BEHAVIORS = {
     "ketama": True
 }
 
+MAIL_SERVER = 'localhost'
+MAIL_PORT = 25
+MAIL_USE_TLS = False
+MAIL_USE_SSL = False
+MAIL_USERNAME = None
+MAIL_PASSWORD = None
+DEFAULT_MAIL_SENDER = 'Brighton Feminist Collective <no-reply@brightonfeministcollective.org.uk>'
+
 try:
     from btnfemcol.local_settings import *
 except ImportError:

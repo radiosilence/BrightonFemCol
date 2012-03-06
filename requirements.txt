@@ -5,6 +5,7 @@ Flask-Markdown
 Flask-Uploads
 Flask-SQLAlchemy
 Flask-Cache
+Flask-Mail
 pylibmc
 Whirlpool
 Markdown
