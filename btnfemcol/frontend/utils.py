@@ -7,7 +7,7 @@ def get(cls, slug, status='live'):
     return cls.query.filter_by(status=status, slug=slug).first()
 
 def secondary_nav_pages(section_slug):
-    return get(Section, (section_slug)).pages.filter_by(status='live').all()
+    return get(Section, section_slug).pages.filter_by(status='live').all()
 
 def secondary_nav_categories():
     return Category.query.filter_by(status='live').all()
