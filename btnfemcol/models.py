@@ -258,6 +258,7 @@ class User(db.Model):
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
     group = db.relationship('Group',
         backref=db.backref('users', lazy='dynamic'))
+    status = db.Column(db.String(10))
 
     def __init__(self, group=None, username=None, email=None, firstname=None,
         surname=None, password=None, website=None, phone=None, twitter=None,
