@@ -1,6 +1,7 @@
 {% extends 'page.html' %}
-{% block posthead %}
+{% block body %}
         <div class="twelve columns alpha omega">
+            {{ page.body }}
             {% if events %}
                 {% for event in events %}
                     <article>
