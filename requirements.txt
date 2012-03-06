@@ -10,4 +10,5 @@ pylibmc
 Whirlpool
 Markdown
 SQLAlchemy
+SQLAlchemy-migrate
 pylibmc
