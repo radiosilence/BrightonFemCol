@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 from btnfemcol import create_app, db
 app = create_app(debug=True)
 
