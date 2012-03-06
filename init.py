@@ -9,6 +9,9 @@ SU_FIRSTNAME= raw_input('\t first name? ')
 SU_SURNAME  = raw_input('\t surname? ')
 print "Thanks! Doing things now..."
 
+db.app = create_app()
+print "Bound database."
+
 from btnfemcol.models import *
 
 # Add sections
