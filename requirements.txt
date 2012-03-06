@@ -1,12 +1,13 @@
 Flask
 Flask-WTF
-pycrypto
 Flask-Markdown
 Flask-Uploads
 Flask-SQLAlchemy
 Flask-Cache
 Flask-Mail
+pycrypto
 pylibmc
 Whirlpool
 Markdown
 SQLAlchemy
+pylibmc
