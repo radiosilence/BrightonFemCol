@@ -7,12 +7,11 @@ from flask import Flask, render_template, flash, g, session
 from flaskext.cache import Cache
 from flaskext.markdown import Markdown
 from flaskext.uploads import configure_uploads, UploadSet, IMAGES
-
 from flaskext.sqlalchemy import SQLAlchemy
+from flaskext.mail import Mail
 
 from btnfemcol.settings import *
 
-import pylibmc
 
 uploaded_avatars = UploadSet('avatars', IMAGES)
 uploaded_images = UploadSet('images', IMAGES)
