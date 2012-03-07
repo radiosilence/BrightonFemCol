@@ -431,12 +431,13 @@ class LogEntry(db.Model):
     target_id = db.Column(db.Integer)
     verb = db.Column(db.String(255))
     when = db.Column(db.DateTime)
+    class_name = db.Column(db.String(127))
 
-    def __init__(self, verb, target=None):
+    def __init__(self, verb, class_name=None, target=None):
         self.subject = g.user
         self.verb = verb
         self.when = datetime.utcnow()
-
+        self.classname = class_name
         if target:
             self.target_id = target.id
 
