@@ -14,4 +14,22 @@
       </ul>
     {% endif %}
   {% endwith %}
-{% endmacro -%}{% block main %}{% endblock %}
+{% endmacro -%}
+{%- macro render_field(field, class=None, label=None) -%}
+    {%- if field.type != 'HiddenField' -%}
+    <p>
+      {% if field.flags.required %}<span class="required">{% endif %}
+      {{ field.label(label=label) }}
+      {% if field.flags.required %}</span>{% endif %}
+        {{ field(placeholder=field.description, **kwargs)|safe }}
+      {%- if field.errors -%}
+        <ul class="errors">
+        {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+        </ul>
+      {%- endif -%}
+    </p>
+    {%- else -%}
+        {{ field(**kwargs) }}
+    {%- endif -%}
+{%- endmacro -%}
+{%- block main %}{% endblock %}
