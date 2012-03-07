@@ -9,22 +9,26 @@ from btnfemcol import db
 from btnfemcol import cache
 
 
-def edit_instance(cls, form_cls, edit_template='form.html', id=None):
+def edit_instance(cls, form_cls, edit_template='form.html', id=None,
+    submit_value=None):
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
             return abort(404)
-        submit = 'Update'
     else:
         instance = cls()
-        submit = 'Create'
+
+    if not submit_value and id:
+        submit_value = 'Update'
+    else:
+        submit_value = 'Create'
     
     form = form_cls(request.form, instance)
     
     created = save_instance(form, instance)
     if created:
         return redirect(url_for('admin.edit_%s' % cls.__name__.lower(), id=created))
-    return render_template(edit_template, form=form, submit=submit)
+    return render_template(edit_template, form=form, submit=submit_value)
 
 
 def save_instance(form, instance, message=u"%s saved."):
