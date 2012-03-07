@@ -421,3 +421,41 @@ class Permission(db.Model):
     
     def __repr__(self):
         return '<Permission %s:%r>' % (self.id, self.name)
+
+class LogEntry(db.Model):
+    __table__ = 'log_entry'
+    id = db.Column(db.Integer, primary_key=True)
+    subject_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    subject = db.relationship('User',
+        backref=db.backref('actions', lazy='dynamic'))
+    target_id = db.Column(db.Integer)
+    verb = db.Column(db.String)
+    when = db.Column(db.DateTime)
+
+    def __init__(self, verb, target=None):
+        self.subject = g.user
+        self.verb = verb
+        self.when = datetime.utcnow()
+
+        if target:
+            self.target_id = target.id
+
+
+    @classmethod
+    def log(cls, **args, **kwargs)
+        log_entry = cls(*args, **kwargs)
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<LogEntry %s>' % self.id
+
+    def __unicode__(self):
+        string = '[%(when)s] %(subject)s %(verb)s' % {
+            'when': self.when,
+            'subject': self.subject.username,
+            'verb': self.verb
+        } 
+        if self.target_id:
+            string += ' on %s' % self.target_id
+        return string
