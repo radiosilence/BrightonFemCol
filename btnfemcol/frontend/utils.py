@@ -9,7 +9,6 @@ def get(cls, slug, status='live', cached=True):
     key = str('%s:%s:%s:first' % (cls.__name__, slug, status))
     instance = cache.get(key)
     if not instance or not cached:
-        print "getting", key, "from cache"
         instance = cls.query.filter_by(status=status, slug=slug).first()
         cache.set(key, instance, 10)
     return instance
@@ -19,7 +18,6 @@ def secondary_nav_pages(section_slug):
     key = str('%s:secondary_nav_pages' % section_slug)
     instances = cache.get(key)
     if not instances:
-        print "getting", key, "from cache"
         instances = get(Section, section_slug).pages.filter_by(
             status='live').all()
         cache.set(key, instances, 30)
