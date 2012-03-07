@@ -11,49 +11,48 @@ from btnfemcol import cache
 
 
 def edit_instance(cls, form_cls, edit_template='form.html', id=None,
-    submit_value=None, view=None, callback=None):
+    submit_value=None, view=None, callback=None, **kwargs):
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
             return abort(404)
     else:
         instance = cls()
-
     if not submit_value and id:
         submit_value = 'Update'
     else:
         submit_value = 'Create'
-    
-    form = form_cls(request.form, instance)
-    
-    created = save_instance(form, instance)
+    form = form_cls(request.form, instance)    
+    saved, created = save_instance(form, instance, **kwargs)
     if not view:
         view = 'admin.edit_%s' % cls.__name__.lower()
-
-    if created:
+    if saved:
         if callback:
-            return callback(id, form)
+            return callback(id, saved, created, form)
         else:
-            return redirect(url_for(view, id=created))
-
+            return redirect(url_for(view, id=saved.id))
     return render_template(edit_template, form=form, submit=submit_value)
 
 
-def save_instance(form, instance, message=u"%s saved."):
+def save_instance(form, instance, message=u"%s saved.", do_flash=True):
     """This function handles the simple cyle of testing if an instance's form
     validates and then saving it.
     """
     if request.method == 'POST':
         if not form.validate():
             flash("There were errors saving, see below.", 'error')
-            return False
+            return False, False
         form.populate_obj(instance)
         if not instance.id:
+            created = True
             db.session.add(instance)
+        else:
+            created = False
         db.session.commit()
-        flash(message % instance.__unicode__(), 'success')
-        return instance.id
-    return False
+        if do_flash:
+            flash(message % instance.__unicode__(), 'success')
+        return instance, created
+    return False, False
 
 def log_out():
     g.user = None
