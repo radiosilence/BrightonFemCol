@@ -50,6 +50,9 @@ class Auth:
         if not user:
             raise AuthUserNotFoundError()
         
+        if user.status != 'active':
+            raise AuthInactiveError()
+
         h = Hasher()
         try:
             h.check(password, user.password)
@@ -67,6 +70,8 @@ class AuthUserNotFoundError(AuthError):
 class AuthPasswordIncorrectError(AuthError):
     pass
 
+class AuthInactiveError(AuthError):
+    pass
 
 def login_required(f):
     @wraps(f)

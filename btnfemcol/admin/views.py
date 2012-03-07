@@ -19,7 +19,7 @@ from btnfemcol.models import User, Article, Page, Event, Section, Category, \
 from btnfemcol.admin.forms import UserEditForm, \
     ArticleEditForm, LoginForm, PageEditForm, EventEditForm
 
-from btnfemcol.utils import Auth, AuthError
+from btnfemcol.utils import Auth, AuthError, AuthInactiveError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
     edit_instance, save_instance, calc_pages, json_inner, log_out
@@ -235,6 +235,8 @@ def login():
             session['logged_in'] = g.user.id
             flash("Successfully logged in.", 'success')
             return redirect(url_for('admin.home'))
+        except AuthInactiveError:
+            flash('This user account has not been activated.', 'error')
         except AuthError:
             flash('Invalid username or password.', 'error')
     return render_template('login.html', form=form, submit='Login')
