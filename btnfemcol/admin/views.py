@@ -193,7 +193,7 @@ def edit_user(id=None):
 @auth_allowed_to('manage_users')
 @section('users')
 def json_users():
-    return json_inner(User, User.query)
+    return json_inner(User, User.query, filter_field=User.username)
 
 
 # Log entries
