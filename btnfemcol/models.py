@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from flaskext.mail import Message
 
-from flask import url_for, abort, render_template
+from flask import url_for, abort, render_template, g
 
 from btnfemcol import db, cache, mail
 
@@ -437,15 +437,16 @@ class LogEntry(db.Model):
         self.subject = g.user
         self.verb = verb
         self.when = datetime.utcnow()
-        self.classname = class_name
+        self.class_name = class_name
         if target:
+            self.class_name = target.__class__.__name__
             self.target_id = target.id
 
 
     @classmethod
     def log(cls, *args, **kwargs):
         log_entry = cls(*args, **kwargs)
-        db.session.add(self)
+        db.session.add(log_entry)
         db.session.commit()
 
     def __repr__(self):
@@ -458,5 +459,5 @@ class LogEntry(db.Model):
             'verb': self.verb
         } 
         if self.target_id:
-            string += ' on %s' % self.target_id
+            string += ' %s #%s' % (self.class_name, self.target_id)
         return string

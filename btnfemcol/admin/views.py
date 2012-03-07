@@ -15,7 +15,7 @@ from btnfemcol import uploaded_images, uploaded_avatars
 from btnfemcol import db, cache
 
 from btnfemcol.models import User, Article, Page, Event, Section, Category, \
-    Group
+    Group, LogEntry
 from btnfemcol.admin.forms import UserEditForm, \
     ArticleEditForm, LoginForm, PageEditForm, EventEditForm
 
@@ -60,6 +60,11 @@ def edit_article(id=None):
     
     saved, created = save_instance(form, article)
     if saved:
+        if created:
+            verb = 'created'
+        else:
+            verb = 'edited'
+        LogEntry.log(verb, target=saved)
         return redirect(url_for('admin.edit_article', id=saved.id))
     return render_template('edit_article.html', form=form, submit=submit)
 

@@ -6,6 +6,8 @@ from functools import wraps
 from flask import g, redirect, flash, url_for, abort, request, \
     render_template, session
 
+from btnfemcol.models import LogEntry
+
 from btnfemcol import db
 from btnfemcol import cache
 
@@ -27,6 +29,11 @@ def edit_instance(cls, form_cls, edit_template='form.html', id=None,
     if not view:
         view = 'admin.edit_%s' % cls.__name__.lower()
     if saved:
+        if created:
+            verb = 'created'
+        else:
+            verb = 'edited'
+        LogEntry.log(verb, target=saved)
         if callback:
             return callback(id, saved, created, form)
         else:
