@@ -179,7 +179,7 @@ def home():
         fp_arts = cache.get(key)
         if fp_arts:
             for art in fp_arts:
-                db.session.merge(art)
+                db.session.add(art)
         if not fp_arts:
             fp_arts = Article.query.filter_by(
             status='published').order_by(Article.pub_date.desc())[:2]
