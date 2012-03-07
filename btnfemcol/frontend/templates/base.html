@@ -37,10 +37,10 @@
 			<ul class="primary">
 				{% for section in g.sections %}
 					<li class="
-						{%- if section.slug == selected_section_slug: -%}
+						{%- if section['slug'] == selected_section_slug: -%}
 							selected
 						{%- endif -%}"
-					><a href="{{ section.url }}">{{ section.title }}</a>
+					><a href="{{ section['url'] }}">{{ section['title'] }}</a>
 				{% endfor %}
 			</ul>
 			<ul class="secondary">

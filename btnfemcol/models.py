@@ -57,7 +57,6 @@ class Category(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     @property
-    @cache.memoize(20)
     def url(self):
         top_cat = Category.query.filter_by(
             status='live').order_by(Category.order.asc()).first()
@@ -79,6 +78,7 @@ class Section(SiteEntity, db.Model):
 
         key = 'section:%s:first_page'
 
+        db.session.add(self)
         first = self.pages.first()
         if not first:
             return '#'

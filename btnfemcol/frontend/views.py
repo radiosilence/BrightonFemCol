@@ -24,9 +24,12 @@ def before_request():
     key = 'sections'
     sections = cache.get(key)
     if not sections:
-        sections = Section.get_live()
-        cache.set(key, sections, 60)
-
+        sections = [{
+            'url': s.url,
+            'title': s.title,
+            'slug': s.slug
+        } for s in Section.get_live()]
+        cache.set(key, sections, 20)
     g.sections = sections
 
 
