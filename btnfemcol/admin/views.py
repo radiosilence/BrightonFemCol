@@ -60,7 +60,7 @@ def edit_article(id=None):
     
     created = save_instance(form, article)
     if created:
-        return redirect(url_for('admin.edit_article', id=created))
+        return redirect(url_for('admin.edit_article', id=created.id))
     return render_template('edit_article.html', form=form, submit=submit)
 
 @admin.route('/article/new', methods=['GET', 'POST'])
