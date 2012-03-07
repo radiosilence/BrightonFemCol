@@ -37,6 +37,7 @@ class Displayable(SiteEntity):
 
 
     @property
+    @cache.memoize(20)
     def excerpt(self):
         if not self.body:
             return ''
@@ -81,7 +82,7 @@ class Section(SiteEntity, db.Model):
         return self.title
 
     @classmethod
-#    @cache.memoize(20)
+    @cache.memoize(60)
     def get_live(cls):
         return cls.query.filter_by(status='live') \
             .order_by(Section.order).all()

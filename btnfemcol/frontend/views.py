@@ -34,6 +34,7 @@ def testmail():
 
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
+@cache.memoize(20)
 def show_events(type='upcoming'):
     def inner(type, limit=10):
         q = Event.query.filter_by(status='live')
@@ -61,6 +62,7 @@ def show_event(slug):
 
 
 @frontend.route('/articles/<string:category_slug>')
+@cache.memoize(20)
 def show_category(category_slug):
     category = get(Category, category_slug)
     if not category:
@@ -79,6 +81,7 @@ def show_category(category_slug):
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
 @cache.memoize(60)
 def show_article(category_slug, article_slug):
+    print "WHEE"
     article = get(Article, article_slug, status='published')
     if not article:
         return abort(404)
