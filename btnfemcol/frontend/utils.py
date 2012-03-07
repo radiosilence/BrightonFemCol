@@ -22,7 +22,10 @@ def secondary_nav_pages(section_slug):
     instances = cache.get(key)
     if not instances:
         section = get(Section, section_slug)
-        db.session.merge(section)
+        try:
+            db.session.add(section)
+        except Exception:
+            db.session.merge(section)
         instances = section.pages.filter_by(
             status='live').all()
         cache.set(key, instances, 30)
