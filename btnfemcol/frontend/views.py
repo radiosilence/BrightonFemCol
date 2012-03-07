@@ -48,6 +48,7 @@ def show_events(type='upcoming'):
     return show_page('events', type, template='event_listing.html', events=inner(type))
 
 @frontend.route('/event/<string:slug>')
+@cache.memoize(20)
 def show_event(slug):
     event = get(Event, slug)
     if not event:
@@ -86,7 +87,6 @@ def show_category(category_slug=None):
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
 @cache.memoize(60)
 def show_article(category_slug, article_slug):
-    print "WHEE"
     article = get(Article, article_slug, status='published')
     if not article:
         return abort(404)
