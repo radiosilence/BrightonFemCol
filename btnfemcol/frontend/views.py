@@ -92,7 +92,7 @@ def show_article(category_slug, article_slug):
 
 def post_registration(id, saved, created, form):
     saved.send_activation_email()
-    g.secondary_nav = secondary_nav_pages(section_slug)
+    g.secondary_nav = secondary_nav_pages('home')
     return render_template('registered.html', user=saved)
 
 @frontend.route('/register', methods=['GET', 'POST'])
