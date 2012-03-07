@@ -1,0 +1,8 @@
+Hi, {{ user.firstname }}!
+Welcome to the Brighton Feminist Collective website.
+
+All you need to do now is click this link...
+
+    {{ activate_url }}
+
+..and your account will be activated.

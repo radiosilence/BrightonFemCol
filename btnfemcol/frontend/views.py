@@ -17,12 +17,20 @@ from btnfemcol.frontend.forms import UserRegistrationForm
 from btnfemcol.frontend.utils import get, secondary_nav_pages, \
     secondary_nav_categories, q_events_upcoming
 
-from btnfemcol.admin.utils import edit_instance
+from btnfemcol.admin.utils import edit_instance, log_out, logged_in
 
 @frontend.before_request
 def before_request():
     g.sections = Section.get_live()
 
+
+@frontend.route('/testmail')
+def testmail():
+    from flaskext.mail import Message
+    msg = Message("TEST123", recipients=['jamescleveland@gmail.com'])
+    msg.body = "SUUP"
+    mail.send(msg)
+    return "SEND"
 
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
@@ -82,15 +90,40 @@ def show_article(category_slug, article_slug):
         selected_secondary_slug=category_slug
     )
 
+def post_registration(id, saved, created, form):
+    saved.send_activation_email()
+    g.secondary_nav = secondary_nav_pages(section_slug)
+    return render_template('registered.html', user=saved)
+
 @frontend.route('/register', methods=['GET', 'POST'])
 def register():
+    if logged_in():
+        log_out()
+
     g.secondary_nav = secondary_nav_pages('home')
     return edit_instance(User, UserRegistrationForm,
-        edit_template='registration.html')
+        edit_template='registration.html',
+        callback=post_registration,
+        do_flash=False)
 
 @frontend.route('/activate/<int:user_id>/<string:reg_code>')
 def activate(user_id, reg_code):
-    return render_template('registration.html')
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        return abort(404)
+
+    if user.reg_code != reg_code:
+        return abort(403)
+
+    if user.status == 'banned':
+        return abort(403)
+
+    user.status = 'active'
+
+    db.session.commit()
+
+    flash('Your account has been activated.', success)
+    return redirect(url_for('frontend.home'))
 
 @frontend.route('/<string:slug>')
 def show_section(slug):

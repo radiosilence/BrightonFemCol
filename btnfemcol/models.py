@@ -1,9 +1,11 @@
+import random
 from datetime import datetime
 from sqlalchemy.ext.declarative import AbstractConcreteBase
+from flaskext.mail import Message
 
-from flask import url_for, abort
+from flask import url_for, abort, render_template
 
-from btnfemcol import db, cache
+from btnfemcol import db, cache, mail
 
 from btnfemcol.utils import Hasher
 
@@ -104,9 +106,6 @@ class Page(Displayable, db.Model):
         return url_for('frontend.show_page',
             section_slug=self.section.slug,
             page_slug=self.slug)
-
-    def _generate_slug(self):
-        pass
 
     def __repr__(self):
         return '<Page: %r>' % self.title
@@ -256,7 +255,7 @@ class User(db.Model):
     location = db.Column(db.String(80))
     surname = db.Column(db.String(80), nullable=False)
     website = db.Column(db.String(255))
-    email = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True)
     phone = db.Column(db.String(80))
     twitter = db.Column(db.String(80))
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
@@ -294,6 +293,33 @@ class User(db.Model):
         """This will check if a user can do a certain action."""
         permission = Permission.query.filter_by(name=name).first()
         return permission in self.group.permissions
+
+    def send_activation_email(self):
+        """Send the e-mail that allows a user to activate their account."""
+        if not self.reg_code:
+            self._gen_reg_code()
+            db.session.commit()
+
+        msg = Message("Account Activation",
+            recipients=[self.email])
+
+        print self.reg_code
+        activate_url = url_for('frontend.activate', user_id=self.id,
+            reg_code=self.reg_code, _external=True)
+        msg.html = render_template('email_activate.html', user=self,
+            activate_url=activate_url)
+        msg.body = render_template('email_activate.txt', user=self,
+            activate_url=activate_url)
+        mail.send(msg)
+
+    def _gen_reg_code(self):
+        chrs = list(
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
+        
+        string = ''
+        for i in range(20):
+            string += random.choice(chrs)
+        self.reg_code = string
 
     @property
     def fullname(self):

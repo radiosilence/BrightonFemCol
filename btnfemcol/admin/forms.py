@@ -228,7 +228,8 @@ UserFormBase = model_form(User, Form, exclude=['id', 'reg_code'], field_args={
     },
     'email': {
         'validators': [
-            Required()
+            Required(),
+            Unique(User, User.email)
         ],
         'description': 'Eg. derping@gmail.com'
     },

@@ -22,7 +22,7 @@ from btnfemcol.admin.forms import UserEditForm, \
 from btnfemcol.utils import Auth, AuthError
 
 from btnfemcol.admin.utils import auth_logged_in, auth_allowed_to, section, \
-    edit_instance, save_instance, calc_pages, json_inner
+    edit_instance, save_instance, calc_pages, json_inner, log_out
 
 # Article Views
 @admin.route('/articles')
@@ -241,10 +241,9 @@ def login():
 
 
 @admin.route('/logout')
+@auth_logged_in
 def logout():
-    g.user = None
-    del session['logged_in']
-    flash('Logged out.')
+    log_out()
     return redirect(url_for('admin.login'))
 
 
