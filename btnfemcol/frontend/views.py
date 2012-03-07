@@ -13,8 +13,11 @@ from btnfemcol import db, cache, mail
 
 from btnfemcol.models import Article, User, Page, Section, Category, Event
 
+from btnfemcol.frontend.forms import UserRegistrationForm
 from btnfemcol.frontend.utils import get, secondary_nav_pages, \
     secondary_nav_categories, q_events_upcoming
+
+from btnfemcol.admin.utils import edit_instance
 
 @frontend.before_request
 def before_request():
@@ -78,6 +81,16 @@ def show_article(category_slug, article_slug):
         selected_section_slug='articles',
         selected_secondary_slug=category_slug
     )
+
+@frontend.route('/register', methods=['GET', 'POST'])
+def register():
+    g.secondary_nav = secondary_nav_pages('home')
+    return edit_instance(User, UserRegistrationForm,
+        edit_template='registration.html')
+
+@frontend.route('/activate/<int:user_id>/<string:reg_code>')
+def activate(user_id, reg_code):
+    return render_template('registration.html')
 
 @frontend.route('/<string:slug>')
 def show_section(slug):
