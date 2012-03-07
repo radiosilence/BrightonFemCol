@@ -196,6 +196,22 @@ def json_users():
     return json_inner(User, User.query)
 
 
+# Log entries
+@admin.route('/logs')
+@auth_logged_in
+@auth_allowed_to('view_logs')
+@section('logs')
+def view_logs():
+    return render_template('logs.html')
+
+
+@admin.route('/async/logs')
+@auth_logged_in
+@auth_allowed_to('view_logs')
+@section('logs')
+def json_logs():
+    return json_inner(LogEntry, LogEntry.query, filter_field=LogEntry.verb)
+
 
 # Dashboards
 @section('articles')

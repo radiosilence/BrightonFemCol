@@ -452,8 +452,12 @@ class LogEntry(db.Model):
     def __repr__(self):
         return '<LogEntry %s>' % self.id
 
-    def __unicode__(self):
-        string = '[%(when)s] %(subject)s %(verb)s' % {
+    def __unicode__(self, date=True):
+        if date:
+            string = '[%s] ' % self.when
+        else:
+            string = ''
+        string += '%(subject)s %(verb)s' % {
             'when': self.when,
             'subject': self.subject.username,
             'verb': self.verb
@@ -461,3 +465,21 @@ class LogEntry(db.Model):
         if self.target_id:
             string += ' %s #%s' % (self.class_name, self.target_id)
         return string
+
+
+    @property
+    @cache.memoize(500)
+    def json_dict(self, exclude=[]):
+        """This is a form of serialisation but specifically for the output to
+        JSON for asyncronous requests."""
+        d = {
+            'id': self.id,
+            'entry': self.__unicode__(date=False),
+            'when' : self.when.strftime('%Y/%m/%d %H:%m:%S'),
+            'urls': {
+                'user': self.subject.url
+            }
+        }
+        for key in exclude:
+            del d[key]
+        return d

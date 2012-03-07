@@ -117,10 +117,12 @@ def calc_pages(results, per_page):
 
 
 def json_inner(cls, base, status=None, page=None, per_page=None, filter=None,
-    order=None):
+    order=None, filter_field=None):
     """This function handles getting json for instances once arguments have
     already been decided.
     """
+    if not filter_field:
+         filter_field = cls.title
     if not status:
         status = request.args.get('status', default='any')
     if not page:
@@ -135,10 +137,10 @@ def json_inner(cls, base, status=None, page=None, per_page=None, filter=None,
 
     if filter and status != 'any':
         q = base.filter_by(status=status).filter(
-            cls.title.like('%' + filter + '%'))
+            filter_field.like('%' + filter + '%'))
     elif filter:
         q = base.filter(
-            cls.title.like('%' + filter + '%'))
+            filter_field.like('%' + filter + '%'))
     elif status == 'any':
         q = base
     else:

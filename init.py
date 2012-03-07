@@ -100,6 +100,7 @@ perms = [
     ('post_comments', 'Post Comments'),
     ('write_articles', 'Write Articles'),
     ('change_authors', 'Change the author of an article.')
+    ('view_logs', 'View Log Entries'),
 ]
 
 permissions = {}
@@ -145,7 +146,7 @@ db.session.add(g_moderator)
 g_admin = Group(name='Administrator')
 for p in g_editor.permissions:
     g_admin.permissions.append(p)
-for name in ['manage_events', 'manage_pages', 'moderate']:
+for name in ['manage_events', 'manage_pages', 'moderate', 'view_logs']:
     g_admin.permissions.append(permissions[name])
 db.session.add(g_admin)
 
