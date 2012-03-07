@@ -56,6 +56,9 @@
 {% macro menu_site() %}
   <h1>Site</h1>
   <ul class="actions square">
+  {% if g.user.allowed_to('view_logs') %}
+    <li><a href="{{ url_for('admin.view_logs') }}">View Logs</a></li>
+  {% endif %}
   </ul>
 {% endmacro %}
 
