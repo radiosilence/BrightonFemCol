@@ -101,7 +101,12 @@ def configure_pre_post_request(app):
         try:
             if session['logged_in']:
                 g.logged_in = True
-                g.user = User.query.filter_by(id=session['logged_in']).first()
+                key = 'user:id:%s' % session['logged_in']
+                user = cache.get(key)
+                if not user:
+                    user = User.query.filter_by(id=session['logged_in']).first()
+                    cache.set(key, user, 5)
+                g.user = user
         except KeyError:
             pass
 

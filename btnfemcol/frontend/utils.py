@@ -9,7 +9,6 @@ def get(cls, slug=None, status='live', cached=True):
     key = str('%s:%s:%s:first' % (cls.__name__, slug, status))
     instance = cache.get(key)
     if not instance or not cached:
-        print "Cache miss", key
         if slug:
             instance = cls.query.filter_by(status=status, slug=slug).first()
         else:
@@ -22,7 +21,6 @@ def secondary_nav_pages(section_slug):
     key = str('%s:secondary_nav_pages' % section_slug)
     instances = cache.get(key)
     if not instances:
-        print "Cache miss", key
         section = get(Section, section_slug)
         db.session.merge(section)
         instances = section.pages.filter_by(
@@ -35,7 +33,6 @@ def secondary_nav_categories():
     key = 'categories'
     instances = cache.get(key)
     if not instances:
-        print "Cache miss", key
         instances = Category.query.filter_by(status='live').all()
         cache.set(key, instances, 30)
     return instances
