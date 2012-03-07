@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from btnfemcol import cache
+from btnfemcol import cache, db
 from btnfemcol.models import Category, Event, Section
 
 
@@ -23,7 +23,9 @@ def secondary_nav_pages(section_slug):
     instances = cache.get(key)
     if not instances:
         print "Cache miss", key
-        instances = get(Section, section_slug).pages.filter_by(
+        section = get(Section, section_slug)
+        db.session.add(section)
+        instances = section.pages.filter_by(
             status='live').all()
         cache.set(key, instances, 30)
     return instances
