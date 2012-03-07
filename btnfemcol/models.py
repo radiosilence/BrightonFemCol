@@ -37,7 +37,7 @@ class Displayable(SiteEntity):
 
 
     @property
-    @cache.memoize(20)
+    @cache.memoize(60)
     def excerpt(self):
         if not self.body:
             return ''
@@ -57,6 +57,7 @@ class Category(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     @property
+    @cache.memoize(300)
     def url(self):
         top_cat = Category.query.filter_by(
             status='live').order_by(Category.order.asc()).first()
@@ -69,6 +70,7 @@ class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     @property
+    @cache.memoize(300)
     def url(self):
         if self.slug == 'articles':
             top_cat = Category.query.filter_by(status='live').first()
@@ -105,6 +107,7 @@ class Page(Displayable, db.Model):
         super(Page, self).__init__(*args, **kwargs)
 
     @property
+    @cache.memoize(300)
     def url(self):
         if self.slug == 'welcome' and self.section.slug == 'home':
             return url_for('frontend.home')
@@ -124,6 +127,7 @@ class Page(Displayable, db.Model):
 
 
     @property
+    @cache.memoize(5)
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
         JSON for asyncronous requests."""
@@ -178,6 +182,7 @@ class Article(Displayable, db.Model):
         super(Article, self).__init__(*args, **kwargs)
 
     @property
+    @cache.memoize(300)
     def url(self):
         return url_for('frontend.show_article',
             category_slug=self.category.slug,
@@ -185,6 +190,7 @@ class Article(Displayable, db.Model):
         )
 
     @property
+    @cache.memoize(5)
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
         JSON for asyncronous requests."""
@@ -227,10 +233,12 @@ class Event(Displayable, db.Model):
         super(Event, self).__init__(*args, **kwargs)
 
     @property
+    @cache.memoize(300)
     def url(self):
         return url_for('frontend.show_event', slug=self.slug)
 
     @property
+    @cache.memoize(5)
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
         JSON for asyncronous requests."""
@@ -331,25 +339,28 @@ class User(db.Model):
         self.reg_code = string
 
     @property
+    @cache.memoize(60)
     def fullname(self):
         return u'%s %s' % (self.firstname, self.surname)
 
     def __repr__(self):
         return '<User %r>' % self.username
 
+    @cache.memoize(5)
     def __unicode__(self):
-        return '%s %s (%s) <%s>' % (
-            self.firstname,
-            self.surname,
+        return '%s (%s) <%s>' % (
+            self.fullname,
             self.username,
             self.email
         )
 
     @property
+    @cache.memoize(300)
     def url(self):
         return '#'
 
     @property
+    @cache.memoize(5)
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
         JSON for asyncronous requests."""
@@ -386,6 +397,7 @@ class Group(db.Model):
     def __init__(self, name=None):
         self.name = name
     
+    @cache.memoize(6000)
     def __unicode__(self):
         return u'%s' % self.name
 
