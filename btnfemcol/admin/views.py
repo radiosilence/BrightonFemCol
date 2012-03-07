@@ -16,7 +16,7 @@ from btnfemcol import db, cache
 
 from btnfemcol.models import User, Article, Page, Event, Section, Category, \
     Group
-from btnfemcol.admin.forms import UserEditForm, UserRegistrationForm, \
+from btnfemcol.admin.forms import UserEditForm, \
     ArticleEditForm, LoginForm, PageEditForm, EventEditForm
 
 from btnfemcol.utils import Auth, AuthError
@@ -180,7 +180,6 @@ def create_user():
 @auth_allowed_to('manage_users')
 @section('users')
 def edit_user(id=None):
-    group = Group.query.filter_by(name='Writer').first()
     return edit_instance(User, UserEditForm, id=id)
 
 
