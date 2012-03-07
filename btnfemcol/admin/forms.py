@@ -1,4 +1,5 @@
-from btnfemcol.models import User, Page, Article, Event, Section, Group
+from btnfemcol.models import User, Page, Article, Event, Section, Group, \
+    Category
 
 from flask import g
 from flaskext.wtf import *
@@ -192,6 +193,7 @@ class ArticleEditForm(ArticleFormBase):
     author_id = ForeignKeyField(User.query, label='Author')
     status = ArticleStatusField(label='Publish Status')
     pub_date = DateField(label='Publication Date')
+    category_id = ForeignKeyField(Category.query, label='Category')
 
     def __init__(self, form, article, *args, **kwargs):
         self._model = article
