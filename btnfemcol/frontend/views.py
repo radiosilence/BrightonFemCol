@@ -122,7 +122,7 @@ def activate(user_id, reg_code):
 
     db.session.commit()
 
-    flash('Your account has been activated.', success)
+    flash('Your account has been activated.', 'success')
     return redirect(url_for('frontend.home'))
 
 @frontend.route('/<string:slug>')
