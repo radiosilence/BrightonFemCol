@@ -442,7 +442,7 @@ class LogEntry(db.Model):
 
 
     @classmethod
-    def log(cls, **args, **kwargs)
+    def log(cls, *args, **kwargs)
         log_entry = cls(*args, **kwargs)
         db.session.add(self)
         db.session.commit()
