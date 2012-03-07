@@ -199,7 +199,7 @@ class ArticleEditForm(ArticleFormBase):
 
 
 # User Forms
-UserFormBase = model_form(User, Form, exclude=['id'], field_args={
+UserFormBase = model_form(User, Form, exclude=['id', 'reg_code'], field_args={
     'username': {
         'validators': [
             Unique(User, User.username)
