@@ -353,6 +353,7 @@ class User(db.Model):
             'website': self.website,
             'twitter': self.twitter,
             'group': self.group.name,
+            'status': self.status,
             'urls': {
                 'edit': url_for('admin.edit_user', id=self.id),
                 'bin': '#'

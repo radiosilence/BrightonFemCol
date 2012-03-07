@@ -245,6 +245,11 @@ class UserEditForm(UserFormBase):
     password = PasswordField('Password',
         [PasswordValidator()])
     group_id = ForeignKeyField(Group.query, label='Group')
+    status = SelectField(choices=[
+        ('pending', 'Pending Activation'),
+        ('active', 'Activated'),
+        ('banned', 'Banned')    
+    ])
 
     def __init__(self, form, user, *args, **kwargs):
         self._model = user
