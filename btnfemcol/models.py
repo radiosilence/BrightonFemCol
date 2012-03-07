@@ -58,6 +58,10 @@ class Category(SiteEntity, db.Model):
 
     @property
     def url(self):
+        top_cat = Category.query.filter_by(
+            status='live').order_by(Category.order.asc()).first()
+        if self == top_cat:
+            return url_for('frontend.show_category')
         return url_for('frontend.show_category', category_slug=self.slug)
 
 

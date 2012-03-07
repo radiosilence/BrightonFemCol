@@ -61,10 +61,15 @@ def show_event(slug):
     )
 
 
+@frontend.route('/articles')
 @frontend.route('/articles/<string:category_slug>')
 @cache.memoize(20)
-def show_category(category_slug):
-    category = get(Category, category_slug)
+def show_category(category_slug=None):
+    if not category_slug:
+        category = Category.query.filter_by(
+            status='live').order_by(Category.order.asc()).first()
+    else:
+        category = get(Category, category_slug)
     if not category:
         return abort(404)
 
