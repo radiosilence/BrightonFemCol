@@ -44,7 +44,12 @@ class Displayable(SiteEntity):
             ellip = u'\u2026'
         else:
             ellip = ''
-        return self.body[:140] + ellip
+        chars = list('[]#*-=!')
+
+        excerpt = self.body[:340]
+        for char in chars:
+            excerpt = excerpt.replace(char, '')
+        return excerpt[:140] + ellip
 
 
 class Category(SiteEntity, db.Model):
