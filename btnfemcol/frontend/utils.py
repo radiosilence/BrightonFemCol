@@ -8,7 +8,12 @@ def get(cls, slug=None, status='live', cached=True):
     """Return an object, cached by a few seconds"""
     key = str('%s:%s:%s:first' % (cls.__name__, slug, status))
     instance = cache.get(key)
-    if not instance or not cached:
+    if instance and cached:
+        try:
+            db.session.add(instance)
+        except:
+            db.session.merge(instance)
+    else:
         if slug:
             instance = cls.query.filter_by(status=status, slug=slug).first()
         else:
