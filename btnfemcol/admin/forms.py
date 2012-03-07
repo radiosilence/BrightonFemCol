@@ -220,7 +220,7 @@ UserFormBase = model_form(User, Form, exclude=['id', 'reg_code'], field_args={
         'description': 'Eg. Derp'
     },
     'website': {
-        'label': u'url',
+        'label': u'URL',
         'validators': [
             url(),
         ],
