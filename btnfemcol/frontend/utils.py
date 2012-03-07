@@ -4,12 +4,16 @@ from btnfemcol import cache
 from btnfemcol.models import Category, Event, Section
 
 
-def get(cls, slug, status='live', cached=True):
+def get(cls, slug=None, status='live', cached=True):
     """Return an object, cached by a few seconds"""
     key = str('%s:%s:%s:first' % (cls.__name__, slug, status))
     instance = cache.get(key)
     if not instance or not cached:
-        instance = cls.query.filter_by(status=status, slug=slug).first()
+        print "Cache miss", key
+        if slug:
+            instance = cls.query.filter_by(status=status, slug=slug).first()
+        else:
+            instance = cls.query.filter_by(status=status).first()
         cache.set(key, instance, 10)
     return instance
     
@@ -18,6 +22,7 @@ def secondary_nav_pages(section_slug):
     key = str('%s:secondary_nav_pages' % section_slug)
     instances = cache.get(key)
     if not instances:
+        print "Cache miss", key
         instances = get(Section, section_slug).pages.filter_by(
             status='live').all()
         cache.set(key, instances, 30)
@@ -28,6 +33,7 @@ def secondary_nav_categories():
     key = 'categories'
     instances = cache.get(key)
     if not instances:
+        print "Cache miss", key
         instances = Category.query.filter_by(status='live').all()
         cache.set(key, instances, 30)
     return instances

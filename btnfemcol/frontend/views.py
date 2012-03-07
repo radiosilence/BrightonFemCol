@@ -39,7 +39,7 @@ def testmail():
 
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
-@cache.memoize(20)
+#@cache.memoize(20)
 def show_events(type='upcoming'):
     def inner(type, limit=10):
         q = Event.query.filter_by(status='live')
@@ -53,7 +53,7 @@ def show_events(type='upcoming'):
     return show_page('events', type, template='event_listing.html', events=inner(type))
 
 @frontend.route('/event/<string:slug>')
-@cache.memoize(20)
+#@cache.memoize(20)
 def show_event(slug):
     event = get(Event, slug)
     if not event:
@@ -69,7 +69,7 @@ def show_event(slug):
 
 @frontend.route('/articles')
 @frontend.route('/articles/<string:category_slug>')
-@cache.memoize(20)
+#@cache.memoize(20)
 def show_category(category_slug=None):
     if not category_slug:
         category = Category.query.filter_by(
@@ -90,7 +90,7 @@ def show_category(category_slug=None):
     )
 
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
-@cache.memoize(60)
+#@cache.memoize(60)
 def show_article(category_slug, article_slug):
     article = get(Article, article_slug, status='published')
     if not article:
@@ -139,7 +139,7 @@ def activate(user_id, reg_code):
     return redirect(url_for('frontend.home'))
 
 @frontend.route('/<string:slug>')
-@cache.memoize(10)
+#@cache.memoize(10)
 def show_section(slug):
     section = get(Section, slug)
     if not section:
@@ -153,7 +153,7 @@ def show_section(slug):
 
 
 @frontend.route('/<string:section_slug>/<string:page_slug>')
-@cache.memoize(10)
+#@cache.memoize(10)
 def show_page(section_slug, page_slug, template='page.html',
     **kwargs):
     
@@ -172,16 +172,29 @@ def show_page(section_slug, page_slug, template='page.html',
     )
 
 @frontend.route('/')
-@cache.memoize(10)
+#@cache.memoize(20)
 def home():
     def articles():
-        return Article.query.filter_by(
+        key = 'frontpage:articles'
+        fp_arts = cache.get(key)
+        if fp_arts:
+            for art in fp_arts:
+                db.session.merge(art)
+        if not fp_arts:
+            fp_arts = Article.query.filter_by(
             status='published').order_by(Article.pub_date.desc())[:2]
+            cache.set(key, fp_arts, 30)
+        return fp_arts
     def events():
-        return q_events_upcoming()[:2]
+        key = 'frontpage:events'
+        fp_evts = cache.get(key)
+        if not fp_evts:
+            fp_evts = q_events_upcoming()[:2]
+            cache.set(key, fp_evts, 30)
+        return fp_evts
 
-    first_section = Section.query.filter_by(status='live').first()
-    first_page = first_section.pages.filter_by(status='live').first()
+    first_section = get(Section)
+    first_page = get(Page)
     return show_page(
         first_section.slug,
         first_page.slug,
