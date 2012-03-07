@@ -29,13 +29,6 @@ def before_request():
 
     g.sections = sections
 
-@frontend.route('/testmail')
-def testmail():
-    from flaskext.mail import Message
-    msg = Message("TEST123", recipients=['jamescleveland@gmail.com'])
-    msg.body = "SUUP"
-    mail.send(msg)
-    return "SEND"
 
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
