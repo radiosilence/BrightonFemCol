@@ -10,7 +10,7 @@ from btnfemcol import cache
 
 
 def edit_instance(cls, form_cls, edit_template='form.html', id=None,
-    submit_value=None):
+    submit_value=None, view=None, callback=None):
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
@@ -26,8 +26,15 @@ def edit_instance(cls, form_cls, edit_template='form.html', id=None,
     form = form_cls(request.form, instance)
     
     created = save_instance(form, instance)
+    if not view:
+        view = 'admin.edit_%s' % cls.__name__.lower()
+
     if created:
-        return redirect(url_for('admin.edit_%s' % cls.__name__.lower(), id=created))
+        if callback:
+            return callback(id, form)
+        else:
+            return redirect(url_for(view, id=created))
+
     return render_template(edit_template, form=form, submit=submit_value)
 
 
