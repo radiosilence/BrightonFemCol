@@ -21,8 +21,13 @@ from btnfemcol.admin.utils import edit_instance, log_out, logged_in
 
 @frontend.before_request
 def before_request():
-    g.sections = Section.get_live()
+    key = 'sections'
+    sections = cache.get(key)
+    if not sections:
+        sections = Section.get_live()
+        cache.set(key, sections, 60)
 
+    g.sections = sections
 
 @frontend.route('/testmail')
 def testmail():
