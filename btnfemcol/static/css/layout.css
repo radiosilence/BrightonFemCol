@@ -50,7 +50,7 @@ div.container {
 
 #main-container>header {
 	overflow: hidden;
-	background: url(../images/headerbg.png);
+	background: url(../images/logo_lg_head_960.png) no-repeat top;
 }
 
 #main-container>header h1 {
@@ -179,7 +179,7 @@ div.container>aside {
 	color: white;
 	display: block;
 	height: 200px;
-	background: url(../images/bannerbg.png) #080808 right;
+	background: url(../images/logo_sm_rect_200.png) #080808 right no-repeat;
 	padding: 0px;
 	margin-top: 10px;
 }
