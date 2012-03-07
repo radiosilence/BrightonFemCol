@@ -423,13 +423,13 @@ class Permission(db.Model):
         return '<Permission %s:%r>' % (self.id, self.name)
 
 class LogEntry(db.Model):
-    __table__ = 'log_entry'
+    __tablename__ = 'log_entry'
     id = db.Column(db.Integer, primary_key=True)
     subject_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     subject = db.relationship('User',
         backref=db.backref('actions', lazy='dynamic'))
     target_id = db.Column(db.Integer)
-    verb = db.Column(db.String)
+    verb = db.Column(db.String(255))
     when = db.Column(db.DateTime)
 
     def __init__(self, verb, target=None):
@@ -442,7 +442,7 @@ class LogEntry(db.Model):
 
 
     @classmethod
-    def log(cls, *args, **kwargs)
+    def log(cls, *args, **kwargs):
         log_entry = cls(*args, **kwargs)
         db.session.add(self)
         db.session.commit()
