@@ -235,7 +235,7 @@ def dashboard_editor():
 def dashboard_administrator():
     """Administrator dashboard will cover page editing, event uploading, user
     management."""
-    return render_template('dashboard_administrator.html')
+    return view_logs()
 
 @section('users')
 @auth_allowed_to('manage_site')
