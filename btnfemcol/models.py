@@ -78,7 +78,11 @@ class Section(SiteEntity, db.Model):
                 return top_cat.url
 
         key = 'section:%s:first_page'
-        db.session.add(self)
+        try:
+            db.session.add(self)
+        except:
+            db.session.merge(self)
+
         first = self.pages.first()
         if not first:
             return '#'
