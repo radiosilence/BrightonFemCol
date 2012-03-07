@@ -171,8 +171,10 @@ def home():
         key = 'frontpage:articles'
         fp_arts = cache.get(key)
         if fp_arts:
+            arts = []
             for art in fp_arts:
-                db.session.add(art)
+                arts.append(db.session.merge(art))
+            fp_arts = arts
         if not fp_arts:
             fp_arts = Article.query.filter_by(
             status='published').order_by(Article.pub_date.desc())[:2]

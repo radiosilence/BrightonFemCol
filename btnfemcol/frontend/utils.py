@@ -9,10 +9,7 @@ def get(cls, slug=None, status='live', cached=True):
     key = str('%s:%s:%s:first' % (cls.__name__, slug, status))
     instance = cache.get(key)
     if instance and cached:
-        try:
-            db.session.add(instance)
-        except:
-            db.session.merge(instance)
+        instance = db.session.merge(instance, load=False)
     else:
         if slug:
             instance = cls.query.filter_by(status=status, slug=slug).first()
@@ -25,12 +22,13 @@ def secondary_nav_pages(section_slug):
     """Return the secondary menu items for normal sections."""
     key = str('%s:secondary_nav_pages' % section_slug)
     instances = cache.get(key)
-    if not instances:
+    if instances:
+        sections = []
+        for s in instances:
+            sections.append(db.session.merge(s, load=False))
+        instances = sections
+    else:
         section = get(Section, section_slug)
-        try:
-            db.session.add(section)
-        except Exception:
-            db.session.merge(section)
         instances = section.pages.filter_by(
             status='live').all()
         cache.set(key, instances, 30)
