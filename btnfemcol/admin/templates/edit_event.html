@@ -8,12 +8,11 @@
         {{ render_field(form.start) }}
         {{ render_field(form.end) }}
         {{ render_field(form.location) }}
+        {{ render_field(form.status) }}
         {{ render_field(form.body) }}
-
     </fieldset>
     <fieldset class="advanced">
         {{ render_field(form.slug, class='slug') }}
-        {{ render_field(form.status) }}
     </fieldset>
     <div class="twelve columns alpha omega" style="text-align: right"><input type="submit" value="{{ submit }}" /></div>   
 </form>
