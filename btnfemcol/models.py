@@ -275,7 +275,7 @@ class User(db.Model):
             self.password = h.hash(password)
 
         if not group:
-            group = Group.query.filter_by(name='Writer').first()
+            group = Group.query.filter_by(name='User').first()
 
         self.username = username
         self.firstname = firstname
