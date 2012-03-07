@@ -258,13 +258,6 @@ class UserEditForm(UserFormBase):
         
         super(UserEditForm, self).populate_obj(user)
 
-class UserRegistrationForm(UserEditForm):
-    password = PasswordField('Password',
-        [optional(), equal_to('confirm_pass',
-            message='Passwords must match.')])
-    confirm_pass = PasswordField('Confirm Password')
-
-
 # Generic Forms
 class LoginForm(Form):
     username = TextField('Username')
