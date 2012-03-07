@@ -8,7 +8,7 @@ log_entry = Table(
     Column('id', Integer, primary_key=True),
     Column('subject_id', Integer, ForeignKey('user.id')),
     Column('target_id', Integer),
-    Column('verb', String),
+    Column('verb', String(255)),
     Column('when', DateTime)
 )
 
