@@ -139,6 +139,7 @@ def activate(user_id, reg_code):
     return redirect(url_for('frontend.home'))
 
 @frontend.route('/<string:slug>')
+@cache.memoize(10)
 def show_section(slug):
     section = get(Section, slug)
     if not section:
