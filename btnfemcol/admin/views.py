@@ -262,4 +262,4 @@ def home():
         or g.user.group.name == 'Super User':
         return dashboard_administrator()
     else:
-        return g.user.group.name
+        return redirect(url_for('frontend.home'))
