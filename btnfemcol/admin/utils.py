@@ -3,7 +3,8 @@ import math
 import json
 
 from functools import wraps
-from flask import g, redirect, flash, url_for, abort, request, render_template
+from flask import g, redirect, flash, url_for, abort, request, \
+    render_template, session
 
 from btnfemcol import db
 from btnfemcol import cache
@@ -54,12 +55,25 @@ def save_instance(form, instance, message=u"%s saved."):
         return instance.id
     return False
 
+def log_out():
+    g.user = None
+    del session['logged_in']
+    flash('Logged out.')
+
+def logged_in():
+    try:
+        user = g.user
+        if not user:
+            return False
+    except AttributeError:
+        return False
+    return True
+
 def auth_logged_in(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         try:
-            user = g.user
-            if not user:
+            if not logged_in():
                 raise Exception
         except (AttributeError, Exception):
             flash("You must be logged in to view this page.", 'error')
