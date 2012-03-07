@@ -57,7 +57,7 @@ class Category(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     @property
-    @cache.memoize(300)
+    @cache.memoize(20)
     def url(self):
         top_cat = Category.query.filter_by(
             status='live').order_by(Category.order.asc()).first()
@@ -70,14 +70,17 @@ class Section(SiteEntity, db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     @property
-    @cache.memoize(300)
+    @cache.memoize(20)
     def url(self):
         if self.slug == 'articles':
             top_cat = Category.query.filter_by(status='live').first()
             if top_cat:
                 return top_cat.url
 
-        if self.pages.count() == 0:
+        key = 'section:%s:first_page'
+        db.session.add(self)
+        first = self.pages.first()
+        if not first:
             return '#'
         return self.pages.first().url
 
@@ -168,7 +171,6 @@ class Article(Displayable, db.Model):
 
     tags = db.relationship('Tag', secondary=tags, 
         backref=db.backref('articles', lazy='dynamic'))
-
 
     def __init__(self, pub_date=None, author=None, subtitle=None,
         category=None, *args, **kwargs):
