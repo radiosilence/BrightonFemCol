@@ -161,7 +161,8 @@ def show_page(section_slug, page_slug, template='page.html',
 @cache.memoize(10)
 def home():
     def articles():
-        return Article.query.filter_by(status='published')[:2]
+        return Article.query.filter_by(
+            status='published').order_by(Article.pub_date.desc())[:2]
     def events():
         return q_events_upcoming()[:2]
 
