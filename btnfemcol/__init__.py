@@ -52,7 +52,8 @@ def create_app(debug=False):
             'wikilinks',
             'toc'
         ],
-        output_format='html5'
+        output_format='html5',
+        safe_mode=True
     )
     if not debug:
         configure_logging(app)
