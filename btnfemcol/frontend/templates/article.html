@@ -1,4 +1,7 @@
 {% extends 'page.html' %}
+{% block title %}{{ article.title }} - Brighton Feminist Collective{% endblock %}
+{% block meta_description %}{{ article.excerpt }}{% endblock %}
+{% block meta_author %}{{ article.author.displayed_name }}{% endblock %}
 {% block content %}
     {% block header %}
         <header class="ten columns article-header alpha omega offset-by-one">

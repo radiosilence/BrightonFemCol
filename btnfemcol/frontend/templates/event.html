@@ -1,4 +1,6 @@
 {% extends 'page.html' %}
+{% block title %}{{ page.title }} - Brighton Feminist Collective{% endblock %}
+{% block meta_description %}{{ page.excerpt }}{% endblock %}
     {% block header %}
         <header class="twelve columns alpha omega">
             {{ page.tags_html|safe }}
