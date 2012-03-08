@@ -310,6 +310,8 @@ class User(db.Model):
 #    @cache.memoize(20)
     def allowed_to(self, name):
         """This will check if a user can do a certain action."""
+        if self.status != 'active':
+            return False
         permission = Permission.query.filter_by(name=name).first()
         return permission in self.group.permissions
 

@@ -94,11 +94,10 @@ def auth_allowed_to(permission):
         def inner(*args, **kwargs):
             try:
                 user = g.user
-                if not user.allowed_to(permission) and test:
-                    raise Exception
+                if user.allowed_to(permission):
+                    return f(*args, **kwargs)
             except (AttributeError, Exception):
                 return abort(403)
-            return f(*args, **kwargs)
         return inner
     return decorator
 
