@@ -46,7 +46,14 @@ def create_app(debug=False):
     cache.init_app(app)
 
     # Initialise Markdown
-    Markdown(app)
+    Markdown(app,
+        extensions=[
+            'extra',
+            'wikilinks',
+            'toc'
+        ],
+        output_format='html5'
+    )
     if not debug:
         configure_logging(app)
 
