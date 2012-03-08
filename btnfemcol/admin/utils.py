@@ -14,6 +14,8 @@ from btnfemcol import cache
 
 def edit_instance(cls, form_cls, edit_template='form.html', id=None,
     submit_value=None, view=None, callback=None, **kwargs):
+    
+
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
@@ -33,7 +35,13 @@ def edit_instance(cls, form_cls, edit_template='form.html', id=None,
             verb = 'created'
         else:
             verb = 'edited'
-        LogEntry.log(verb, target=saved)
+        LogEntry.log(verb, target=saved, subject=subject)
+
+        if cls.__name__ == 'User' and created:
+            subject = saved.id
+        else:
+            subject = g.user
+            
         if callback:
             return callback(id, saved, created, form)
         else:

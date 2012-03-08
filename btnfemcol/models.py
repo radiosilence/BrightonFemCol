@@ -440,8 +440,9 @@ class LogEntry(db.Model):
     when = db.Column(db.DateTime)
     class_name = db.Column(db.String(127))
 
-    def __init__(self, verb, class_name=None, target=None):
-        self.subject = g.user
+    def __init__(self, verb, subject=None, class_name=None, target=None):
+        if not subject:
+            self.subject = g.user
         self.verb = verb
         self.when = datetime.utcnow()
         self.class_name = class_name
