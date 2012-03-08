@@ -210,7 +210,7 @@ def view_logs():
 @auth_allowed_to('view_logs')
 @section('logs')
 def json_logs():
-    return json_inner(LogEntry, LogEntry.query, filter_field=LogEntry.verb)
+    return json_inner(LogEntry, LogEntry.query.order_by(LogEntry.when.desc()), filter_field=LogEntry.verb)
 
 
 # Dashboards
