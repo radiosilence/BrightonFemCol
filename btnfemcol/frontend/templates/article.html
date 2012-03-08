@@ -6,8 +6,8 @@
             <a href="{{ article.category.url }}" class="category">{{ article.category.title }}</a>
             <h1><span>{{ article.title }}</span></h1>
             <span class="subtitle">{{ article.subtitle }}</span>
-            <span class="author">By {{ user_link(article.author) }}</span>
-            <span class="date tk-octin-vintage">{{ article.pub_date.strftime('%B %d, %Y') }}</span>
+            <span class="author tk-octin-vintage">By {{ user_link(article.author) }}</span>
+            <span class="date">{{ article.pub_date.strftime('%B %d, %Y') }}</span>
         </header>
     {% endblock %}
     {% block body %}
