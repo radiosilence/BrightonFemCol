@@ -378,6 +378,50 @@ div.article-body p:nth-child(even) img {
 	vertical-align: middle;
 }
 
+
+/* Tabular */
+
+
+table {
+	margin: 10px 0 20px 0;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	line-height: 2;
+	width: 100%;
+}
+
+table h1 {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	font-size: 18px;
+}
+table th {
+	font-weight: bold;
+	text-align: center;
+	border-bottom: 1px solid black;
+}
+
+table th.title {
+	text-align: left;
+}
+table tr.header {
+}
+table tr.header:hover {
+	background-color: transparent;
+}
+
+dl {
+	margin-left: 2em;
+}
+dt {
+	font-weight: bold;
+}
+
+dd {
+	margin-left: 3em;
+}
+
 	
 /* #Page Styles
 ================================================== */
