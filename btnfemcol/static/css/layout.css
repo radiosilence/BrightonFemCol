@@ -312,6 +312,10 @@ div.article-body p:nth-child(even) img {
 	margin: 0px 20px 20px 0px;
 }
 
+#main>div {
+	padding-bottom: 40px;
+}
+
 #main>div h1 {
 	font-size: 24px;
 }
