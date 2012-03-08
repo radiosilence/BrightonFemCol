@@ -73,6 +73,9 @@ class AuthPasswordIncorrectError(AuthError):
 class AuthInactiveError(AuthError):
     pass
 
+class AuthPermissionDeniedError(AuthError):
+    pass
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

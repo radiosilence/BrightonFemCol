@@ -313,7 +313,7 @@ class User(db.Model):
         if self.status != 'active':
             return False
         permission = Permission.query.filter_by(name=name).first()
-        return permission in self.group.permissions
+        return permission in self.group.permissions.all()
 
     def send_activation_email(self):
         """Send the e-mail that allows a user to activate their account."""

@@ -7,7 +7,7 @@ from flask import g, redirect, flash, url_for, abort, request, \
     render_template, session
 
 from btnfemcol.models import LogEntry
-
+from btnfemcol.utils import AuthPermissionDeniedError
 from btnfemcol import db
 from btnfemcol import cache
 
@@ -77,7 +77,7 @@ def log_out():
 def logged_in():
     try:
         user = g.user
-        if not user:
+        if not user  or user.status == 'banned':
             return False
     except AttributeError:
         return False
@@ -87,14 +87,13 @@ def auth_logged_in(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         try:
-            if not logged_in():
-                raise Exception
-        except (AttributeError, Exception):
+            if not logged_in() :
+                raise AuthPermissionDeniedError("Not logged in.")
+        except (AttributeError, AuthPermissionDeniedError):
             flash("You must be logged in to view this page.", 'error')
             return redirect(url_for('admin.login'))
         return f(*args, **kwargs)
     return decorated
-
 
 def auth_allowed_to(permission):
     def decorator(f):
@@ -104,7 +103,8 @@ def auth_allowed_to(permission):
                 user = g.user
                 if user.allowed_to(permission):
                     return f(*args, **kwargs)
-            except (AttributeError, Exception):
+                raise AuthPermissionDeniedError("Not allowed to do this.")
+            except (AttributeError, AuthPermissionDeniedError):
                 return abort(403)
         return inner
     return decorator
