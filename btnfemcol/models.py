@@ -344,6 +344,11 @@ class User(db.Model):
 
     @property
     @cache.memoize(60)
+    def displayed_name(self):
+        return unicode(self.username)
+
+    @property
+    @cache.memoize(60)
     def fullname(self):
         return u'%s %s' % (self.firstname, self.surname)
 

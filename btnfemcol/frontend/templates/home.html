@@ -19,7 +19,7 @@
             {% if event: %}
                 <span class="author">{{ article.start.strftime('%B %d, %Y @ %I:%M%p') }} &mdash; {{ article.end.strftime('%I:%M%p') }}</span>
             {% else %}
-                <span class="author">by {{ article.author.fullname }}</span>
+                <span class="author">by {{ article.author.displayed_name }}</span>
             {% endif %}
         </header>
         <p>{{ article.excerpt }}</p>

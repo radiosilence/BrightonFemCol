@@ -1,6 +1,6 @@
 {% extends 'macros.html' %}
 {%- macro user_link(user) -%}
-<a href="#">{{ user.firstname }} {{ user.surname }}</a>
+<a href="{{ user.url }}">{{ user.displayed_name }}</a>
 {%- endmacro -%}
 {%- macro article_link(article) -%}
 <a href="#">{{ article.title }}</a> by {{ user_link(article.author) }}
