@@ -442,7 +442,8 @@ class LogEntry(db.Model):
 
     def __init__(self, verb, subject=None, class_name=None, target=None):
         if not subject:
-            self.subject = g.user
+            subject = g.user
+        self.subject = subject
         self.verb = verb
         self.when = datetime.utcnow()
         self.class_name = class_name
@@ -465,27 +466,40 @@ class LogEntry(db.Model):
             string = '[%s] ' % self.when
         else:
             string = ''
+
+        if not self.subject_id:
+            subject_name = "(not attributed)"
+        else:
+            subject_name = self.subject.username
+
         string += '%(subject)s %(verb)s' % {
             'when': self.when,
-            'subject': self.subject.username,
+            'subject': subject_name,
             'verb': self.verb
         } 
+
         if self.target_id:
             string += ' %s #%s' % (self.class_name, self.target_id)
         return string
 
 
     @property
-    @cache.memoize(500)
+#    @cache.memoize(500)
     def json_dict(self, exclude=[]):
         """This is a form of serialisation but specifically for the output to
         JSON for asyncronous requests."""
+
+        if not self.subject_id:
+            subject_url = '#'
+        else:
+            subject_url = self.subject.url
+
         d = {
             'id': self.id,
             'entry': self.__unicode__(date=False),
             'when' : self.when.strftime('%Y/%m/%d %H:%m:%S'),
             'urls': {
-                'user': self.subject.url
+                'user': subject_url
             }
         }
         for key in exclude:

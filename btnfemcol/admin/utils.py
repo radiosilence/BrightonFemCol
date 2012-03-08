@@ -37,10 +37,9 @@ def edit_instance(cls, form_cls, edit_template='form.html', id=None,
             verb = 'edited'
 
         if cls.__name__ == 'User' and created:
-            subject = saved.id
+            subject = saved
         else:
-            subject = g.user
-            
+            subject = g.user            
         LogEntry.log(verb, target=saved, subject=subject)
         if callback:
             return callback(id, saved, created, form)
