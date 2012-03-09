@@ -7,7 +7,7 @@
                     <article>
                         <header>
                             <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
-                            <span class="date">{{ event.start.strftime('%c') }} &lsquo;till {{ event.start.strftime('%c') }}</span>
+                            <span class="date">{{ event.start.strftime('%B %d, %Y @ %I:%M%p') }} &mdash; {{ event.start.strftime('%I:%M%p') }}</span>
                         </header>
                         <p>{{ event.excerpt }}</p>
                     </article>
