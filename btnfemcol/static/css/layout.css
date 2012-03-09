@@ -258,7 +258,6 @@ div.container>header nav>ul.secondary>li.selected {
 /* Article related */
 article header h1 a {
 	font-size: 24px;
-	font-family: octin-vintage, serif !important;
 	text-decoration: none;
 	font-weight: normal;
 
@@ -291,7 +290,6 @@ header.article-header a.category  {
 header.article-header span.author {
 	font-size: 14px;
 	margin-bottom: 15px;
-	font-family: octin-vintage, serif;
 	display: block;
 
 }

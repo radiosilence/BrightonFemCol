@@ -17,17 +17,3 @@ $(function() {
             loading_text: "loading tweets..."
         });
 });
-
-$(function() {
-    $('#main>div h1, #main>div h2, #main>div h3, #main>div h4, #main>div h5').each(function() {
-        t = $(this);
-        $('code', t).each(function(){
-            var c = $(this);
-            if(c.text() == '_') {
-                c.replaceWith('_');
-            }
-        });
-
-        t.html(t.html().replace(/_/g, '<code>_</code>'));
-    });
-});
