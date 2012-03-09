@@ -1,5 +1,7 @@
 import random
 from datetime import datetime
+import urllib, hashlib
+
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from flaskext.mail import Message
 
@@ -333,6 +335,7 @@ class User(db.Model):
             activate_url=activate_url)
         mail.send(msg)
 
+
     def _gen_reg_code(self):
         chrs = list(
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
@@ -341,6 +344,20 @@ class User(db.Model):
         for i in range(20):
             string += random.choice(chrs)
         self.reg_code = string
+    
+    @property
+    @cache.memoize(20)
+    def gravatar_url(self, size=100):
+        size = int(size)
+        default = url_for('static', filename='images/av_def_%s.png' % size)
+        gravatar_url = "http://www.gravatar.com/avatar/" + \
+            hashlib.md5(self.email.lower()).hexdigest() + "?"
+        gravatar_url += urllib.urlencode({
+            'd': default,
+            's': str(size)
+        })
+        return gravatar_url
+
 
     @property
     @cache.memoize(60)
