@@ -25,9 +25,6 @@ body {
 a, a:visited {
 	color: black
 }
-span.date, h1, h2 {
-}
-
 code {
 	font-family: 'Dejavu Sans Mono', monospace;
 }
@@ -55,11 +52,15 @@ div.container {
 
 #main-container>header h1 {
 	display: block;
-	font-size: 24px;
+	font-size: 29px;
 	margin-top: 30px;
 	margin-bottom: 10px;
 	padding: 0px;
 	line-height: .8;
+}
+
+#main-container>header h1 a {
+	background-color: white;
 }
 
 body>div>header h1 {
