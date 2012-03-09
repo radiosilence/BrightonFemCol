@@ -33,6 +33,11 @@ def before_request():
     g.sections = sections
 
 
+# Blitz.io
+@frontend.route('/mu-564346ee-4c8fbe62-92480e43-5112ec20')
+def blitz():
+    return 42
+
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
 @cache.memoize(20)
