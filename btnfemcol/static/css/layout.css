@@ -89,6 +89,10 @@ body>div>header h1 {
 	text-transform: uppercase;
 	display: block;
 }
+
+#main>header .event.date {
+	font-size: 18px;
+}
 #main>header span.date sup {
 	text-transform: none;
 }
