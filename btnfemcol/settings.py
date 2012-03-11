@@ -10,7 +10,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
 GMAPS_KEY = ''
 STATIC_PATH = '/'
 
-CACHE_TYPE = 'btnfemcol.utils.cache_pylibmc'
+CACHE_TYPE = 'flask.ext.cache_pylibmc.pylibmc'
 CACHE_KEY_PREFIX = 'btnfemcol'
 
 CACHE_MEMCACHED_SERVERS = ['127.0.0.1']

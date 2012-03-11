@@ -4,6 +4,7 @@ Flask-Markdown
 Flask-Uploads
 Flask-SQLAlchemy
 Flask-Cache
+Flask-Cache-PyLibMC
 Flask-Mail
 pycrypto
 pylibmc
