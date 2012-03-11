@@ -7,7 +7,6 @@ Flask-Cache
 Flask-Cache-PyLibMC
 Flask-Mail
 pycrypto
-pylibmc
 Whirlpool
 Markdown
 SQLAlchemy
