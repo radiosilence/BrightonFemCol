@@ -29,6 +29,9 @@ code {
 	font-family: 'Dejavu Sans Mono', monospace;
 }
 
+p ul {
+	padding-left: 2em;
+}
 ul li {
 	list-style-type: square;
 	margin-left: 2em;
