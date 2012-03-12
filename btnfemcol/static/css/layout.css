@@ -114,6 +114,14 @@ body>div>header h1 {
 	font-size: 16px;
 }
 
+#main div img {
+	float: left;
+}
+
+#main div img.even {
+	float: right;
+}
+
 
 div.container>header a {
 	text-decoration: none;
