@@ -110,7 +110,7 @@ body>div>header h1 {
 }
 
 #main div ul {
-	padding-left: 2em !important;
+	margin-left: 2em !important;
 }
 
 #main div.article-body p {
