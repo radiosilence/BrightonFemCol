@@ -3,6 +3,7 @@ from btnfemcol.models import User, Page, Article, Event, Section, Group, \
 
 from flask import g
 from flaskext.wtf import *
+from flaskext.wtf import PasswordField
 from flaskext.wtf.html5 import *
 from wtforms.ext.sqlalchemy.orm import model_form
 
