@@ -29,9 +29,6 @@ code {
 	font-family: 'Dejavu Sans Mono', monospace;
 }
 
-p ul {
-	padding-left: 2em !important;
-}
 ul li {
 	list-style-type: square;
 	margin-left: 2em;
@@ -110,6 +107,10 @@ body>div>header h1 {
 #main div p {
 	line-height: 1;
 	font-size: 14px;
+}
+
+#main div ul {
+	padding-left: 2em !important;
 }
 
 #main div.article-body p {
