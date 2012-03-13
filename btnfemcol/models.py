@@ -473,7 +473,10 @@ class LogEntry(db.Model):
     def log(cls, *args, **kwargs):
         log_entry = cls(*args, **kwargs)
         db.session.add(log_entry)
-        db.session.commit()
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
 
     def __repr__(self):
         return '<LogEntry %s>' % self.id

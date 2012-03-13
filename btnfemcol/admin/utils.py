@@ -62,7 +62,11 @@ def save_instance(form, instance, message=u"%s saved.", do_flash=True):
             db.session.add(instance)
         else:
             created = False
-        db.session.commit()
+        try:
+            session.commit()
+        except:
+            session.rollback()
+
         if do_flash:
             flash(message % instance.__unicode__(), 'success')
         return instance, created

@@ -134,7 +134,10 @@ def activate(user_id, reg_code):
 
     user.status = 'active'
 
-    db.session.commit()
+    try:
+        session.commit()
+    except:
+        session.rollback()
 
     flash('Your account has been activated.', 'success')
     return redirect(url_for('frontend.home'))
