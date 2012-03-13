@@ -319,13 +319,13 @@ header.article-header span.author a {
 }
 
 
-div.article-body p img {
+#main div.article-body p img {
 	max-width: 200px;
 	float: right;
 	margin: 0px 0px 20px 20px;
 }
 
-div.article-body p:nth-child(even) img {
+#main div.article-body p:nth-child(even) img {
 	float: left;
 	margin: 0px 20px 20px 0px;
 }
