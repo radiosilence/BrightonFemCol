@@ -64,7 +64,6 @@ def save_instance(form, instance, message=u"%s saved.", do_flash=True):
             created = False
         try:
             db.session.commit()
-            current_app.logger.critical("HI")
         except Exception as e:
             current_app.logger.critical(e)
             db.session.rollback()
