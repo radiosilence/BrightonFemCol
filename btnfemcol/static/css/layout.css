@@ -435,6 +435,7 @@ table tr.header:hover {
 
 dl {
 	margin-left: 1em;
+	margin-bottom: 1em;
 }
 dt {
 	font-weight: bold;
