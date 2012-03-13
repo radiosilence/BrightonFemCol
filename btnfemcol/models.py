@@ -475,7 +475,8 @@ class LogEntry(db.Model):
         db.session.add(log_entry)
         try:
             db.session.commit()
-        except:
+        except Exception as e:            
+            current_app.logger.critical(e)
             db.session.rollback()
 
     def __repr__(self):
