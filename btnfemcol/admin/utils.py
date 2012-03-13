@@ -4,7 +4,7 @@ import json
 
 from functools import wraps
 from flask import g, redirect, flash, url_for, abort, request, \
-    render_template, session
+    render_template, session, current_app
 
 from btnfemcol.models import LogEntry
 from btnfemcol.utils import AuthPermissionDeniedError
@@ -63,9 +63,11 @@ def save_instance(form, instance, message=u"%s saved.", do_flash=True):
         else:
             created = False
         try:
-            session.commit()
-        except:
-            session.rollback()
+            db.session.commit()
+            current_app.logger.critical("HI")
+        except Exception as e:
+            current_app.logger.critical(e)
+            db.session.rollback()
 
         if do_flash:
             flash(message % instance.__unicode__(), 'success')
