@@ -93,7 +93,11 @@ def show_category(category_slug=None):
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
 @cache.memoize(60)
 def show_article(category_slug, article_slug):
-    article = get(Article, article_slug, status='published')
+    article = Article.query.filter(
+            Article.pub_date <= datetime.now()
+        ).filter_by(
+            status='published', slug=article_slug
+        ).first()
     if not article:
         return abort(404)
     
@@ -189,7 +193,9 @@ def home():
             fp_arts = arts
         if not fp_arts:
             fp_arts = Article.query.filter_by(
-            status='published').order_by(Article.pub_date.desc())[:2]
+            status='published').filter(
+            Article.pub_date <= datetime.now()).order_by(
+            Article.pub_date.desc())[:2]
             cache.set(key, fp_arts, 30)
         return fp_arts
     def events():
