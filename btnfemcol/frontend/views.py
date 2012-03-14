@@ -31,6 +31,7 @@ def before_request():
         } for s in Section.get_live()]
         cache.set(key, sections, 20)
     g.sections = sections
+    g.domain_name = current_app.config['DOMAIN_NAME']
 
 
 # Blitz.io
