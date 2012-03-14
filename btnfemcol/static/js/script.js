@@ -1,6 +1,12 @@
 /* Author: James Cleveland
 */
-
+var add_www = function() {
+    if(window.domain_name !== window.location.host) {
+        proper_url = window.location.protocol + '//' + window.domain_name + window.location.pathname;
+        window.location = proper_url;
+    }
+}
+add_www();
 $(function() {
     $("#twitter").tweet({
             username: [

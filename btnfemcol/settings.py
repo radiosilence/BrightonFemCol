@@ -1,6 +1,7 @@
 # Default Configuration
 DEBUG = False
 SECRET_KEY = ''
+DOMAIN_NAME = 'www.brightonfeministcollective.org.uk'
 LOG_LOCATION = 'error.log'
 UPLOADED_AVATARS_DEST = 'btnfemcol/static/img/avatar'
 UPLOADED_IMAGES_DEST = 'btnfemcol/static/img/event'
