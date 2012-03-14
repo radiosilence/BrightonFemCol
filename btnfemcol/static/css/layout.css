@@ -52,7 +52,7 @@ div.container {
 
 #main-container>header h1 {
 	display: block;
-	font-size: 29px;
+	font-size: 24px;
 	margin-top: 30px;
 	margin-bottom: 10px;
 	padding: 0px;
@@ -60,7 +60,8 @@ div.container {
 }
 
 #main-container>header h1 a {
-	background-color: white;
+	background-color: #080808;
+	color: white;
 }
 
 body>div>header h1 {
