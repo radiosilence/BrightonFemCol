@@ -59,7 +59,7 @@ def show_event(slug):
     event = get(Event, slug)
     if not event:
         return abort(404)
-    
+    g.canonical_url = event.url
     g.secondary_nav = secondary_nav_pages('events')
     return render_template('event.html',
         page=event,
@@ -80,8 +80,9 @@ def show_category(category_slug=None):
     if not category:
         return abort(404)
 
-    articles = category.articles.filter_by(status='published').all()
-
+    articles = category.articles.filter_by(status='published').filter( \
+                Article.pub_date <= datetime.utcnow()).all()
+    g.canonical_url = category.url
     g.secondary_nav = secondary_nav_categories()
     return render_template('category.html',
         category=category,
@@ -102,6 +103,7 @@ def show_article(category_slug, article_slug):
         return abort(404)
     
     g.secondary_nav = secondary_nav_categories()
+    g.canonical_url = article.url
     return render_template('article.html',
         article=article,
         selected_section_slug='articles',
@@ -117,7 +119,7 @@ def post_registration(id, saved, created, form):
 def register():
     if logged_in():
         log_out()
-
+    g.canonical_url = '/registration'
     g.secondary_nav = secondary_nav_pages('home')
     return edit_instance(User, UserRegistrationForm,
         edit_template='registration.html',
@@ -172,7 +174,7 @@ def show_page(section_slug, page_slug, template='page.html',
         return abort(404)
 
     g.secondary_nav = secondary_nav_pages(section_slug)
-
+    g.canonical_url = page.url
     return render_template(template,
         page=page,
         selected_section_slug=section_slug,
