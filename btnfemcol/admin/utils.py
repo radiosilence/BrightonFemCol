@@ -14,8 +14,6 @@ from btnfemcol import cache
 
 def edit_instance(cls, form_cls, edit_template='form.html', id=None,
     submit_value=None, view=None, callback=None, **kwargs):
-    
-
     if id:
         instance = cls.query.filter_by(id=id).first()
         if not instance:
@@ -87,11 +85,12 @@ def logged_in():
         return False
     return True
 
+
 def auth_logged_in(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         try:
-            if not logged_in() :
+            if not logged_in():
                 raise AuthPermissionDeniedError("Not logged in.")
         except (AttributeError, AuthPermissionDeniedError):
             flash("You must be logged in to view this page.", 'error')
