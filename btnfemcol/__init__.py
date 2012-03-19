@@ -12,7 +12,6 @@ from flaskext.mail import Mail
 
 from btnfemcol.settings import *
 
-
 uploaded_avatars = UploadSet('avatars', IMAGES)
 uploaded_images = UploadSet('images', IMAGES)
 
@@ -66,7 +65,7 @@ def create_app(debug=False):
     app.register_blueprint(frontend, url_prefix='')
     from btnfemcol.admin import admin
     app.register_blueprint(admin, url_prefix='/admin')
-            
+
     configure_base_views(app)
 
     configure_pre_post_request(app)
@@ -123,14 +122,10 @@ def configure_pre_post_request(app):
             pass
 
 
+
     @app.after_request
     def after_request(response):
         """Closes the database again at the end of the request."""
-        try:
-            db.session.commit()
-        except Exception as e:
-            current_app.logger.critical(e)
-            db.session.rollback()
         return response
         
 
