@@ -2,7 +2,7 @@ import sys
 import logging
 from logging import Formatter, FileHandler
 
-from flask import Flask, render_template, flash, g, session
+from flask import Flask, render_template, flash, g, session, current_app
 
 from flaskext.cache import Cache
 from flaskext.markdown import Markdown
@@ -126,6 +126,11 @@ def configure_pre_post_request(app):
     @app.after_request
     def after_request(response):
         """Closes the database again at the end of the request."""
+        try:
+            db.session.commit()
+        except Exception as e:
+            current_app.logger.critical(e)
+            db.session.rollback()
         return response
         
 
