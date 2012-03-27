@@ -51,9 +51,12 @@
 
 /* #Basic Styles
 ================================================== */
-	body {
-		background: #fff;
+	body, #black-bloc p.quote {
 		font: 14px/21px "Goudy Old Style", "Georgia", "Times New Roman", Helvetica, Arial, sans-serif;
+	}
+
+	body { 
+		background: #fff;
 		color: #444;
 		-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
 		-webkit-text-size-adjust: 100%;
@@ -62,7 +65,7 @@
 
 /* #Typography
 ================================================== */
-	h1, h2, h3, h4, h5, h6, li {
+	h1, h2, h3, h4, h5, h6, li, #black-bloc p {
 		color: #181818;
 		font-family: Helvetica, Arial, sans-serif;
 		font-weight: normal; }
