@@ -17,6 +17,7 @@
 /* #Site Styles
 ================================================== */
 
+
 body {
 	background: #010101 url(../nami.png);
 	color: white;
@@ -208,7 +209,6 @@ div.container>aside {
 
 #black-bloc p {
 	margin-top: 10px;
-	font-family: facitweb, sans-serif;
 	text-transform: uppercase;
 }
 
@@ -220,7 +220,6 @@ div.container>aside {
 	margin-top: 10px;
 	font-size: 24px;
 	font-style: italic;
-	font-family: ff-meta-serif-web-pro, serif;
 	text-transform: none;
 }
 div.container>footer {
@@ -295,7 +294,6 @@ a.category {
 	text-align: right;
 	text-transform: uppercase;
 	font-weight: bold;
-	font-family: facitweb, sans-serif;
 	padding: 0px 5px 0px 5px;
 }
 
