@@ -89,7 +89,7 @@
 /* #Typography
 ================================================== */
 	h1, h2, h3, h4, a.category, #black-bloc p, div.container>header nav li,
-		span.date {
+		span.date, span.article.display.author {
 		font-family:  'UniversCn', sans-serif;
 		text-transform: uppercase;
 		color: black;
