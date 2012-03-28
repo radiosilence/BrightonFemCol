@@ -88,21 +88,20 @@
 
 /* #Typography
 ================================================== */
-	h1, h2, h3, h4, a.category, #black-bloc p,
+	h1, h2, h3, h4, a.category, #black-bloc p, div.container>header nav li,
 		span.date {
 		font-family:  'UniversCn', sans-serif;
 		text-transform: uppercase;
 		color: black;
 		font-weight: bold;
 	}
-	span.date, #black-bloc p {
+	span.date, #black-bloc p, div.container>header nav li {
 		font-weight: normal;
 	}
 	div.container>header nav li.selected a {
 		font-weight: bold;
 	}
-	h5, h6, li,  span.author {
-		color: #1a1a1a;
+	h5, h6,  span.author, ul.tweet_list li {
 		font-family:   Arial, Helvetica, sans-serif;
 		font-weight: normal; }
 
