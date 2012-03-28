@@ -111,6 +111,11 @@ body>div>header h1 {
 	font-size: 14px;
 }
 
+
+#main div.page p {
+	line-height: 1.4;
+	font-size: 15px;
+}
 #main div ul {
 	margin-left: 2em !important;
 }
