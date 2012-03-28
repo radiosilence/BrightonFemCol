@@ -43,15 +43,22 @@ class Displayable(SiteEntity):
     def excerpt(self):
         if not self.body:
             return ''
-        if len(self.body) > 140:
+        excerpt = self.body[:440]
+
+        patterns = [
+            r'!?\[(.*)\]\((.*)\)',
+            r'\*',
+            r'#(.+)',
+        ]
+
+        for pattern in patterns:
+            excerpt = re.sub(pattern, '', excerpt)
+
+        if len(excerpt) > 140:
             ellip = u'\u2026'
         else:
             ellip = ''
-        chars = list('[]#*-=!')
 
-        excerpt = self.body[:340]
-        for char in chars:
-            excerpt = excerpt.replace(char, '')
         return excerpt[:140] + ellip
 
 
