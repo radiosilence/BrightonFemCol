@@ -116,8 +116,8 @@ body>div>header h1 {
 }
 
 #main div.article-body p {
-	line-height: 1.8;
-	font-size: 16px;
+	line-height: 25px;
+	font-size: 17px;
 }
 
 #main div img {
@@ -218,8 +218,9 @@ div.container>aside {
 }
 
 #black-bloc p.quote {
-	margin-top: 10px;
-	font-size: 24px;
+	margin-top: 0px;
+	font-size: 22px;
+	line-height: 1.2;
 	font-style: italic;
 	text-transform: none;
 }
