@@ -1,6 +1,9 @@
 import random
+import re
+
 from datetime import datetime
-import urllib, hashlib
+import urllib
+import hashlib
 
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from flaskext.mail import Message
@@ -21,7 +24,7 @@ class SiteEntity(object):
 
     def __init__(self, title=None, slug=None, body=None, order=0,
         status='draft'):
-        
+
         self.slug = slug
         self.title = title
         self.status = status
@@ -30,13 +33,13 @@ class SiteEntity(object):
     def __unicode__(self):
         return unicode(self.title)
 
+
 class Displayable(SiteEntity):
     body = db.Column(db.Text, nullable=False)
 
     def __init__(self, body=None, *args, **kwargs):
         self.body = body
         super(Displayable, self).__init__(*args, **kwargs)
-
 
     @property
     @cache.memoize(60)
@@ -84,8 +87,6 @@ class Section(SiteEntity, db.Model):
             top_cat = Category.query.filter_by(status='live').first()
             if top_cat:
                 return top_cat.url
-
-        key = 'section:%s:first_page'
 
         db.session.add(self)
         first = self.pages.first()
