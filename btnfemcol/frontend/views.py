@@ -82,7 +82,9 @@ def show_category(category_slug=None):
         return abort(404)
 
     articles = category.articles.filter_by(status='published').filter( \
-                Article.pub_date <= datetime.utcnow()).all()
+                Article.pub_date <= datetime.utcnow()).order_by(
+                    Article.pub_date.desc()).all()
+
     g.canonical_url = category.url
     g.secondary_nav = secondary_nav_categories()
     return render_template('category.html',
