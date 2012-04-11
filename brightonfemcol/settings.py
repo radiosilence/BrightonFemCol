@@ -107,7 +107,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'south'
+    'south',
+    'suave',
+    'brightonfemcol'
 )
 
 # A sample logging configuration. The only tangible logging
