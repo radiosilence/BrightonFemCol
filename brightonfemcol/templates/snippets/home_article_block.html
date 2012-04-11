@@ -1,0 +1,23 @@
+<article class="home listed">
+    <a class="category" href="
+    {% if event %}
+        {{ show_events_url }}
+    {% else %}
+        {{ article.category.url }}
+    {% endif %}">
+        {% if event %}
+            Event
+        {% else %}
+            {{ article.category.title }}
+        {% endif %}
+    </a>
+    <header>
+        <h1><a href="{{ article.url }}">{{ article.name }}</a></h1>
+        {% if event %}
+            <span class="author">DATE</span>
+        {% else %}
+            <span class="author">by {{ article.author.displayed_name }}</span>
+        {% endif %}
+    </header>
+    <p>{{ article.excerpt }}</p>
+</article>
