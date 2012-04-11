@@ -48,30 +48,20 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 
-MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
-    'fiber.middleware.ObfuscateEmailAddressMiddleware',
-    'fiber.middleware.AdminPageMiddleware',
-)
-
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = 'static/'
 
 STATIC_URL = '/static/'
-
-STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
-    'compressor.finders.CompressorFinder',
-)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'l)(-ko0021##i^a&amp;+7m-nhl^67x2_94+*3wevc5g33zx*t*y0b'
@@ -95,7 +85,6 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
-    'fiber.context_processors.page_info',
 )
 
 ROOT_URLCONF = 'brightonfemcol.urls'
