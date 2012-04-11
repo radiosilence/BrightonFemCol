@@ -107,8 +107,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'django-pjax',
-    'django-model-utils',
+    'djpjax',
+    'reversion',
     'south',
     'suave',
     'brightonfemcol'

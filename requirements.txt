@@ -3,3 +3,4 @@ PIL
 django-model-utils
 django-pjax
 south
+django-reversion
