@@ -40,26 +40,27 @@
 		</div>
 		<nav class="sixteen columns alpha omega">
 			<ul class="primary">
-				{% for section in nav_sections %}
+				{% for nav_section in nav_sections %}
 					<li class="
-						{% if section.slug == selected_section_slug %}
+						{% if nav_section.slug == section.slug %}
 							selected
 						{% endif %}"
-					><a href="{{ section.url }}">{{ section.title }}</a>
+					><a href="{{ nav_section.url }}">{{ nav_section.name }}</a>
 				{% endfor %}
 			</ul>
 			<ul class="secondary">
 				{% for item in nav_secondary %}
 					<li class="
-						{% if item.slug == selected_secondary_slug %}
+						{% if item.slug == nav_secondary_selected.slug %}
 							selected
 						{% endif %}"
-					><a href="{{ item.url }}">{{ item.title }}</a></li>
+					><a href="{{ item.url }}">{{ item.name }}</a></li>
 				{% endfor %}
 			</ul>
 		</nav>
 	</header>
 	<section id="main" class="twelve columns main-column">
+		{{ nav_secondary_selected.slug }}
 		{% block content %}
 		{% endblock %}
 	</section>
