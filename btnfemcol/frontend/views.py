@@ -1,15 +1,11 @@
 from datetime import datetime
 
-from flask import Blueprint, request, session, g, redirect, url_for, abort, \
-     render_template, flash, current_app
-
-from flaskext.uploads import (UploadSet, configure_uploads, IMAGES,
-                              UploadNotAllowed)
+from flask import g, redirect, url_for, abort, render_template, flash, \
+    current_app
 
 from btnfemcol.frontend import frontend
 
-from btnfemcol import uploaded_images, uploaded_avatars
-from btnfemcol import db, cache, mail
+from btnfemcol import db, cache
 
 from btnfemcol.models import Article, User, Page, Section, Category, Event
 
@@ -18,6 +14,7 @@ from btnfemcol.frontend.utils import get, secondary_nav_pages, \
     secondary_nav_categories, q_events_upcoming
 
 from btnfemcol.admin.utils import edit_instance, log_out, logged_in
+
 
 @frontend.before_request
 def before_request():
@@ -39,6 +36,7 @@ def before_request():
 def blitz():
     return '42'
 
+
 @frontend.route('/events')
 @frontend.route('/events/<string:type>')
 @cache.memoize(20)
@@ -52,7 +50,9 @@ def show_events(type='upcoming'):
                 Event.start < datetime.utcnow())
         return q[:limit]
 
-    return show_page('events', type, template='event_listing.html', events=inner(type))
+    return show_page('events', type, template='event_listing.html',
+        events=inner(type))
+
 
 @frontend.route('/event/<string:slug>')
 @cache.memoize(20)
@@ -92,6 +92,7 @@ def show_category(category_slug=None):
         selected_secondary_slug=category_slug
     )
 
+
 @frontend.route('/articles/<string:category_slug>/<string:article_slug>')
 @cache.memoize(60)
 def show_article(category_slug, article_slug):
@@ -102,7 +103,7 @@ def show_article(category_slug, article_slug):
         ).first()
     if not article:
         return abort(404)
-    
+
     g.secondary_nav = secondary_nav_categories()
     g.canonical_url = article.url
     return render_template('article.html',
@@ -111,10 +112,12 @@ def show_article(category_slug, article_slug):
         selected_secondary_slug=category_slug
     )
 
+
 def post_registration(id, saved, created, form):
     saved.send_activation_email()
     g.secondary_nav = secondary_nav_pages('home')
     return render_template('registered.html', user=saved)
+
 
 @frontend.route('/register', methods=['GET', 'POST'])
 def register():
@@ -126,6 +129,7 @@ def register():
         edit_template='registration.html',
         callback=post_registration,
         do_flash=False)
+
 
 @frontend.route('/activate/<int:user_id>/<string:reg_code>')
 def activate(user_id, reg_code):
@@ -150,6 +154,7 @@ def activate(user_id, reg_code):
     flash('Your account has been activated.', 'success')
     return redirect(url_for('frontend.home'))
 
+
 @frontend.route('/<string:slug>')
 @cache.memoize(10)
 def show_section(slug):
@@ -168,7 +173,7 @@ def show_section(slug):
 @cache.memoize(10)
 def show_page(section_slug, page_slug, template='page.html',
     **kwargs):
-    
+
     page = get(Page, page_slug)
 
     if not page:
@@ -182,6 +187,7 @@ def show_page(section_slug, page_slug, template='page.html',
         selected_secondary_slug=page_slug,
         **kwargs
     )
+
 
 @frontend.route('/')
 @cache.memoize(20)
@@ -201,6 +207,7 @@ def home():
             Article.pub_date.desc())[:2]
             cache.set(key, fp_arts, 30)
         return fp_arts
+
     def events():
         key = 'frontpage:events'
         fp_evts = cache.get(key)
