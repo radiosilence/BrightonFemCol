@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <header class="twelve columns alpha omega ">
+        <h1>Nearly There...</h1>
+    </header>
+
+    <div class="twelve columns alpha omega">
+        <p>You have successfully registered!</p>
+        <p>An e-mail has been sent to <strong>{{ user.email }}</strong> with an activation link so you can 
+            start using your account.</p>
+        <p>Be sure to check spam folders because automated messages can sometimes become false-positives.</p>
+    </div>
+{% endblock %}

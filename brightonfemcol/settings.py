@@ -85,7 +85,9 @@ MIDDLEWARE_CLASSES = (
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'django.core.context_processors.request',
+    "suave.context_processors.nav",
 )
+
 
 ROOT_URLCONF = 'brightonfemcol.urls'
 
@@ -103,15 +105,16 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.markup',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'brightonfemcol',
     'djpjax',
     'reversion',
     'south',
     'suave',
-    'brightonfemcol'
 )
 
 # A sample logging configuration. The only tangible logging
