@@ -1,2 +1,5 @@
 Django
 PIL
+django-model-utils
+django-pjax
+south

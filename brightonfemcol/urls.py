@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
 )
 
 if settings.DEBUG:
