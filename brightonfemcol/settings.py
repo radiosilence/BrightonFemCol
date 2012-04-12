@@ -115,6 +115,8 @@ INSTALLED_APPS = (
     'reversion',
     'south',
     'suave',
+    'suave_press',
+    'suave_calendar'
 )
 
 # A sample logging configuration. The only tangible logging

@@ -28,9 +28,6 @@
 		g.src=('https://ssl.google-analytics.com/ga.js');
 		s.parentNode.insertBefore(g,s)}(document,'script'));
 	</script>
-	<script>
-		window.domain_name = '{{ g.domain_name }}';
-	</script>
 </head>
 <body>
 <div id="main-container" class="container">
@@ -45,7 +42,7 @@
 						{% if nav_section.slug == section.slug %}
 							selected
 						{% endif %}"
-					><a href="{{ nav_section.url }}">{{ nav_section.name }}</a>
+					><a href="{{ nav_section.url }}">{{ nav_section.title }}</a>
 				{% endfor %}
 			</ul>
 			<ul class="secondary">
@@ -54,14 +51,14 @@
 						{% if item.slug == nav_secondary_selected.slug %}
 							selected
 						{% endif %}"
-					><a href="{{ item.url }}">{{ item.name }}</a></li>
+					><a href="{{ item.url }}">{{ item.title }}</a></li>
 				{% endfor %}
 			</ul>
 		</nav>
 	</header>
 	<section id="main" class="twelve columns main-column">
-		{% block content %}
-		{% endblock %}
+	{% block content %}
+	{% endblock %}
 	</section>
 	<aside class="columns four alpha omega" id="twitter">
 	</aside>
@@ -75,6 +72,8 @@
 <script src="{% static 'js/plugins.js' %}"></script>
 <script src="{% static 'js/tabs.js' %}"></script>
 <script src="{% static 'js/script.js' %}"></script>
-
+<script>
+	$('a').pjax('#main');
+</script>
 </body>
 </html>
