@@ -1,4 +1,5 @@
 Django
+-e git+git@github.com:radiosilence/django-suave.git#egg=suave
 PIL
 django-model-utils
 django-pjax
