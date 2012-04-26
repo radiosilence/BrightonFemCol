@@ -57,12 +57,12 @@ class Displayable(SiteEntity):
         for pattern in patterns:
             excerpt = re.sub(pattern, '', excerpt)
 
-        if len(excerpt) > 140:
+        if len(excerpt) > 150:
             ellip = u'\u2026'
         else:
             ellip = ''
 
-        return excerpt[:140] + ellip
+        return excerpt[:150] + ellip
 
 
 class Category(SiteEntity, db.Model):
