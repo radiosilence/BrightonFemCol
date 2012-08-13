@@ -1,7 +1,7 @@
-from flaskext.wtf import *
+from flask.ext.wtf import *
 
-from flaskext.wtf import PasswordField
-from flaskext.wtf.html5 import *
+from flask.ext.wtf import PasswordField
+from flask.ext.wtf.html5 import *
 
 from btnfemcol.admin.forms import UserEditForm
 

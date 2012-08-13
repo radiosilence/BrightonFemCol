@@ -2,9 +2,9 @@ from btnfemcol.models import User, Page, Article, Event, Section, Group, \
     Category
 
 from flask import g
-from flaskext.wtf import *
-from flaskext.wtf import PasswordField
-from flaskext.wtf.html5 import *
+from flask.ext.wtf import *
+from flask.ext.wtf import PasswordField
+from flask.ext.wtf.html5 import *
 from wtforms.ext.sqlalchemy.orm import model_form
 
 from btnfemcol.utils import Hasher
