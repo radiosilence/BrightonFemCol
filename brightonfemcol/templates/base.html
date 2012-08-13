@@ -43,7 +43,10 @@
 						{% if item == nav.primary.selected %}
 							selected
 						{% endif %}"
-					><a href="{{ item.url }}">{{ item.title }}</a>
+						{% if item == nav.primary.selected %}
+							itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"
+						{% endif %}
+					><a itemprop="url" href="{{ item.url }}"><span itemprop="title">{{ item.title }}</span></a>
 				{% endfor %}
 			</ul>
 			<ul class="secondary">
@@ -52,7 +55,18 @@
 						{% if item == nav.secondary.selected %}
 							selected
 						{% endif %}"
-					><a href="{{ item.url }}">{{ item.title }}</a></li>
+						{% if item == nav.secondary.selected %}
+							itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"
+						{% endif %}
+					>
+						{% if item != nav.secondary.selected %}
+							<a itemprop="url" href="{{ item.url }}">
+						{% endif %}
+							<span itemprop="title">{{ item.title }}</span>
+						{% if item != nav.secondary.selected %}
+							</a>
+						{% endif %}
+						</li>
 				{% endfor %}
 			</ul>
 		</nav>

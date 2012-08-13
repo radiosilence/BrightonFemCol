@@ -1,12 +1,19 @@
 from django.contrib import admin
 
-from suave.admin import DisplayableAdmin
+from suave.admin import DisplayableAdmin, ImageInline
 
-from .models import Category, Article
+from .models import Category, Article, ArticleImage
+
+
+class ArticleImageInline(ImageInline):
+    model = ArticleImage
 
 
 class ArticleAdmin(DisplayableAdmin):
-    pass
+    inlines = (
+        ArticleImageInline,
+    )
+
 
 class CategoryAdmin(DisplayableAdmin):
     pass

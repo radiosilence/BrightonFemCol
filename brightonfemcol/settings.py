@@ -123,6 +123,8 @@ INSTALLED_APPS = (
     'south',
     'suave',
     'tinymce',
+    'django_extensions',
+    'sorl.thumbnail',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

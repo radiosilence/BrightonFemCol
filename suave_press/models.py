@@ -7,7 +7,7 @@ from model_utils import Choices
 from model_utils.managers import PassThroughManager
 from model_utils.fields import StatusField
 
-from suave.models import Displayable, SiteEntityQuerySet
+from suave.models import Displayable, SiteEntityQuerySet, Image
 
 
 class Category(Displayable):
@@ -51,3 +51,6 @@ class Article(Displayable):
             'article': self.slug,
             'category': self.category.slug,
         })
+
+class ArticleImage(Image):
+    article = models.ForeignKey(Article, related_name='images')
