@@ -2,9 +2,6 @@ import sys
 import logging
 from logging import Formatter, FileHandler
 
-import newrelic.agent
-newrelic.agent.initialize('/srv/btnfemcol/btnfemcol/newrelic.ini')
-
 from flask import Flask, render_template, flash, g, session, current_app
 
 from flaskext.cache import Cache
