@@ -12,12 +12,12 @@
         {% endif %}
     </a>
     <header>
-        <h1><a href="{{ article.url }}">{{ article.name }}</a></h1>
+        <h1><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h1>
         {% if event %}
             <span class="author">DATE</span>
         {% else %}
-            <span class="author">by {{ article.author.displayed_name }}</span>
+            <span class="author">by {{ article.author.username }}</span>
         {% endif %}
     </header>
-    <p>{{ article.excerpt }}</p>
+    <p>{{ article.body|striptags|truncatewords:25 }}</p>
 </article>

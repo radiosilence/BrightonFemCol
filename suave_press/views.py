@@ -1,23 +1,30 @@
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 
 from .models import Category, Article
 
-from .utils import get_category_from_slug, get_article_from_slug
 
+def category(request, category=None):
+    category = get_object_or_404(Category, slug=category)
 
-def view_category(request, category_slug=None):
-    category = get_category_from_slug(category_slug)
-
-    return TemplateResponse('suave_press/category.html', dict(
+    return TemplateResponse(request, 'suave_press/category.html', dict(
         category=category
     ))
 
-def view_article(request, category_slug=None, article_slug=None):
-    category = get_category_from_slug(category_slug)
-    article = get_article_from_slug(article_slug)
+def article(request, category=None, article=None):
+    category = get_object_or_404(Category, slug=category)
+    article = get_object_or_404(Article, slug=article, category=category)
 
-    return TemplateResponse('suave_press/article.html', dict(
+    if article.status != Article.STATUS.live \
+        and not request.user.is_staff:
+
+        raise Http404
+
+    return TemplateResponse(request, 'suave_press/article.html', dict(
         category=category,
         article=article
     ))
+
+def home(request):
+    return TemplateResponse(request, 'suave_press/home.html', {})

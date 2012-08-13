@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse_lazy
 
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
@@ -35,7 +36,18 @@ class Article(Displayable):
     subtitle = models.CharField(max_length=255, null=True, blank=True)
     published = models.DateTimeField()
     author = models.ForeignKey(User, related_name='articles')
+    category = models.ForeignKey(Category, related_name='category')
     categories = models.ManyToManyField(Category, related_name='articles',
-        null=True, blank=True)
+        null=True, blank=True, verbose_name="extra categories")
 
     objects = PassThroughManager.for_queryset_class(ArticleQuerySet)()
+
+    @property
+    def url(self):
+        return self.get_absolute_url()
+
+    def get_absolute_url(self):
+        return reverse_lazy('suave_press:article', kwargs={
+            'article': self.slug,
+            'category': self.category.slug,
+        })

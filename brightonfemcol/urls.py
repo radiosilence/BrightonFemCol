@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    
+    url(r'^articles/', include('suave_press.urls', namespace='suave_press')),
     (r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
 )

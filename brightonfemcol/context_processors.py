@@ -1,5 +1,7 @@
 from suave.models import NavItem
 
+from suave_press.models import Article
+
 def brightonfemcol(request):
     def nav():
         try:
@@ -10,9 +12,8 @@ def brightonfemcol(request):
         primary = nav.get_children()
         primary_selected = None
         for item in primary:
-            if item.url in request.path:
+            if request.path.startswith(item.url):
                 primary_selected = item
-                break
 
         if primary_selected:
             secondary = primary_selected.get_children()
@@ -24,7 +25,7 @@ def brightonfemcol(request):
             if request.path == item.url:
                 secondary_selected = item
                 break
-        print secondary
+
         return {
             'primary': {
                 'items': primary,
@@ -36,6 +37,12 @@ def brightonfemcol(request):
             }
         }
 
+    def home():
+        return {
+            'articles': Article.objects.published()[:3]
+        }
+
     return {
+        'home': home(),
         'nav': nav()
     }
