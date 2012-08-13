@@ -5,3 +5,4 @@ django-model-utils
 django-pjax
 south
 django-reversion
+django-compressor
