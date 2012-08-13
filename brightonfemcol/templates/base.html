@@ -59,13 +59,9 @@
 							itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"
 						{% endif %}
 					>
-						{% if item != nav.secondary.selected %}
-							<a itemprop="url" href="{{ item.url }}">
-						{% endif %}
+						<a itemprop="url" href="{{ item.url }}">
 							<span itemprop="title">{{ item.title }}</span>
-						{% if item != nav.secondary.selected %}
-							</a>
-						{% endif %}
+						</a>
 						</li>
 				{% endfor %}
 			</ul>
