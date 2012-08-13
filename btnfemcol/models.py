@@ -83,16 +83,20 @@ class Section(SiteEntity, db.Model):
     @property
     @cache.memoize(20)
     def url(self):
-        if self.slug == 'articles':
-            top_cat = Category.query.filter_by(status='live').first()
-            if top_cat:
-                return top_cat.url
+        try:
+            if self.slug == 'articles':
+                top_cat = Category.query.filter_by(status='live').first()
+                if top_cat:
+                    return top_cat.url
 
-        db.session.add(self)
-        first = self.pages.first()
-        if not first:
+            db.session.add(self)
+            first = self.pages.first()
+            if not first:
+                return '#'
+            return self.pages.first().url
+        except:
+            db.session.rollback()
             return '#'
-        return self.pages.first().url
 
     def __repr__(self):
         return '<Section: %s>' % self.title

@@ -11,11 +11,15 @@ def get(cls, slug=None, status='live', cached=True):
     if instance and cached:
         instance = db.session.merge(instance, load=False)
     else:
-        if slug:
-            instance = cls.query.filter_by(status=status, slug=slug).first()
-        else:
-            instance = cls.query.filter_by(status=status).first()
-        cache.set(key, instance, 10)
+        try:
+            if slug:
+                instance = cls.query.filter_by(status=status, slug=slug).first()
+            else:
+                instance = cls.query.filter_by(status=status).first()
+            cache.set(key, instance, 10)
+        except:
+            db.session.rollback
+            return False
     return instance
     
 def secondary_nav_pages(section_slug):

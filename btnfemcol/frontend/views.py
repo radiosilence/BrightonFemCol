@@ -21,12 +21,16 @@ def before_request():
     key = 'sections'
     sections = cache.get(key)
     if not sections:
-        sections = [{
-            'url': s.url,
-            'title': s.title,
-            'slug': s.slug
-        } for s in Section.get_live()]
-        cache.set(key, sections, 20)
+        try:
+            sections = [{
+                'url': s.url,
+                'title': s.title,
+                'slug': s.slug
+            } for s in Section.get_live()]
+            cache.set(key, sections, 20)
+        except:
+            sections = []
+            db.session.rollback()
     g.sections = sections
     g.domain_name = current_app.config['DOMAIN_NAME']
 
@@ -218,11 +222,18 @@ def home():
             cache.set(key, fp_evts, 30)
         return fp_evts
 
-    first_section = get(Section)
-    first_page = get(Page)
+    try:
+        section_slug = get(Section).slug
+    except:
+        section_slug = '#'
+    try:
+        page_slug = get(Page).slug
+    except:
+        page_slug = '#'
+
     return show_page(
-        first_section.slug,
-        first_page.slug,
+        section_slug,
+        page_slug,
         template='home.html',
         articles=articles(),
         events=events()

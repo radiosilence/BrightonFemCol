@@ -84,9 +84,11 @@ def configure_logging(app):
         '[in %(pathname)s:%(funcName)s:%(lineno)d]'
     ))
     app.logger.addHandler(file_handler)
-    for logger in app.config['LOGGERS']:
-        app.logger.addHandler(logger)
-
+    try:
+        for logger in app.config['LOGGERS']:
+            app.logger.addHandler(logger)
+    except KeyError:
+        pass
 def configure_base_views(app):
     
     @app.errorhandler(401)
