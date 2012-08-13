@@ -84,8 +84,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-    "suave.context_processors.nav",
+    'brightonfemcol.context_processors.brightonfemcol',
 )
 
 
@@ -101,6 +100,16 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'brightonfemcol',
+    'suave_press',
+    'suave_calendar',
+    'suave_discussion',
+    'compressor',
+    'mptt',
+    'reversion',
+    'south',
+    'suave',
+    'tinymce',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -110,14 +119,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'brightonfemcol',
-    'reversion',
-    'mptt',
-    'south',
-    'suave',
-    'suave_press',
-    'suave_calendar'
 )
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -147,3 +156,8 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

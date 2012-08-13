@@ -32,9 +32,10 @@ class Article(Displayable):
         ('deleted', 'Deleted')
     )
 
-    status = StatusField()
     subtitle = models.CharField(max_length=255, null=True, blank=True)
     published = models.DateTimeField()
     author = models.ForeignKey(User, related_name='articles')
+    categories = models.ManyToManyField(Category, related_name='articles',
+        null=True, blank=True)
 
     objects = PassThroughManager.for_queryset_class(ArticleQuerySet)()

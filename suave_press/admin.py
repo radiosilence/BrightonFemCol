@@ -6,8 +6,7 @@ from .models import Category, Article
 
 
 class ArticleAdmin(DisplayableAdmin):
-    exclude = ('sort_index',)
-
+    pass
 
 class CategoryAdmin(DisplayableAdmin):
     pass

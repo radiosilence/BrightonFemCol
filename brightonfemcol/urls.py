@@ -6,11 +6,13 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
+    
+    (r'^tinymce/', include('tinymce.urls')),
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
 )
 
+
 if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
     urlpatterns += patterns('',
         url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
