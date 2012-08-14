@@ -1,0 +1,45 @@
+{% extends 'base.html' %}{% load thumbnail %}
+{% block title %}{{ event.title }} - Brighton Feminist Collective{% endblock %}
+{% block meta_description %}{{ event.excerpt }}{% endblock %}
+{% block meta_author %}{{ event.author.displayed_name }}{% endblock %}
+{% block content %}
+    {% block header %}
+        {% if event.image and event.header_image %}
+            {% thumbnail event.image.image '700x200' crop='center' as im %}
+            <header
+                class="twelve columns alpha omega event header_image{% if event.dark_bg %} dark_bg{% endif %}"
+                style="background-image:url({{ im.url }})">
+                {% include 'suave_calendar/snippets/event_header.html' %}
+            </header>
+            {% endthumbnail %}
+        {% else %}
+            <header class="twelve columns alpha omega event">
+                {% include 'suave_calendar/snippets/event_header.html' %}
+            </header>
+        {% endif %}
+    {% endblock %}
+    {% block body %}
+        <div class="twelve columns alpha omega event">
+            {% if event.image and not event.header_image %}
+                {% thumbnail event.image.image '250' crop='center' as im %}
+                    <a href={{ event.image.image.url }}><img src={{ im.url }} /></a>
+                {% endthumbnail %}
+            {% endif %}
+            {{ event.body|safe }}
+            {% if event.links.all.count > 0 %}
+            <h2>Additional Links</h2>
+            <ul>
+                {% for link in event.links.all %}
+                    <li>
+                        <a href="{{ link.url }}">{{ link.text }}</a>
+                        {% if link.information %}
+                            &nbsp;&ndash; {{ link.information }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% include 'snippets/gallery.html' with items=event.images.all count=event.image.all.count title='Pictures' %}
+        </div>
+    {% endblock %}
+{% endblock %}

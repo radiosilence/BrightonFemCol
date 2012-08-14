@@ -1,3 +1,10 @@
+@mixin UniversCn($style: normal) {
+  font-family: 'UniversCn', sans-serif;
+  text-transform: uppercase;
+  font-style: $style;
+}
+
+
 body {
   background: #010101 url(../images/hold-fast.png);
   color: white; }
@@ -76,7 +83,7 @@ body>div>header h1 {
     line-height: 1.4;
     font-size: 15px; }
   ul {
-    margin-left: 2em !important; }
+    margin-left: 2em; }
   &.article-body p {
     line-height: 28px;
     font-size: 17px; }
@@ -337,6 +344,108 @@ dd {
 
 /* #Page Styles
 ================================================== */
+@mixin Dymo($bg: black, $fg: white) {
+  background-color: $bg;
+  float: left;
+  color: $fg;
+  padding: 2px 5px;
+  margin: 8px 5px;
+  overflow: hidden;
+  display: block;
+  @include UniversCn();
+}
+
+/* #Events
+================================================== */
+
+#main {
+  header.event {
+    margin-top: 10px;
+    h1 {
+      margin-bottom: 0px;
+      font-size: 36px;
+    }
+    span, a, label, span.event.date {
+      @include UniversCn;
+      font-size: 22px;
+    }
+    div {
+      width: 700px;
+      display: block;
+      overflow: hidden;
+    }
+    label {
+      margin-right: .5em;
+      margin-top: .5em;
+      width: 120px;
+      display: block;
+
+    }
+  }
+  header.event.header_image {
+    height: 200px;
+    label {
+      display: none;
+    }
+    h1 {
+      @include Dymo(white, black);
+      line-height: 1;
+    }
+    span.event {
+      @include Dymo(white, black);
+    }
+    span.event.price {
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    a {
+      @include Dymo(white, black);
+      font-size: 20px;
+    }
+  }
+  header.event.dark_bg {
+    h1 {
+      @include Dymo();
+    }
+    span.event {
+      @include Dymo();
+    }
+    span.event.price {
+    }
+
+    a {
+      @include Dymo();
+    }
+  }
+  div.event {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+
+/* #In page picture galleries
+================================================== */
+
+#main div ul.gallery {
+  margin: 0;
+  padding: 5px 0 0 5px;
+  text-indent: 0;
+  overflow: hidden;
+  background: black;
+  width: 693px;
+  li {
+    float: left;
+    display: block;
+    margin: 0;
+    padding: 0;
+    a {
+      img {
+        margin: 0 5px 5px 0;
+      }
+    }
+  }
+}
+
 
 /* #Media Queries
 ================================================== */

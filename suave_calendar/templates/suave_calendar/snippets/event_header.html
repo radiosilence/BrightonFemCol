@@ -1,0 +1,22 @@
+{{ event.tags_html|safe }}
+<div>
+    <h1>{{ event.title }}</h1>
+</div>
+<div><label>Location</label>
+   <a href="https://maps.google.co.uk/?q={{ event.location }}"> {{ event.location }}</a>
+</div>
+<div><label>When</label>
+    <span class="event date">
+    {{ event.start_date|date:'F d, Y' }}{% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
+    {% if event.end_date %}
+        &mdash; {{ event.end_date|date:'F d, Y' }}{% if event.end_time %} @ {{ event.end_time|time:'H:i' }}{% endif %}
+    {% endif %}
+    </span>
+</div>
+{% if event.price %}
+<div><label>Price</label>
+    <span class="event price">
+        &pound;{{ event.price|floatformat:-2 }}
+    </span>
+</div>
+{% endif %}
