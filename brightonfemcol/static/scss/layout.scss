@@ -32,6 +32,7 @@ div.container {
   background: white;
   color: black; }
 
+
 #main-container>header {
   overflow: hidden;
   background: url(../images/logo_lg_head_960.png) no-repeat top;
@@ -123,7 +124,7 @@ body>div>header h1 {
         }
       }
       span {
-        
+
       }
     }
   }
@@ -309,20 +310,25 @@ div {
         margin: 0px 20px 20px 0px; } }
     padding-bottom: 40px; }
 
-  #main>div {
+  div.article {
     h1 {
-      font-size: 24px; }
+      font-size: 24px; 
+      line-height: 34px; }
     h2 {
-      font-size: 20px; }
+      font-size: 20px;
+      line-height: 30px; }
     h3 {
-      font-size: 18px; }
+      font-size: 18px;
+      line-height: 27px; }
     h4 {
-      font-size: 16px; }
+      font-size: 16px;
+      line-height: 24px; }
     h5 {
-      font-size: 14px; }
+      font-size: 14px;
+      line-height: 21px; }
     article h1 {
       font-size: 16px;
-      display: bl3d1111ock;
+      display: block;
       margin: 0px;
       overflow: hidden;
       padding: 5px 0 0 0;
