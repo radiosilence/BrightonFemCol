@@ -276,6 +276,39 @@ div {
       margin-right: 10px; 
       header {
         width: 345px;
+        position: relative;
+        aside {
+          display: block;
+          overflow: hidden;
+          position: absolute;
+          top: 22px;
+          width: 100%;
+          z-index: 99999;
+          span {
+            float: right;
+            background-color: black;
+            color: white;
+            padding: 0px 3px;
+            margin-right: 5px;
+            @include UniversCn;
+            font-size: 18px;
+
+          }
+
+        }
+        aside.credit {
+          top: 100%;
+          margin-top: -70px;
+          height: 16px;
+          span {
+            float: right;
+            color: white;
+            background-color: rgba(0,0,0,.5);
+            text-transform: none;
+            font-size: 12px;
+            font-family: Lora
+          }
+        }
         h1 {
           background-color: black;
           display: block;

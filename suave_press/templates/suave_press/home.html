@@ -10,16 +10,20 @@
             {% for article in articles %}
                 <article class="{% if article.image %}image{% endif %}">
                     <header>
+                        <aside><span>{{ article.category.title }}</span></aside>
                     {% if article == first %}
                         {% thumbnail article.image.image '690x200' crop='center' as im %}
+                        {% if article.image.credit %}
+                            <aside class="credit"><span>{{ article.image.credit }}</span></aside>
+                        {% endif %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.image.title }}"/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}"/>
                         </a>
                         {% endthumbnail %}
                     {% else %}
                         {% thumbnail article.image.image '335x150' crop='center' as im %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.image.title }}"/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}"/>
                         </a>
                         {% endthumbnail %}
                     {% endif %}

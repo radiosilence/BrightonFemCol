@@ -114,7 +114,8 @@ div {
   &.container>header nav li.selected a {
     font-weight: bold; } }
 
-h5, h6, span.author, #main div.page, #main div.event, .tweet_list li {
+h5, h6, span.author, #main div.page, #main div.event, .tweet_list li,
+aside.credit span {
   font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   font-weight: normal; }
 
