@@ -54,3 +54,4 @@ class Article(Displayable):
 
 class ArticleImage(Image):
     article = models.ForeignKey(Article, related_name='images')
+    gallery = models.BooleanField(default=True)
