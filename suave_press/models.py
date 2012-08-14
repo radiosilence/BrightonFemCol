@@ -8,6 +8,7 @@ from model_utils.managers import PassThroughManager
 from model_utils.fields import StatusField
 
 from suave.models import Displayable, SiteEntityQuerySet, Image
+from suave.utils import get_default_image
 
 
 class Category(Displayable):
@@ -57,7 +58,7 @@ class Article(Displayable):
         try:
             return self.images.all()[0]
         except IndexError:
-            return None
+            return get_default_image()
 
 
 class ArticleImage(Image):

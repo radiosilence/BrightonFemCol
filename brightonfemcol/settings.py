@@ -34,6 +34,7 @@ THUMBNAIL_QUALITY = 100
 THUMBNAIL_COLORSPACE = None
 THUMBNAIL_FORMAT = 'PNG'
 
+DEFAULT_IMAGE = 'default-image.png'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy as reverse
 from model_utils.managers import PassThroughManager
 from suave.models import Displayable, Ordered, Image, SiteEntityQuerySet
 
+from suave.utils import get_default_image
 
 
 class EventQuerySet(SiteEntityQuerySet):
@@ -51,7 +52,7 @@ class Event(Displayable):
         try:
             return self.images.all()[0]
         except IndexError:
-            return None
+            return get_default_image()
 
 
 class EventLink(Ordered):
