@@ -16,6 +16,13 @@
     {% block body %}
         <div class="ten columns offset-by-one alpha article">
             {{ article.body|safe }}
+
+        </div>
+        <div class="twelve columns alpha article">
+        {% if article.images.all.count > 0 %}
+            <h2>Pictures</h2>
+            {% include 'snippets/gallery.html' with items=article.images.all %}
+        {% endif %}
         </div>
     {% endblock %}
 {% endblock %}
