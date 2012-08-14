@@ -292,7 +292,10 @@ div {
 
 #main {
   header.articles {
-
+    h1 {
+      font-size: 48px;
+      line-height: 48px;
+    }
   }
   div.articles {
     article {
@@ -524,7 +527,10 @@ dd {
 
 #main {
   header.events {
-
+    h1 {
+      font-size: 48px;
+      line-height: 48px;
+    }
   }
   div.events {
     article {
