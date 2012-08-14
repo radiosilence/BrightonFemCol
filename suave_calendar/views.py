@@ -5,12 +5,20 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 
+from suave.utils import get_page_from_url
+
 from .models import Event
 
 
 def home(request):
+    try:
+        page = get_page_from_url(request.path)
+    except Http404:
+        page = None
     return TemplateResponse(request, 'suave_calendar/calendar.html', {
-
+        'title': 'Upcoming Events',
+        'page': page,
+        'events': Event.objects.future().all()
     })
 
 

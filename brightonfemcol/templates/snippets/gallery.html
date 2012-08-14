@@ -1,6 +1,4 @@
 {% load thumbnail %}
-{% if count > 0 %}
-<h2>{{ title }}</h2>
 <ul class="gallery">
     {% for item in items %}
     <li>
@@ -10,4 +8,3 @@
     </li>
     {% endfor %}
 </ul>
-{% endif %}

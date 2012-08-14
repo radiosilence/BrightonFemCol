@@ -1,3 +1,4 @@
+{% load thumbnail %}
 <article class="home listed">
     <a class="category" href="
     {% if event %}
@@ -12,7 +13,12 @@
         {% endif %}
     </a>
     <header>
-        <h1><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h1>
+        {% if article.image %}
+            {% thumbnail article.image.image '98x85' crop='center' as im %}
+                <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}"></a>
+            {% endthumbnail %}
+        {% endif %}
+        <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:40 }}</a></h1>
         {% if event %}
             <span class="author">
                 {{ article.start_date|date:'M d, Y' }}

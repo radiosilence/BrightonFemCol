@@ -1,0 +1,29 @@
+{% extends 'base.html' %}{% load thumbnail %}
+{% block title %}{{ title }} - Brighton Feminist Collective{% endblock %}
+{% block content %}
+    <header class="twelve columns alpha omega events">
+        <h1>{{ title }}</h1>
+        {{ page.body }}
+    </header>
+    <div class="twelve columns alpha omega events">
+        {% if events %}
+            {% for event in events %}
+                <article class="{% if event.image %}image{% endif %}">
+                    <header>
+                        {% thumbnail event.image.image '220x150' crop='center' as im %}
+                        <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.image.title }}"/>
+                        {% endthumbnail %}
+                        <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
+                        {% include 'suave_calendar/snippets/event_date.html' %}
+                    </header>
+                    <div>
+                        <p>{{ event.body|striptags|safe|truncatechars:285 }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+        <p>There are no events to see.</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

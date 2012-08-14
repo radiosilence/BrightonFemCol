@@ -39,7 +39,10 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            {% include 'snippets/gallery.html' with items=event.images.all count=event.image.all.count title='Pictures' %}
+            {% if event.image.all.count > 0 %}
+                <h2>Pictures</h2>
+                {% include 'snippets/gallery.html' with items=event.images.all %}
+            {% endif %}
         </div>
     {% endblock %}
 {% endblock %}

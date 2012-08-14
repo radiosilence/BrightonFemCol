@@ -52,6 +52,14 @@ class Article(Displayable):
             'category': self.category.slug,
         })
 
+    @property
+    def image(self):
+        try:
+            return self.images.all()[0]
+        except IndexError:
+            return None
+
+
 class ArticleImage(Image):
     article = models.ForeignKey(Article, related_name='images')
     gallery = models.BooleanField(default=True)
