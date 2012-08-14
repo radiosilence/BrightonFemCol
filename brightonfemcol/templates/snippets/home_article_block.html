@@ -19,5 +19,5 @@
             <span class="author">by {{ article.author.username }}</span>
         {% endif %}
     </header>
-    <p>{{ article.body|striptags|safe|truncatewords:25 }}</p>
+    <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
 </article>
