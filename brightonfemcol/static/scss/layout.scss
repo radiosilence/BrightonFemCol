@@ -519,12 +519,9 @@ dd {
 ================================================== */
 @mixin Dymo($bg: black, $fg: white) {
   background-color: $bg;
-  float: left;
   color: $fg;
-  padding: 2px 5px;
-  margin: 8px 5px;
   overflow: hidden;
-  display: block;
+  display: inline;
   @include UniversCn();
 }
 
@@ -624,9 +621,15 @@ dd {
     }
   }
   header.event.header_image {
-    height: 200px;
+    min-height: 200px;
+    max-height: 500px;
+    background-position: center;
     label {
       display: none;
+    }
+    div {
+      padding: 2px 5px;
+      margin: 8px 5px;
     }
     h1 {
       @include Dymo(white, black);

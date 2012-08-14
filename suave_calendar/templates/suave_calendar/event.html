@@ -5,7 +5,7 @@
 {% block content %}
     {% block header %}
         {% if event.image and event.header_image %}
-            {% thumbnail event.image.image '700x200' crop='center' as im %}
+            {% thumbnail event.image.image '700x500' crop='center' as im %}
             <header
                 class="twelve columns alpha omega event header_image{% if event.dark_bg %} dark_bg{% endif %}"
                 style="background-image:url({{ im.url }})">
