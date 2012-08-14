@@ -1,6 +1,18 @@
 <span class="event date">
-{{ event.start_date|date:'F d, Y' }}{% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
+    {% if short and event.end_date %}
+        {{ event.start_date|date:'M d, Y' }}
+    {% else %}
+        {{ event.start_date|date:'F d, Y' }}
+    {% endif %}
+
+{% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
 {% if event.end_date %}
-    &mdash; {{ event.end_date|date:'F d, Y' }}{% if event.end_time %} @ {{ event.end_time|time:'H:i' }}{% endif %}
+    &mdash; 
+    {% if short %}
+        {{ event.end_date|date:'M d, Y' }}
+    {% else %}
+        {{ event.end_date|date:'F d, Y' }}
+    {% endif %}
+    {% if event.end_time %} @ {{ event.end_time|time:'H:i' }}{% endif %}
 {% endif %}
 </span>

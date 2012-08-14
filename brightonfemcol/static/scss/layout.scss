@@ -4,6 +4,28 @@
   font-style: $style;
 }
 
+@mixin CategoryAside($top, $font-size: 18px) {
+  aside {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: $top;
+    width: 100%;
+    z-index: 99999;
+    span, a {
+      float: right;
+      background-color: black;
+      color: white;
+      padding: 0 0 0 3px;
+      margin-right: 5px;
+      @include UniversCn;
+      font-size: $font-size;
+      text-decoration: none;
+      font-weight: normal;
+    }
+  }
+}
+
 
 body {
   background: #010101 url(../images/skewed_print.png);
@@ -104,15 +126,25 @@ body>div>header h1 {
       &.even {
         float: right;
         margin: 0px 0px 10px 10px; } } }
+
+
+  /* HOME PAGE COLUMN THINGS */
   div.home-articles article, div.home-events article {
+    width: 340px;
     header {
+      position: relative;
+      clear: both;
+      display: block;
+      overflow: hidden;
+      @include CategoryAside(10px, 14px);
       img {
-        border: 2px solid black;
-        border-top: none;
-        margin: 0 5px 2px 0;
+        border: 5px solid black;
+        border-bottom: none;
+        margin: 0;
       }
       h1 {
-        background-color: #521717;
+        width: 340px;
+        background-color: black;
         color: white;
         font-size: 18px;
         line-height: 18px;
@@ -124,16 +156,11 @@ body>div>header h1 {
         }
       }
       span {
-
-      }
-    }
-  }
-  div.home-articles article:nth-child(even) ,
-  div.home-events article:nth-child(even) {
-    header {
-      img {
-        float: right;
-        margin: 0 0 2px 5px;
+        background-color: #521717;
+        color: white;
+        display: block;
+        padding: 0px 3px;
+        @include UniversCn;
       }
     }
   }
@@ -278,25 +305,10 @@ div {
         width: 345px;
         position: relative;
         aside {
-          display: block;
-          overflow: hidden;
-          position: absolute;
-          top: 22px;
-          width: 100%;
-          z-index: 99999;
-          span {
-            float: right;
-            background-color: black;
-            color: white;
-            padding: 0px 3px;
-            margin-right: 5px;
-            @include UniversCn;
-            font-size: 18px;
-
-          }
-
+          display: none;
         }
         aside.credit {
+          display: block;
           top: 100%;
           margin-top: -70px;
           height: 16px;
@@ -312,7 +324,7 @@ div {
         h1 {
           background-color: black;
           display: block;
-          padding: 3px 3px 3px 10px;
+          padding: 3px 3px 3px 3px;
           line-height: 24px;
           font-size: 24px;
           margin: 0px;
@@ -329,11 +341,12 @@ div {
           border-bottom: 0px;
         }
         span {
-          padding: 0 3px 0 10px;
+          padding: 0 3px 0 3px;
           overflow: hidden;
           background-color: #521717;
           color: white;
           display: block;
+          @include UniversCn;
         }
       }
       div {
@@ -342,6 +355,10 @@ div {
       }
     }
     article.image {
+      header {        
+        @include CategoryAside(22px);
+
+      }
       div {
         margin: 5px 0 0 0;
       }
@@ -371,16 +388,6 @@ div {
       font-weight: normal; }
     &.listed {
       margin-top: 10px; } }
-
-  a.category {
-    text-decoration: none;
-    display: block;
-    color: white;
-    background: #080808;
-    text-align: right;
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 0px 5px 0px 5px; }
 
   article.listed img {
     float: left; }

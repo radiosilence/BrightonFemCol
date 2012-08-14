@@ -10,7 +10,7 @@
             {% for article in articles %}
                 <article class="{% if article.image %}image{% endif %}">
                     <header>
-                        <aside><span>{{ article.category.title }}</span></aside>
+                        <aside><a href="{{ article.category.url }}">{{ article.category.title }}</a></aside>
                     {% if article == first %}
                         {% thumbnail article.image.image '690x200' crop='center' as im %}
                         {% if article.image.credit %}
@@ -28,7 +28,7 @@
                         {% endthumbnail %}
                     {% endif %}
                         <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
-                        <span>{{ article.published|date:'F d, Y' }} by {{ article.author.username }}</span>
+                        {% include 'suave_press/snippets/author.html' %}
                     </header>
                     <div>
 

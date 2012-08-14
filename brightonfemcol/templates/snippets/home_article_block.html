@@ -1,34 +1,30 @@
 {% load thumbnail %}
 <article class="home listed">
-    <a class="category" href="
-    {% if event %}
-        {{ show_events_url }}
-    {% else %}
-        {{ article.category.url }}
-    {% endif %}">
-        {% if event %}
-            Event
-        {% else %}
-            {{ article.category.title }}
-        {% endif %}
-    </a>
     <header>
         {% if article.image %}
-            {% thumbnail article.image.image '98x85' crop='center' as im %}
+            <aside>
+                <a class="category" href="
+                {% if event %}
+                    {{ show_events_url }}
+                {% else %}
+                    {{ article.category.url }}
+                {% endif %}">
+                    {% if event %}
+                        Event
+                    {% else %}
+                        {{ article.category.title }}
+                    {% endif %}
+                </a>
+            </aside>
+            {% thumbnail article.image.image '330x85' crop='center' as im %}
                 <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}"></a>
             {% endthumbnail %}
         {% endif %}
         <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:60 }}</a></h1>
         {% if event %}
-            <span class="author">
-                {{ article.start_date|date:'M d, Y' }}
-                    {% if article.start_time %} @ {{ article.start_time|time:'H:i' }}{% endif %}
-                {% if article.end_date %} &mdash; {{ article.end_date|date:'M d, Y' }}
-                    {% if article.end_time %} @ {{ article.end_time|time:'H:i' }}{% endif %}
-                {% endif %}
-            </span>
+            {% include 'suave_calendar/snippets/event_date.html' with event=article short='yes' %}
         {% else %}
-            <span class="author">by {{ article.author.username }}</span>
+            {% include 'suave_press/snippets/author.html' with article=article %}
         {% endif %}
     </header>
     <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
