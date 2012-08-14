@@ -273,7 +273,7 @@ div {
       overflow: hidden;
       width: 345px;
       float: left;
-      margin-right: 10px;
+      margin-right: 10px; 
       header {
         width: 345px;
         h1 {
@@ -285,6 +285,7 @@ div {
           margin: 0px;
           width: 345px;
           a {
+            width: 345px;
             color: white;
             text-decoration: underline;
           }
@@ -314,16 +315,19 @@ div {
     }
     article:nth-child(odd) {
       margin-right: 0px;
-      header {
-        width: 700px;
-        h1 {
-          width: 700px;
-        }
-      }
     }
 
     article:nth-child(1) {
       width: 700px;
+      header {
+        width: 700px;
+        h1 {
+          width: 700px;
+          a {
+            width: 700px;
+          }
+        }
+      }
     }
   }
 
@@ -485,7 +489,8 @@ dd {
   div.events {
     article {
       display: block;
-      overflow: hidden;
+      overflow: hidden; 
+      word-wrap: break-word;
       header {
         h1 {
           background-color: black;
