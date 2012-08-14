@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import patterns, include, url
 
-EVENT_PART = r'(?P<year>[\d]{4})/(?P<month>[\d]{2})/(?P<day>[\d]{2})/(?P<slug>[-\w]+)/'
+EVENT_PART = r'(?P<slug>[-\w]+)-(?P<month>[\w]+)-(?P<day>[\d]{2})-(?P<year>[\d]{4})/'
 
 urlpatterns = patterns('suave_calendar.views',
     url(r'^' + EVENT_PART + r'$', 'event',
         name='event'),
-    url(r'^$', 'calendar', name='calendar'),
+    url(r'^$', 'home', name='home'),
 )

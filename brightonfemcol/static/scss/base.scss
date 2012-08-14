@@ -78,7 +78,7 @@ table {
 ================================================== */
 
 body, #black-bloc p.quote {
-  font: 14px / 21px "Poly", "Times New Roman", Helvetica, Arial, sans-serif; }
+  font: 16px / 21px "Poly", "Times New Roman", Helvetica, Arial, sans-serif; }
 
 body {
   background: #fff;
@@ -114,8 +114,8 @@ div {
   &.container>header nav li.selected a {
     font-weight: bold; } }
 
-h5, h6, span.author, #main div.page, .tweet_list li {
-  font-family: Arial, Helvetica, sans-serif;
+h5, h6, span.author, #main div.page, #main div.event, .tweet_list li {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
   font-weight: normal; }
 
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
@@ -146,7 +146,7 @@ h5 {
   line-height: 24px; }
 
 h6 {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 21px; }
 
 .subheader {
@@ -174,7 +174,7 @@ small {
 /*	Blockquotes  */
 
 blockquote {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 24px;
   color: #777;
   font-style: italic;

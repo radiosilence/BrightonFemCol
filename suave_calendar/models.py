@@ -42,7 +42,7 @@ class Event(Displayable):
         return reverse('suave_calendar:event', kwargs={
             'slug': self.slug,
             'year': self.start_date.year,
-            'month': s.format(self.start_date.month),
+            'month': self.start_date.strftime('%B').lower(),
             'day': s.format(self.start_date.day)
         })
 
