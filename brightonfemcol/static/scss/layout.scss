@@ -111,13 +111,19 @@ body>div>header h1 {
         margin: 0 5px 2px 0;
       }
       h1 {
-        font-size: 24px;
-        line-height: 24px;
+        background-color: #521717;
+        color: white;
+        font-size: 18px;
+        line-height: 18px;
         margin: 0;
-        padding: 5px 0 0 0;
+        padding: 5px 3px 2px 3px;
         a {
-          text-decoration: underline;
+          font-size: 18px;
+          color: white;
         }
+      }
+      span {
+        
       }
     }
   }

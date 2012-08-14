@@ -11,7 +11,9 @@
                 <article class="{% if event.image %}image{% endif %}">
                     <header>
                         {% thumbnail event.image.image '220x150' crop='center' as im %}
-                        <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.image.title }}"/>
+                        <a href="{{ event.url }}">
+                            <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.image.title }}"/>
+                        </a>
                         {% endthumbnail %}
                         <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
                         {% include 'suave_calendar/snippets/event_date.html' %}
