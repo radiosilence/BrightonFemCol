@@ -29,6 +29,12 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'sass --scss {infile} {outfile}'),
 )
 
+
+THUMBNAIL_QUALITY = 100
+THUMBNAIL_COLORSPACE = None
+THUMBNAIL_FORMAT = 'PNG'
+
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
