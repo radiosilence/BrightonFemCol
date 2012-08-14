@@ -14,7 +14,7 @@
                     {% if article == first %}
                         {% thumbnail article.image.image '690x200' crop='center' as im %}
                         {% if article.image.credit %}
-                            <aside class="credit"><span>{{ article.image.credit }}</span></aside>
+                            <aside class="credit"><span>Photo: {{ article.image.credit }}</span></aside>
                         {% endif %}
                         <a href="{{ article.url }}">
                             <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}"/>
