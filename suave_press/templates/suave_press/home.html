@@ -1,1 +1,44 @@
-{% extends 'base.html' %}asd
+{% extends 'base.html' %}{% load thumbnail %}
+{% block title %}{{ title }} - Brighton Feminist Collective{% endblock %}
+{% block content %}
+    <header class="twelve columns alpha omega articles">
+        <h1>{{ title }}</h1>
+        {{ page.body }}
+    </header>
+    <div class="twelve columns alpha omega articles">
+        {% if articles %}
+            {% for article in articles %}
+                <article class="{% if article.image %}image{% endif %}">
+                    <header>
+                    {% if article == first %}
+                        {% thumbnail article.image.image '690x200' crop='center' as im %}
+                        <a href="{{ article.url }}">
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.image.title }}"/>
+                        </a>
+                        {% endthumbnail %}
+                    {% else %}
+                        {% thumbnail article.image.image '335x150' crop='center' as im %}
+                        <a href="{{ article.url }}">
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.image.title }}"/>
+                        </a>
+                        {% endthumbnail %}
+                    {% endif %}
+                        <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
+                        <span>{{ article.published|date:'F d, Y' }} by {{ article.author.username }}</span>
+                    </header>
+                    <div>
+
+                    {% if article == first %}
+                        <p>{{ article.body|striptags|safe|truncatechars:485 }}</p>
+                    {% else %}
+                        <p>{{ article.body|striptags|safe|truncatechars:285 }}</p>
+                    {% endif %}
+                    </div>
+                </article>
+            {% endfor %}
+        {% else %}
+        <p>There are no articles to see.</p>
+        {% endif %}
+
+    </div>
+{% endblock %}

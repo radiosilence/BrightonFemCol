@@ -262,7 +262,63 @@ div {
 /* Navigation */
 
 /* Article related */
+
 #main {
+  header.articles {
+
+  }
+  div.articles {
+    article {
+      display: block;
+      overflow: hidden;
+      width: 345px;
+      float: left;
+      margin-right: 10px;
+      header {
+        h1 {
+          background-color: black;
+          display: block;
+          padding: 3px 3px 3px 10px;
+          line-height: 24px;
+          font-size: 24px;
+          margin: 0px;
+          a {
+            color: white;
+            text-decoration: underline;
+          }
+        }
+        img {
+          margin: 0 0 0 0;
+          border: 5px solid black;
+          border-bottom: 0px;
+        }
+        span {
+          padding: 0 3px 0 10px;
+          overflow: hidden;
+          background-color: #521717;
+          color: white;
+          display: block;
+        }
+      }
+      div {
+        margin: 5px 0 0 0;
+        display: block;
+      }
+    }
+    article.image {
+      div {
+        margin: 5px 0 0 0;
+      }
+    }
+    article:nth-child(odd) {
+      margin-right: 0px;
+    }
+
+    article:nth-child(1) {
+      width: 700px;
+    }
+  }
+
   article {
     header h1 a {
       font-size: 24px;
@@ -439,7 +495,7 @@ dd {
           margin: 0 0 5px 0;
           border: 5px solid black;
         }
-        span.date {
+        span {
           padding: 0 3px 0 10px;
           overflow: hidden;
           background-color: #521717;
