@@ -18,7 +18,7 @@
                 <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}"></a>
             {% endthumbnail %}
         {% endif %}
-        <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:40 }}</a></h1>
+        <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:60 }}</a></h1>
         {% if event %}
             <span class="author">
                 {{ article.start_date|date:'M d, Y' }}
