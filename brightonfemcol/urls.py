@@ -11,6 +11,11 @@ urlpatterns = patterns('',
     url(r'^events/', include('suave_calendar.urls',
         namespace='suave_calendar')),
     (r'^tinymce/', include('tinymce.urls')),
+
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
+        'url': settings.STATIC_URL + 'images/favicon.ico'
+    }),
+
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
 )
 
