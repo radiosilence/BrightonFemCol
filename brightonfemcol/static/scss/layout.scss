@@ -544,7 +544,7 @@ dd {
         h1 {
           background-color: black;
           display: block;
-          padding: 3px 3px 3px 10px;
+          padding: 3px 3px 3px 3px;
           line-height: 24px;
           font-size: 24px;
           margin: 0px;
@@ -558,7 +558,7 @@ dd {
           border: 5px solid black;
         }
         span {
-          padding: 0 3px 0 10px;
+          padding: 0 3px 0 3px;
           overflow: hidden;
           background-color: #521717;
           color: white;
@@ -571,6 +571,12 @@ dd {
       }
     }
     article.image {
+      h1 {
+        padding: 3px 3px 3px 10px;
+      }
+      span {
+        padding: 0 3px 0 10px;
+      }
       div {
         margin: 5px 0 0 240px;
       }
