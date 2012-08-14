@@ -314,6 +314,12 @@ div {
     }
     article:nth-child(odd) {
       margin-right: 0px;
+      header {
+        width: 700px;
+        h1 {
+          width: 700px;
+        }
+      }
     }
 
     article:nth-child(1) {
