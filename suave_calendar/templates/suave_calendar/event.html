@@ -20,7 +20,7 @@
     {% endblock %}
     {% block body %}
         <div class="twelve columns alpha omega event">
-            {% if event.image and not event.header_image %}
+            {% if event.images.all.count > 0 and not event.header_image %}
                 {% thumbnail event.image.image '250' crop='center' as im %}
                     <a href={{ event.image.image.url }}><img src={{ im.url }} /></a>
                 {% endthumbnail %}
