@@ -78,6 +78,9 @@ class Event(Displayable):
         except IndexError:
             return get_default_image()
 
+    class Meta:
+        ordering = ('-start_date',)
+
 
 class EventLink(Ordered):
     url = models.CharField(max_length=255)
