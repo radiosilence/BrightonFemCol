@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load thumbnail %}
+{% extends 'base.html' %}{% load thumbnail %}{% load static %}
 {% block title %}{{ event.title }} - Brighton Feminist Collective{% endblock %}
 {% block meta_description %}{{ event.excerpt }}{% endblock %}
 {% block meta_author %}{{ event.author.displayed_name }}{% endblock %}
@@ -35,6 +35,19 @@
                         {% if link.information %}
                             &nbsp;&ndash; {{ link.information }}
                         {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% if event.attachments.all.count > 0 %}
+            <h2>Attachments</h2>
+            <ul class="attachments">
+                {% for attachment in event.attachments.all %}
+                    <li>
+                        <a href="{{ attachment.file.url }}">
+                            <img src={% static attachment.icon %} />
+                            {{ attachment.filename }} ({{ attachment.size }})
+                        </a>
                     </li>
                 {% endfor %}
             </ul>

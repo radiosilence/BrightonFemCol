@@ -19,6 +19,17 @@
 
         </div>
         <div class="twelve columns alpha article">
+        {% if article.attachments.all.count > 0 %}
+        <h2>Attachments</h2>
+        <ul class="attachments">
+            {% for attachment in article.attachments.all %}
+                <li>
+                    <a href="{{ attachment.file.url }}">{{ attachment.filename }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    
         {% if article.images.all.count > 0 %}
             <h2>Pictures</h2>
             {% include 'snippets/gallery.html' with items=article.images.all %}

@@ -673,26 +673,35 @@ dd {
 /* #In page picture galleries
 ================================================== */
 
-#main div ul.gallery {
-  margin: 0;
-  padding: 5px 0 0 5px;
-  text-indent: 0;
-  overflow: hidden;
-  background: black;
-  width: 693px;
-  li {
-    float: left;
-    display: block;
+#main div {
+  ul.gallery {
     margin: 0;
-    padding: 0;
-    a {
-      img {
-        margin: 0 5px 5px 0;
+    padding: 5px 0 0 5px;
+    text-indent: 0;
+    overflow: hidden;
+    background: black;
+    width: 693px;
+    li {
+      float: left;
+      display: block;
+      margin: 0;
+      padding: 0;
+      a {
+        img {
+          margin: 0 5px 5px 0;
+        }
       }
     }
   }
+  ul.attachments li {
+    list-style-type: none;
+    a {
+      img {
+        vertical-align: baseline;
+      }
+    } 
+  }
 }
-
 
 /* #Media Queries
 ================================================== */
