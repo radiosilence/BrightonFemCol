@@ -8,13 +8,15 @@
     <div class="twelve columns alpha omega events">
         {% if events %}
             {% for event in events %}
-                <article class="{% if event.image %}image{% endif %}">
+                <article class="{% if event.images.all.count > 0 %}image{% endif %}">
                     <header>
-                        {% thumbnail event.image.image '220x150' crop='center' as im %}
-                        <a href="{{ event.url }}">
-                            <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}"/>
-                        </a>
-                        {% endthumbnail %}
+                        {% if event.images.all.count > 0 %}
+                            {% thumbnail event.image.image '220x150' crop='center' as im %}
+                            <a href="{{ event.url }}">
+                                <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}"/>
+                            </a>
+                            {% endthumbnail %}
+                        {% endif %}
                         <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
                         {% include 'suave_calendar/snippets/event_date.html' %}
                     </header>
