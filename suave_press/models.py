@@ -20,6 +20,9 @@ class Category(Displayable):
             | Q(categories__in=[self])
         ).order_by('-published')
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
 
 class ArticleQuerySet(SiteEntityQuerySet):
     def by_author(self, user):

@@ -18,6 +18,9 @@ class Category(Displayable):
             | Q(categories__in=[self])
         ).order_by('start_date')
 
+    class Meta:
+        verbose_name_plural = 'categories'
+
 
 class EventQuerySet(SiteEntityQuerySet):
 
