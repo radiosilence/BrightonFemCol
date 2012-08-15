@@ -82,7 +82,7 @@ class Event(Displayable):
 class EventLink(Ordered):
     url = models.CharField(max_length=255)
     text = models.CharField(max_length=255)
-    information = models.TextField(null=True, blank=True)
+    information = models.CharField(max_length=255, null=True, blank=True)
     event = models.ForeignKey(Event, related_name='links')
 
 
