@@ -751,6 +751,17 @@ dd {
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
   #main {
+    div {
+      ul.gallery {
+        width: 100%;
+        li {
+          width: 45%;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
     div.home-articles, div.home-events {
       width: 100%;
       article {
