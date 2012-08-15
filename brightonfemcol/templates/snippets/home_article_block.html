@@ -5,7 +5,7 @@
             <aside>
                 <a class="category" href="
                 {% if event %}
-                    {{ show_events_url }}
+                    {% url suave_calendar:home %}
                 {% else %}
                     {{ article.category.url }}
                 {% endif %}">
