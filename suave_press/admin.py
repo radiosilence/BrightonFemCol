@@ -1,8 +1,12 @@
 from django.contrib import admin
 
-from suave.admin import DisplayableAdmin, ImageInline
+from suave.admin import DisplayableAdmin, ImageInline, AttachmentInline
 
-from .models import Category, Article, ArticleImage
+from .models import Category, Article, ArticleImage, ArticleAttachment
+
+
+class ArticleAttachmentInline(AttachmentInline):
+    model = ArticleAttachment
 
 
 class ArticleImageInline(ImageInline):
@@ -12,6 +16,7 @@ class ArticleImageInline(ImageInline):
 class ArticleAdmin(DisplayableAdmin):
     inlines = (
         ArticleImageInline,
+        ArticleAttachmentInline,
     )
 
 

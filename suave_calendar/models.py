@@ -5,7 +5,8 @@ from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy as reverse
 
 from model_utils.managers import PassThroughManager
-from suave.models import Displayable, Ordered, Image, SiteEntityQuerySet
+from suave.models import (Displayable, Ordered, Image, SiteEntityQuerySet,
+    Attachment)
 
 from suave.utils import get_default_image
 
@@ -88,3 +89,7 @@ class EventLink(Ordered):
 class EventImage(Image):
     event = models.ForeignKey(Event, related_name='images')
     gallery = models.BooleanField(default=True)
+
+
+class EventAttachment(Attachment):
+    event = models.ForeignKey(Event, related_name='attachments')

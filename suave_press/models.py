@@ -8,7 +8,7 @@ from model_utils import Choices
 from model_utils.managers import PassThroughManager
 from model_utils.fields import StatusField
 
-from suave.models import Displayable, SiteEntityQuerySet, Image
+from suave.models import Displayable, SiteEntityQuerySet, Image, Attachment
 from suave.utils import get_default_image
 
 
@@ -74,3 +74,7 @@ class Article(Displayable):
 class ArticleImage(Image):
     article = models.ForeignKey(Article, related_name='images')
     gallery = models.BooleanField(default=True)
+
+
+class ArticleAttachment(Attachment):
+    article = models.ForeignKey(Article, related_name='attachments')
