@@ -34,9 +34,13 @@ def home(request):
     except Http404:
         page = None
     articles = Article.objects.published().order_by('-published')[:7]
+    try:
+        first = articles[0]
+    except IndexError:
+        first = None
     return TemplateResponse(request, 'suave_press/home.html', {
         'title': 'Latest Articles',
         'page': page,
         'articles': articles,
-        'first': articles[0]
+        'first': first,
     })
