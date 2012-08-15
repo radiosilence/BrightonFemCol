@@ -28,7 +28,8 @@
 
 
 body {
-  background: #010101 url(../images/skewed_print.png);
+  background-color: #010101;
+  background-image: url(../images/skewed_print.png);
   color: white; }
 
 a {
@@ -751,6 +752,10 @@ dd {
 /* All Mobile Sizes (devices and browser) */
 @media only screen and (max-width: 767px) {
   #main-container {
+    >header {
+      background-image: none;
+      background: #010101;
+    }
     overflow: hidden;
   }
   #main {
@@ -775,6 +780,9 @@ dd {
       width: 100%;
       article {
         header {
+          h1 {
+            width: 100%;
+          }
           a img {
             border-left: none;
             border-right: none;
@@ -793,6 +801,9 @@ dd {
     div.articles {
       article {
         width: 100%;
+        h1 {
+          width: 100%;
+        }
         a img {
           width: 100%;
           border-left: none;
