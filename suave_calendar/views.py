@@ -22,6 +22,19 @@ def home(request):
     })
 
 
+def archive(request):
+    try:
+        page = get_page_from_url(request.path)
+    except Http404:
+        page = None
+
+    return TemplateResponse(request, 'suave_calendar/calendar.html', {
+        'title': 'Archived Events',
+        'page': page,
+        'events': Event.objects.past().order_by('-start_date', '-start_time')
+    })
+
+
 def event(request, year, month, day, slug):
     try:
         month = dict(
