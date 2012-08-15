@@ -626,7 +626,7 @@ dd {
       font-size: 22px;
     }
     div {
-      width: 700px;
+      width: 100%;
       display: block;
       overflow: hidden;
     }
@@ -815,6 +815,12 @@ dd {
         a img {
           width: 100%;
         }
+      }
+    }
+
+    header.event.header_image {
+      img {
+        width: 100%;
       }
     }
     #twitter {
