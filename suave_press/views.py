@@ -9,8 +9,6 @@ from .models import Category, Article
 
 def category(request, category=None):
     category = get_object_or_404(Category, slug=category)
-    print category
-    print category.articles.live().all()
     return TemplateResponse(request, 'suave_press/category.html', dict(
         category=category
     ))
@@ -36,7 +34,7 @@ def home(request):
         page = get_page_from_url(request.path)
     except Http404:
         page = None
-    articles = Article.objects.published()[:7]
+    articles = Article.objects.published().order_by('-published')[:7]
     return TemplateResponse(request, 'suave_press/home.html', {
         'title': 'Latest Articles',
         'page': page,

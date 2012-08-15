@@ -18,7 +18,7 @@ def home(request):
     return TemplateResponse(request, 'suave_calendar/calendar.html', {
         'title': 'Upcoming Events',
         'page': page,
-        'events': Event.objects.future().all()
+        'events': Event.objects.future().order_by('start_date', 'start_time')
     })
 
 

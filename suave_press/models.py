@@ -18,7 +18,7 @@ class Category(Displayable):
         return Article.objects.live().filter(
             Q(category=self)
             | Q(categories__in=[self])
-        )
+        ).order_by('-published')
 
 
 class ArticleQuerySet(SiteEntityQuerySet):

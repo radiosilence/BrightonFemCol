@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy as reverse
 
 from model_utils.managers import PassThroughManager
@@ -12,10 +13,14 @@ from suave.utils import get_default_image
 class EventQuerySet(SiteEntityQuerySet):
 
     def future(self):
-        return self.live().filter(start_date__gte=datetime.date.today())
+        return self.live().filter(
+            Q(end_date__gte=datetime.date.today())
+            | Q(start_date__gte=datetime.date.today())
+        )
+
 
     def past(self):
-        return self.live().filter(end_date__lte=datetime.date.today())
+        return self.live().filter(start_date__lte=datetime.date.today())
 
 
 class Event(Displayable):

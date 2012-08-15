@@ -40,8 +40,9 @@ def brightonfemcol(request):
 
     def home():
         return {
-            'articles': Article.objects.published()[:3],
-            'events': Event.objects.future()[:3]
+            'articles': Article.objects.published().order_by('-published')[:3],
+            'events': Event.objects.future().order_by(
+                'start_date', 'start_time')[:3]
         }
 
     return {
