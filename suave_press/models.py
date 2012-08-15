@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 
@@ -12,7 +13,12 @@ from suave.utils import get_default_image
 
 
 class Category(Displayable):
-    pass
+    @property
+    def articles(self):
+        return Article.objects.live().filter(
+            Q(category=self)
+            | Q(categories__in=[self])
+        )
 
 
 class ArticleQuerySet(SiteEntityQuerySet):
@@ -37,9 +43,10 @@ class Article(Displayable):
     subtitle = models.CharField(max_length=255, null=True, blank=True)
     published = models.DateTimeField()
     author = models.ForeignKey(User, related_name='articles')
-    category = models.ForeignKey(Category, related_name='category')
-    categories = models.ManyToManyField(Category, related_name='articles',
-        null=True, blank=True, verbose_name="extra categories")
+    category = models.ForeignKey(Category, related_name='primary_articles')
+    categories = models.ManyToManyField(Category,
+        related_name='secondary_articles', null=True, blank=True,
+        verbose_name="extra categories")
 
     objects = PassThroughManager.for_queryset_class(ArticleQuerySet)()
 

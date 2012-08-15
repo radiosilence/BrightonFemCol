@@ -9,7 +9,8 @@ from .models import Category, Article
 
 def category(request, category=None):
     category = get_object_or_404(Category, slug=category)
-
+    print category
+    print category.articles.live().all()
     return TemplateResponse(request, 'suave_press/category.html', dict(
         category=category
     ))
