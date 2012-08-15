@@ -30,6 +30,9 @@ def event(request, year, month, day, slug):
         raise Http404
     start = datetime.date(int(year), month, int(day))
     event = get_object_or_404(Event, slug=slug, start_date=start)
+    if event.status != Event.STATUS.live \
+        and not request.user.has_perm('suave_calendar.view_event'):
+        raise Http404
 
     return TemplateResponse(request, 'suave_calendar/event.html', {
         'event': event,    

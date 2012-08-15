@@ -19,8 +19,7 @@ def article(request, category=None, article=None):
     article = get_object_or_404(Article, slug=article, category=category)
 
     if article.status != Article.STATUS.live \
-        and not request.user.is_staff:
-
+        and not request.user.has_perm('suave_press.view_article'):
         raise Http404
 
     return TemplateResponse(request, 'suave_press/article.html', dict(
