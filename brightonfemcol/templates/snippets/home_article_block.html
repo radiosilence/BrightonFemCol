@@ -16,7 +16,7 @@
                     {% endif %}
                 </a>
             </aside>
-            {% thumbnail article.image.image '330x85' crop='center' as im %}
+            {% thumbnail article.image.image '335x85' crop='center' as im %}
                 <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}"></a>
             {% endthumbnail %}
         {% endif %}

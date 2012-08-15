@@ -130,40 +130,47 @@ body>div>header h1 {
 
 
   /* HOME PAGE COLUMN THINGS */
-  div.home-articles article, div.home-events article {
-    width: 340px;
-    header {
-      position: relative;
-      clear: both;
-      display: block;
-      overflow: hidden;
-      @include CategoryAside(10px, 14px);
-      img {
-        border: 5px solid black;
-        border-bottom: none;
-        margin: 0;
-      }
-      h1 {
-        width: 340px;
-        background-color: black;
-        color: white;
-        font-size: 18px;
-        line-height: 18px;
-        margin: 0;
-        padding: 5px 3px 2px 3px;
-        a {
-          font-size: 18px;
+  div.home-articles, div.home-events {
+    width: 345px;
+    float: left;
+    article {
+      width: 100%;
+      header {
+        position: relative;
+        clear: both;
+        display: block;
+        overflow: hidden;
+        @include CategoryAside(10px, 14px);
+        img {
+          border: 5px solid black;
+          border-bottom: none;
+          margin: 0;
+        }
+        h1 {
+          width: 100%;
+          background-color: black;
           color: white;
+          font-size: 18px;
+          line-height: 18px;
+          margin: 0;
+          padding: 5px 3px 2px 3px;
+          a {
+            font-size: 18px;
+            color: white;
+          }
+        }
+        span {
+          background-color: #521717;
+          color: white;
+          display: block;
+          padding: 0px 3px;
+          @include UniversCn;
         }
       }
-      span {
-        background-color: #521717;
-        color: white;
-        display: block;
-        padding: 0px 3px;
-        @include UniversCn;
-      }
     }
+  }
+  div.home-events {
+    margin-left: 10px;
   }
 }
 
@@ -306,7 +313,7 @@ div {
       float: left;
       margin-right: 10px; 
       header {
-        width: 345px;
+        width: 100%;
         position: relative;
         aside {
           display: none;
@@ -332,9 +339,9 @@ div {
           line-height: 24px;
           font-size: 24px;
           margin: 0px;
-          width: 345px;
+          width: 100%;
           a {
-            width: 345px;
+            width: 100%;
             color: white;
             text-decoration: underline;
           }
@@ -343,6 +350,7 @@ div {
           margin: 0 0 0 0;
           border: 5px solid black;
           border-bottom: 0px;
+          width: 335px;
         }
         span {
           padding: 0 3px 0 3px;
@@ -374,12 +382,15 @@ div {
     article:nth-child(1) {
       width: 700px;
       header {
-        width: 700px;
+        width: 100%;
         h1 {
-          width: 700px;
+          width: 100%;
           a {
-            width: 700px;
+            width: 100%;
           }
+        }
+        img {
+          width: 690px;
         }
       }
     }
@@ -707,24 +718,98 @@ dd {
 ================================================== */
 
 /* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {}
+@media only screen and (max-width: 959px) {
+  
+}
 
 /* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  #main {
+    div.home-articles, div.home-events {
+      width: 273px;
+      a img {
+        width: 263px;
+      }
+    }
+    div.articles {
+      article {
+        width: 273px;
+        a img {
+          width: 263px;
+        }
+      }
+      article:nth-child(1) {
+        width: 556px;
+        a img {
+          width: 546px;
+        }
+      }
+    }
+  }
+}
 
 /* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 767px) {}
+@media only screen and (max-width: 767px) {
+  #main {
+    div.home-articles, div.home-events {
+      width: 100%;
+      article {
+        header {
+          a img {
+            border-left: none;
+            border-right: none;
+            width: 100%;
+          }
+          aside {
+            margin-right: 0px;
+          }
+        }
+
+      }
+    }
+    div.home-events {
+      margin-left: 0px;
+    }
+    div.articles {
+      article {
+        width: 100%;
+        a img {
+          width: 100%;
+          border-left: none;
+          border-right: none;
+        }
+      }
+      article:nth-child(1) {
+        width: 100%;
+        a img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
 
 /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-  #black-bloc {
-    height: auto;
-    background: #080808;
-    padding-bottom: 10px; } }
+  #main {
+    #black-bloc {
+      height: auto;
+      background-image: none;
+      background: #080808;
+      padding-bottom: 10px;
+    }
+  }
+}
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {
-  #black-bloc {
-    height: auto;
-    background: #080808;
-    padding-bottom: 10px; } }
+  #main {
+    #black-bloc {
+      height: auto;
+      background: #080808;
+      background-image: none;
+      padding-bottom: 10px;
+    }
+  }
+
+}
