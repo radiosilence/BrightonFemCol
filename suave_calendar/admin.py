@@ -2,7 +2,11 @@ from django.contrib import admin
 
 from suave.admin import DisplayableAdmin, ImageInline, OrderedInline
 
-from .models import Event, EventImage, EventLink
+from .models import Event, EventImage, EventLink, Category
+
+
+class CategoryAdmin(DisplayableAdmin):
+    pass
 
 
 class EventImageInline(ImageInline):
@@ -20,4 +24,5 @@ class EventAdmin(DisplayableAdmin):
     )
 
 
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Event, EventAdmin)

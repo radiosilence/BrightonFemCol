@@ -15,7 +15,7 @@ from suave.utils import get_default_image
 class Category(Displayable):
     @property
     def articles(self):
-        return Article.objects.live().filter(
+        return Article.objects.published().filter(
             Q(category=self)
             | Q(categories__in=[self])
         ).order_by('-published')

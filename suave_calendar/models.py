@@ -10,6 +10,15 @@ from suave.models import Displayable, Ordered, Image, SiteEntityQuerySet
 from suave.utils import get_default_image
 
 
+class Category(Displayable):
+    @property
+    def events(self):
+        return Event.objects.live().filter(
+            Q(category=self)
+            | Q(categories__in=[self])
+        ).order_by('start_date')
+
+
 class EventQuerySet(SiteEntityQuerySet):
 
     def future(self):
@@ -29,6 +38,12 @@ class Event(Displayable):
 
     end_date = models.DateField(null=True, blank=True)
     end_time = models.TimeField(null=True, blank=True)
+
+    category = models.ForeignKey(Category, related_name='primary_events',
+        null=True, blank=True,)
+    categories = models.ManyToManyField(Category,
+        related_name='secondary_events', null=True, blank=True,
+        verbose_name="extra categories")
 
     price = models.DecimalField(max_digits=5, decimal_places=2,
         null=True, blank=True)
