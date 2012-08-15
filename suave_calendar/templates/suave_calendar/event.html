@@ -46,8 +46,8 @@
                     <li>
                         <a href="{{ attachment.file.url }}">
                             <img src={% static attachment.icon %} />
-                            {{ attachment.filename }} ({{ attachment.size }})
-                        </a>
+                            {{ attachment.filename }}
+                        </a> ({{ attachment.size }})
                     </li>
                 {% endfor %}
             </ul>

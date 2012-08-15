@@ -24,7 +24,7 @@
         <ul class="attachments">
             {% for attachment in article.attachments.all %}
                 <li>
-                    <a href="{{ attachment.file.url }}">{{ attachment.filename }}</a>
+                    <a href="{{ attachment.file.url }}">{{ attachment.filename }}</a> ({{ attachment.size }})
                 </li>
             {% endfor %}
         </ul>
