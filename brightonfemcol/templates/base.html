@@ -17,6 +17,10 @@
 	{% block opengraph %}
 		<meta property="og:site_name" content="Brighton Feminist Collective"/>
 	    <meta property="fb:admins" content="789560245"/>
+	    {% if page %}
+
+		    <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ page.url }}" />
+		{% endif %}
 	{% endblock %}
 	<link href='http://fonts.googleapis.com/css?family=Poly:400,400italic|Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 	{% compress css %}

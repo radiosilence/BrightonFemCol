@@ -1,3 +1,5 @@
+from django.contrib.sites.models import Site
+
 from suave.models import NavItem
 
 from suave_press.models import Article
@@ -47,5 +49,6 @@ def brightonfemcol(request):
 
     return {
         'home': home(),
-        'nav': nav()
+        'nav': nav(),
+        'SITE_DOMAIN': Site.objects.get_current().domain,
     }

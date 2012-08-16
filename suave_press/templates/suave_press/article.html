@@ -5,12 +5,13 @@
 
 {% block opengraph %}
     {{ block.super }}
+    <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ article.url }}" />
     <meta property="og:title" content="{{ article.title }}"/>
     <meta property="og:author" content="{{ article.author.username }}"/>
     <meta property="og:type" content="article"/>
     {% for image in article.images.all %}
     {% thumbnail image.image '720x480' crop='center' as im %}
-        <meta property="og:image" content="{{ im.url }}"/>
+        <meta property="og:image" content="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
     {% endthumbnail %}
     {% endfor %}
     <meta property="og:description"

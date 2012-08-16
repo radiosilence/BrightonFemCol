@@ -4,11 +4,12 @@
 {% block meta_author %}Brighton Feminist Collective{% endblock %}
 {% block opengraph %}
     {{ block.super }}
+    <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ event.url }}" />
     <meta property="og:title" content="{{ event.title }}"/>
     <meta property="og:type" content="activity"/>
     {% for image in event.images.all %}
     {% thumbnail image.image '720x480' crop='center' as im %}
-        <meta property="og:image" content="{{ im.url }}"/>
+        <meta property="og:image" content="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
     {% endthumbnail %}
     {% endfor %}
     <meta property="og:description"
