@@ -4,6 +4,7 @@ import calendar
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
+from django.core.urlresolvers import reverse_lazy as reverse
 
 from suave.utils import get_page_from_url
 
@@ -18,7 +19,8 @@ def home(request):
     return TemplateResponse(request, 'suave_calendar/calendar.html', {
         'title': 'Upcoming Events',
         'page': page,
-        'events': Event.objects.future().order_by('start_date', 'start_time')
+        'events': Event.objects.future().order_by('start_date', 'start_time'),
+        'url': reverse('suave_calendar:home'),
     })
 
 
@@ -31,7 +33,8 @@ def archive(request):
     return TemplateResponse(request, 'suave_calendar/calendar.html', {
         'title': 'Archived Events',
         'page': page,
-        'events': Event.objects.past().order_by('-start_date', '-start_time')
+        'events': Event.objects.past().order_by('-start_date', '-start_time'),
+        'url': reverse('suave_calendar:archive'),
     })
 
 

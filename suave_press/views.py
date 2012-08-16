@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
+from django.core.urlresolvers import reverse_lazy as reverse
 
 from suave.utils import get_page_from_url
 
@@ -10,7 +11,10 @@ from .models import Category, Article
 def category(request, category=None):
     category = get_object_or_404(Category, slug=category)
     return TemplateResponse(request, 'suave_press/category.html', dict(
-        category=category
+        category=category,
+        url=reverse('suave_press:category', kwargs={
+            'category': category.slug
+        })
     ))
 
 
@@ -24,7 +28,7 @@ def article(request, category=None, article=None):
 
     return TemplateResponse(request, 'suave_press/article.html', dict(
         category=category,
-        article=article
+        article=article,
     ))
 
 
@@ -43,4 +47,5 @@ def home(request):
         'page': page,
         'articles': articles,
         'first': first,
+        'url': reverse('suave_press:home'),
     })
