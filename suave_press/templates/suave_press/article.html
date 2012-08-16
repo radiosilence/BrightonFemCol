@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}{{ article.title }} - Brighton Feminist Collective{% endblock %}
 {% block meta_description %}{{ article.excerpt }}{% endblock %}
-{% block meta_author %}{{ article.author.displayed_name }}{% endblock %}
+{% block meta_author %}{{ article.author.username }}{% endblock %}
+
+{% block opengraph %}
+    {{ block.super }}
+    <meta property="og:title" content="{{ article.title }}"/>
+    <meta property="og:author" content="{{ article.author.username }}"/>
+    <meta property="og:type" content="article"/>
+    {% for image in article.images.all %}
+    {% thumbnail image.image '720x480' crop='center' as im %}
+        <meta property="og:image" content="{{ im.url }}"/>
+    {% endthumbnail %}
+    {% endfor %}
+    <meta property="og:description"
+          content="{{ article.body|striptags|safe|truncatechars:385 }}"/>
+{% endblock %}
+
 {% block content %}
     {% block header %}
         <header class="ten columns article alpha omega offset-by-one">

@@ -1,7 +1,19 @@
 {% extends 'base.html' %}{% load thumbnail %}{% load static %}
 {% block title %}{{ event.title }} - Brighton Feminist Collective{% endblock %}
-{% block meta_description %}{{ event.excerpt }}{% endblock %}
-{% block meta_author %}{{ event.author.displayed_name }}{% endblock %}
+{% block meta_description %}{{ event.body|striptags|safe|truncatechars:285 }}{% endblock %}
+{% block meta_author %}Brighton Feminist Collective{% endblock %}
+{% block opengraph %}
+    {{ block.super }}
+    <meta property="og:title" content="{{ event.title }}"/>
+    <meta property="og:type" content="activity"/>
+    {% for image in event.images.all %}
+    {% thumbnail image.image '720x480' crop='center' as im %}
+        <meta property="og:image" content="{{ im.url }}"/>
+    {% endthumbnail %}
+    {% endfor %}
+    <meta property="og:description"
+          content="{{ event.body|striptags|safe|truncatechars:385 }}"/>
+{% endblock %}
 {% block content %}
     {% block header %}
         {% if event.image and event.header_image %}
@@ -56,6 +68,7 @@
                 <h2>Pictures</h2>
                 {% include 'snippets/gallery.html' with items=event.images.all %}
             {% endif %}
+            
         </div>
     {% endblock %}
 {% endblock %}

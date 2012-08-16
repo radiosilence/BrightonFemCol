@@ -15,6 +15,10 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta name="google-site-verification" content="w75DgnsnUjKK-QPT8wVABkSvoGYudGhpF12G5k0QaT4" />
 	<meta name="google-site-verification" content="pca_v7HOtC5Xp0rnP5SMIr3tIO7r1UxqRT4SS3B-a8M" />
+	{% block opengraph %}
+		<meta property="og:site_name" content="Brighton Feminist Collective"/>
+	    <meta property="fb:admins" content="789560245"/>
+	{% endblock %}
 	<link href='http://fonts.googleapis.com/css?family=Poly:400,400italic|Source+Sans+Pro:400,700' rel='stylesheet' type='text/css'>
 	{% compress css %}
 		<link rel="stylesheet" type="text/x-scss"  href="{% static 'scss/base.scss' %}">
@@ -30,6 +34,7 @@
 		g.src=('https://ssl.google-analytics.com/ga.js');
 		s.parentNode.insertBefore(g,s)}(document,'script'));
 	</script>
+	{% block extrahead %}{% endblock %}
 </head>
 <body>
 <div id="main-container" class="container">
