@@ -28,12 +28,6 @@
 	{% endcompress %}
 	<link rel="canonical" href="http://www.brightonfeministcollective.org.uk{{ g.canonical_url }}" />
 	<script src="{% static 'js/libs/modernizr-2.5.2.min.js' %}"></script>
-	<script>
-		var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src=('https://ssl.google-analytics.com/ga.js');
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
 	{% block extrahead %}{% endblock %}
 </head>
 <body>
@@ -94,6 +88,12 @@
 		$(function() {
 			$(".fancybox").fancybox();
 		});
+	</script>
+	<script>
+		var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https://ssl.google-analytics.com/ga.js');
+		s.parentNode.insertBefore(g,s)}(document,'script'));
 	</script>
 {% endcompress %}
 </body>
