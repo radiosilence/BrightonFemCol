@@ -11,6 +11,8 @@ from model_utils.fields import StatusField
 from suave.models import Displayable, SiteEntityQuerySet, Image, Attachment
 from suave.utils import get_default_image
 
+from suave_discussion.models import Post, DISCUSSION_TYPE
+
 
 class Category(Displayable):
     @property
@@ -50,6 +52,9 @@ class Article(Displayable):
     categories = models.ManyToManyField(Category,
         related_name='secondary_articles', null=True, blank=True,
         verbose_name="extra categories")
+    posts = models.ManyToManyField(Post, related_name='articles')
+    discussion_type = models.CharField(max_length=15,
+        choices=DISCUSSION_TYPE, default=DISCUSSION_TYPE.open)
 
     objects = PassThroughManager.for_queryset_class(ArticleQuerySet)()
 
