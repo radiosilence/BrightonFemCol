@@ -28,7 +28,7 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-sass', 'sass {infile} {outfile}'),
     ('text/x-scss', 'sass --scss {infile} {outfile}'),
 )
-
+COMPRESS_STORAGE = 'django.conf.settings.COMPRESS_STORAGE'
 
 THUMBNAIL_QUALITY = 100
 THUMBNAIL_COLORSPACE = None
