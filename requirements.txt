@@ -6,3 +6,4 @@ django-pjax
 south
 django-reversion
 django-compressor
+pylibmc
