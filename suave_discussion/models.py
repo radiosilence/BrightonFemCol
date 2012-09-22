@@ -17,5 +17,11 @@ class Post(MPTTModel, Dated):
     author = models.ForeignKey(User, related_name='posts')
     topic = models.BooleanField(default=False)
     parent = TreeForeignKey('self', null=True, blank=True,
-        related_name='children')
+        related_name='replies')
     content = models.TextField()
+
+    def __unicode__(self):
+        return 'Post #{}'.format(self.id)
+
+    class MPTTMeta:
+            order_insertion_by = ['added']

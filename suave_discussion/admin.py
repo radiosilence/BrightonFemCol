@@ -1,13 +1,16 @@
 from django.contrib import admin
 
 import reversion
+
 from suave.admin import DatedAdmin
+from mptt.admin import MPTTModelAdmin
+
 from .models import Post
 
-class PostAdmin(DatedAdmin, reversion.VersionAdmin):
+class PostAdmin(MPTTModelAdmin, DatedAdmin, reversion.VersionAdmin):
     pass
 
-class PostInline(models.TabbedInline):
+class PostInline(admin.TabularInline):
     model = Post
     extra = 0
 
