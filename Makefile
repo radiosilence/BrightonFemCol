@@ -10,12 +10,8 @@ install_requirements:
 pull:
 	git pull
 
-upgrade: pull uninstall_suave install_requirements update_static update_db restart
+upgrade: pull install_requirements update_static update_db restart
 
-upgrade_suave: uninstall_suave install_requirements
-
-uninstall_suave:
-	yes | $(VIRTUAL_ENV)/bin/pip uninstall django-suave
 
 update_static:
 	$(VIRTUAL_ENV)/bin/python manage.py collectstatic -l --noinput
