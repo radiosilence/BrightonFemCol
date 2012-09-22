@@ -7,3 +7,4 @@ south
 django-reversion
 django-compressor
 pylibmc
+django-pylibmc

@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'tinymce',
     'django_extensions',
     'sorl.thumbnail',
+    'debug_toolbar',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
