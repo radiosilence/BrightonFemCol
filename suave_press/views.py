@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.core.urlresolvers import reverse_lazy as reverse
 from mptt.templatetags.mptt_tags import cache_tree_children
+from suave.shortcuts import get_page_or_404
 
-from suave.utils import get_page_from_url
 
 from .models import Category, Article
 
@@ -38,7 +38,7 @@ def article(request, category=None, article=None):
 
 def home(request):
     try:
-        page = get_page_from_url(request.path)
+        page = get_page_or_404(request)
     except Http404:
         page = None
     articles = Article.objects.published().order_by('-published')[:7]

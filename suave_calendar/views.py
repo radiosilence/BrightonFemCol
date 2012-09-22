@@ -6,14 +6,14 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.core.urlresolvers import reverse_lazy as reverse
 
-from suave.utils import get_page_from_url
+from suave.shortcuts import get_page_or_404
 
 from .models import Event
 
 
 def home(request):
     try:
-        page = get_page_from_url(request.path)
+        page = get_page_or_404(request)
     except Http404:
         page = None
     return TemplateResponse(request, 'suave_calendar/calendar.html', {
@@ -26,7 +26,7 @@ def home(request):
 
 def archive(request):
     try:
-        page = get_page_from_url(request.path)
+        page = get_page_or_404(request)
     except Http404:
         page = None
 
