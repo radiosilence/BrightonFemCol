@@ -194,6 +194,8 @@ LOGGING = {
     }
 }
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
 try:
     from settings_local import *
 except ImportError:
