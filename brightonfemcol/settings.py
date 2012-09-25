@@ -5,6 +5,7 @@ import os, sys
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 APP = 'brightonfemcol'
+SITE_DOMAIN = 'www.brightonfeministcollective.org'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),

@@ -1,5 +1,5 @@
 Django
-django-suave>=0.3.10
+django-suave>=0.3.13
 PIL
 django-model-utils
 django-pjax
