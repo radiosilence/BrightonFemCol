@@ -1,9 +1,10 @@
 import django.conf.global_settings as DEFAULT_SETTINGS
-import os
+import os, sys
 # Django settings for brightonfemcol project.
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+APP = 'brightonfemcol'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -31,7 +32,8 @@ CACHES = {
         'OPTIONS': {  # Maps to pylibmc "behaviors"
             'tcp_nodelay': True,
             'ketama': True
-        }
+        },
+        'KEY_PREFIX': APP,
     }
 }
 
@@ -112,7 +114,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'brightonfemcol.context_processors.brightonfemcol',
+    '{0}.context_processors.{0}'.format(APP),
 )
 
 
@@ -122,10 +124,10 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-ROOT_URLCONF = 'brightonfemcol.urls'
+ROOT_URLCONF = '{0}.urls'.format(APP)
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'brightonfemcol.wsgi.application'
+WSGI_APPLICATION = '{0}.wsgi.application'.format(APP)
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -134,7 +136,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'brightonfemcol',
+    APP,
     'suave_press',
     'suave_calendar',
     'suave_discussion',
