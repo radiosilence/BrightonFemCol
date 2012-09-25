@@ -44,6 +44,8 @@ COMPRESS_PRECOMPILERS = (
 )
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 
+LABJS_ENABLED = True
+
 THUMBNAIL_QUALITY = 100
 THUMBNAIL_COLORSPACE = None
 THUMBNAIL_FORMAT = 'PNG'
@@ -148,6 +150,7 @@ INSTALLED_APPS = (
     'tinymce',
     'django_extensions',
     'sorl.thumbnail',
+    'labJS',
     'debug_toolbar',
     'django.contrib.auth',
     'django.contrib.contenttypes',

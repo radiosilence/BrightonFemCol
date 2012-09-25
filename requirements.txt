@@ -8,3 +8,4 @@ django-reversion
 django-compressor
 pylibmc
 django-pylibmc
+git+git://github.com/ashwoods/django-labjs.git#egg=django-labjs

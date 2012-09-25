@@ -1,5 +1,5 @@
 VIRTUAL_ENV?=".."
-UWSGI_INI?="../uwsgi.ini"
+UWSGI_INI?="../uwsgi.yaml"
 
 debug:
 	./manage.py runserver 0.0.0.0:8000
