@@ -9,3 +9,5 @@ django-compressor
 pylibmc
 django-pylibmc
 git+git://github.com/ashwoods/django-labjs.git#egg=django-labjs
+twitter-text-py>=1.0.3
+python-twitter>=0.8.2
