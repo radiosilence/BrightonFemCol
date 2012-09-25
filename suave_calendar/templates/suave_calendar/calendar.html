@@ -17,7 +17,7 @@
                         {% if event.images.all.count > 0 %}
                             {% thumbnail event.image.image '220x150' crop='center' as im %}
                             <a href="{{ event.url }}">
-                                <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}"/>
+                                <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}" width=220 height=150/>
                             </a>
                             {% endthumbnail %}
                         {% endif %}

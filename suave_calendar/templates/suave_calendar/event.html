@@ -35,7 +35,7 @@
         <div class="twelve columns alpha omega event">
             {% if event.images.all.count > 0 and not event.header_image %}
                 {% thumbnail event.image.image '250' crop='center' as im %}
-                    <a href={{ event.image.image.url }}><img src={{ im.url }} /></a>
+                    <a href={{ event.image.image.url }}><img src={{ im.url }} width=250/></a>
                 {% endthumbnail %}
             {% endif %}
             {{ event.body|safe }}

@@ -21,13 +21,13 @@
                             <aside class="credit"><span>Photo: {{ article.image.credit }}</span></aside>
                         {% endif %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}"/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}" width=690 height=200/>
                         </a>
                         {% endthumbnail %}
                     {% else %}
                         {% thumbnail article.image.image '335x150' crop='center' as im %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}"/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}" width=335 height=150/>
                         </a>
                         {% endthumbnail %}
                     {% endif %}
