@@ -1,8 +1,9 @@
-from datetime import datetime
+import datetime
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
+from django.utils.timezone import utc
 
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
@@ -31,10 +32,12 @@ class ArticleQuerySet(SiteEntityQuerySet):
         return self.filter(user=user)
 
     def published(self):
-        return self.live().filter(published__lte=datetime.now())
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        return self.live().filter(published__lte=now)
 
     def unpublished(self):
-        return self.filter(published__gte=datetime.now())
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        return self.filter(published__gte=now)
 
 
 class Article(Displayable):
