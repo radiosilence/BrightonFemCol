@@ -202,3 +202,11 @@ try:
     from settings_local import *
 except ImportError:
     pass
+
+if 'test' in sys.argv:
+    try:
+        from settings_test import *
+    except ImportError:
+        pass
+
+import logging
