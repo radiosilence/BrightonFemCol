@@ -3,6 +3,7 @@ from datetime import datetime
 from twitter_text import TwitterText
 
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.timezone import utc
 
 
@@ -17,10 +18,9 @@ class TwitterAccount(models.Model):
         except IndexError:
             return False
 
-    @property
-    def latest_3_tweets(self):
+    def latest_tweets(self, n=5):
         try:
-            return self.tweets.all()[:3]
+            return self.tweets.order_by('-created_at')[:n]
         except IndexError:
             return False
 

@@ -476,7 +476,11 @@ div {
 .twitter {
   color: white; }
 
-.tweet_list {
+ul.tweet_list {
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin-bottom: 0;
   .awesome, .epic {
     text-transform: uppercase; }
   li {

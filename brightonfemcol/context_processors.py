@@ -17,8 +17,12 @@ def brightonfemcol(request):
             'events': babylon.get('HomeEventsCache')
         }
 
+    def twitter():
+        return babylon.get('TwitterCache', 1)
+
     return {
         'home': home(),
         'nav': nav(),
+        'twitter': twitter(),
         'SITE_DOMAIN': settings.SITE_DOMAIN,
     }

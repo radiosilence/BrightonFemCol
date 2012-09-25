@@ -1,4 +1,4 @@
-<!doctype html>{% load staticfiles %}{% load compress %}{% load labjs %}
+<!doctype html>{% load staticfiles %}{% load compress %}{% load labjs %}{% load humanize %}
 <html lang="en"
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
@@ -78,6 +78,23 @@
 	{% endblock %}
 	</section>
 	<aside class="columns four alpha omega" id="twitter">
+		<ul class="tweet_list">
+			{% for tweet in twitter.latest_tweets %}
+				<li class="four columns alpha omega tweet_{% cycle 'odd' 'even' %}">
+					<a class="tweet_avatar" href="{{ tweet.account.url }}">
+						<img src={{ tweet.account.image_url }} width=50 height=50/>
+					</a>
+					<span class="tweet_time">
+						<a href="{{ tweet.url }}">
+							about {{ tweet.created_at|naturaltime }}
+						</a>
+					</span>
+					<span class="tweet_text">
+						{{ tweet.html }}
+					</span>
+				</li>
+			{% endfor %}
+		</ul>
 	</aside>
 	<footer class="columns sixteen alpha omega">
 		Website by <a href="http://www.dapperdogstudios.com">Dapper Dog Studios</a>, Copyright &copy; 2012 Brighton Feminist Collective
@@ -87,9 +104,6 @@
 {% compress js %}
 	<script src="{% static 'js/libs/jquery-1.8.0.min.js' %}"></script>
 	<script src="{% static 'js/libs/jquery.fancybox.js' %}"></script>
-	<script src="{% static 'js/plugins.js' %}"></script>
-	<script src="{% static 'js/tabs.js' %}"></script>
-	<script src="{% static 'js/script.js' %}"></script>
 	<script>
 		$(function() {
 			$(".fancybox").fancybox();

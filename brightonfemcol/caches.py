@@ -4,7 +4,7 @@ from suave.models import NavItem
 
 from suave_press.models import Article
 from suave_calendar.models import Event
-
+from brightonfemcol.models import TwitterAccount
 
 class NavCache(babylon.Cache):
     model = NavItem
@@ -62,3 +62,9 @@ class HomeEventsCache(babylon.Cache):
         return Event.objects.future().order_by('start_date', 'start_time')[:3]
 
 babylon.register(HomeEventsCache, parents=('PageCache',))
+
+
+class TwitterCache(babylon.Cache):
+    model = TwitterAccount
+
+babylon.register(TwitterCache, parents=('PageCache',))

@@ -155,6 +155,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.markup',
