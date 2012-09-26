@@ -19,17 +19,16 @@ class NavCache(babylon.Cache):
         primary = nav.get_children()
         primary_selected = None
         for item in primary:
-            if item.active(path):
+            if item.active(path, exact=False):
                 primary_selected = item
 
         if primary_selected:
             secondary = primary_selected.get_children()
         else:
             secondary = []
-
         secondary_selected = None
         for item in secondary:
-            if item.active(path):
+            if item.active(path, exact=True):
                 secondary_selected = item
                 break
 
