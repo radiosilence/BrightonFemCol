@@ -1,6 +1,6 @@
 Django
-django-suave>=0.3.15
-PIL
+django-suave>=0.4.0
+sorl-thumbnail
 django-model-utils
 django-pjax
 south
