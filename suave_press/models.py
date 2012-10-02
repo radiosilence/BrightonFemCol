@@ -55,7 +55,8 @@ class Article(Displayable):
     categories = models.ManyToManyField(Category,
         related_name='secondary_articles', null=True, blank=True,
         verbose_name="extra categories")
-    posts = models.ManyToManyField(Post, related_name='articles')
+    posts = models.ManyToManyField(Post, related_name='articles',
+        null=True, blank=True)
     discussion_type = models.CharField(max_length=15,
         choices=DISCUSSION_TYPE, default=DISCUSSION_TYPE.open)
 
