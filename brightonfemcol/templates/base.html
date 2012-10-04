@@ -101,22 +101,24 @@
 	</footer>
 </div>
 {% labjs %}
-{% compress js %}
-	<script src="{% static 'js/libs/jquery-1.8.0.min.js' %}"></script>
-	<script src="{% static 'js/libs/jquery.fancybox.js' %}"></script>
-	<script>
-		$(function() {
-			$(".fancybox").fancybox();
-		});
-	</script>
-{% endcompress %}
-	{% wait %}
-	<script>
-		var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
-		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-		g.src=('https://ssl.google-analytics.com/ga.js');
-		s.parentNode.insertBefore(g,s)}(document,'script'));
-	</script>
+	{% compress js %}
+		<script src="{% static 'js/libs/jquery-1.8.0.min.js' %}"></script>
+		<script src="{% static 'js/libs/jquery.fancybox.js' %}"></script>
+	{% endcompress %}
+		{% wait %}
+	{% compress js %}
+		<script>
+			$(function() {
+				$(".fancybox").fancybox();
+			});
+		</script>
+		<script>
+			var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
+			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+			g.src=('https://ssl.google-analytics.com/ga.js');
+			s.parentNode.insertBefore(g,s)}(document,'script'));
+		</script>
+	{% endcompress %}
 {% endlabjs %}
 {% runlabjs %}
 </body>
