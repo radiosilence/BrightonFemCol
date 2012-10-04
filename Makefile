@@ -10,8 +10,10 @@ install_requirements:
 pull:
 	git pull
 
-upgrade: pull install_requirements update_static update_db restart
+upgrade: pull install_requirements update_static compress update_db restart
 
+compress:
+	$(VIRTUAL_ENV)/bin/python manage.py compress --force
 
 update_static:
 	rm static -rf
