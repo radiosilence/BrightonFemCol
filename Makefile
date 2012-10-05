@@ -25,7 +25,7 @@ update_db:
 	$(VIRTUAL_ENV)/bin/python manage.py migrate
 
 optimize_js:
-	 r.js -o name=main out=brightonfemcol/static/js/main-built.js baseUrl=brightonfemcol/static/js
+	 r.js -o name=main out=static/js/main-built.js baseUrl=static/js
 
 
 create_admin:
