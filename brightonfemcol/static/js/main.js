@@ -1,13 +1,10 @@
 requirejs.config({
     shim: {
-        'libs/jquery': {
-            exports: 'jQuery',
-        },
-        'libs/jquery.fancybox': {
-            deps: ['libs/jquery'],
+        'lib/jquery.fancybox': {
+            deps: ['jquery'],
         },
     },
 });
-require(['libs/jquery', 'libs/jquery.fancybox', 'libs/modernizr'], function($) {
+require(['jquery', 'lib/jquery.fancybox', 'lib/modernizr'], function($) {
     $('.fancybox').fancybox();
 });
