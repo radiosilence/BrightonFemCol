@@ -30,10 +30,7 @@
 		<link rel="stylesheet" type="text/x-scss" href="{% static 'scss/layout.scss' %}">
 	{% endcompress %}
 	<link rel="canonical" href="http://www.brightonfeministcollective.org.uk{{ g.canonical_url }}" />
-	{% compress js %}
-		<script src="{% static 'js/libs/modernizr.js' %}"></script>
-		<script type="text/javascript" src="{% static 'labjs/LAB.min.js' %}"></script>
-	{% endcompress %}
+
 	{% block extrahead %}{% endblock %}
 </head>
 <body>
@@ -100,10 +97,14 @@
 		Website by <a href="http://www.dapperdogstudios.com">Dapper Dog Studios</a>, Copyright &copy; 2012 Brighton Feminist Collective
 	</footer>
 </div>
+{% compress js %}
+	<script type="text/javascript" src="{% static 'labjs/LAB.min.js' %}"></script>
+{% endcompress %}
 {% labjs %}
 	{% compress js %}
 		<script src="{% static 'js/libs/jquery-1.8.0.min.js' %}"></script>
 		<script src="{% static 'js/libs/jquery.fancybox.js' %}"></script>
+		<script src="{% static 'js/libs/modernizr.js' %}"></script>
 	{% endcompress %}
 		{% wait %}
 	{% compress js %}
