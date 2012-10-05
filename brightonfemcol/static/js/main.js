@@ -1,7 +1,7 @@
 requirejs.config({
     shim: {
         'libs/jquery': {
-            exports: '$',
+            exports: 'jQuery',
         },
         'libs/jquery.fancybox': {
             deps: ['libs/jquery'],
