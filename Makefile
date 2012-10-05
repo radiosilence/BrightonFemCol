@@ -10,7 +10,7 @@ install_requirements:
 pull:
 	git pull
 
-upgrade: pull install_requirements update_static compress update_db restart
+upgrade: pull install_requirements update_static compress optimize_js update_db restart
 
 compress:
 	$(VIRTUAL_ENV)/bin/python manage.py compress --force
@@ -23,6 +23,10 @@ update_static:
 update_db:
 	$(VIRTUAL_ENV)/bin/python manage.py syncdb --noinput
 	$(VIRTUAL_ENV)/bin/python manage.py migrate
+
+optimize_js:
+	 r.js -o name=main out=brightonfemcol/static/js/main-built.js baseUrl=brightonfemcol/static/js
+
 
 create_admin:
 	$(VIRTUAL_ENV)/bin/python manage.py create_admin
