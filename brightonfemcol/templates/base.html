@@ -82,7 +82,7 @@
 			{% for tweet in twitter.latest_tweets %}
 				<li class="four columns alpha omega tweet_{% cycle 'odd' 'even' %}">
 					<a class="tweet_avatar" href="{{ tweet.account.url }}">
-						<img src={{ tweet.account.image_url }} width=50 height=50/>
+						<img src={% static 'images/twitter_normal.png' %} width=50 height=50/>
 					</a>
 					<span class="tweet_time">
 						<a href="{{ tweet.url }}">
