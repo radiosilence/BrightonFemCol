@@ -43,7 +43,8 @@ class TwitterAccount(models.Model):
                 })
             if new:
                 tw.save()
-
+        self.save()
+        
     def __unicode__(self):
         return self.user_name
 
