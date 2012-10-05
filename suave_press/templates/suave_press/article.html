@@ -50,9 +50,6 @@
             <h2>Pictures</h2>
             {% include 'snippets/gallery.html' with items=article.images.all %}
         {% endif %}
-
-        <h2>Discussion</h2>
-        {% include 'suave_discussion/snippets/post.html' %}
         </div>
     {% endblock %}
 {% endblock %}

@@ -97,30 +97,15 @@
 		Website by <a href="http://www.dapperdogstudios.com">Dapper Dog Studios</a>, Copyright &copy; 2012 Brighton Feminist Collective
 	</footer>
 </div>
-{% compress js %}
-	<script type="text/javascript" src="{% static 'labjs/LAB.min.js' %}"></script>
-{% endcompress %}
-{% labjs %}
-	{% compress js %}
-		<script src="{% static 'js/libs/jquery-1.8.0.min.js' %}"></script>
-		<script src="{% static 'js/libs/jquery.fancybox.js' %}"></script>
-		<script src="{% static 'js/libs/modernizr.js' %}"></script>
-	{% endcompress %}
-		{% wait %}
-	{% compress js %}
-		<script>
-			$(function() {
-				$(".fancybox").fancybox();
-			});
-		</script>
-		<script>
-			var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
-			(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-			g.src=('https://ssl.google-analytics.com/ga.js');
-			s.parentNode.insertBefore(g,s)}(document,'script'));
-		</script>
-	{% endcompress %}
-{% endlabjs %}
-{% runlabjs %}
+<script
+	data-main="{% static 'js/main.js' %}"
+	src="{% static 'js/require.js' %}"
+></script>
+<script>
+	var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+	g.src=('https://ssl.google-analytics.com/ga.js');
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
 </body>
 </html>
