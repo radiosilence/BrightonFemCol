@@ -59,7 +59,7 @@ class Tweet(models.Model):
     def html(self):
         tt = TwitterText(self.text)
         tt.autolink.auto_link()
-        return mark_safe(tt)
+        return tt
 
     def __unicode__(self):
         return '{}'.format(self.tweet_id)
