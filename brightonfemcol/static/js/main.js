@@ -1,10 +1,5 @@
 requirejs.config({
-    shim: {
-        'lib/jquery.fancybox': {
-            deps: ['jquery'],
-        },
-    },
 });
-require(['jquery', 'lib/jquery.fancybox', 'lib/modernizr'], function($) {
-    $('.fancybox').fancybox();
+require(['jquery', 'lib/jquery.murderbox', 'lib/modernizr'], function($) {
+    $('ul.gallery a').murderbox({});
 });

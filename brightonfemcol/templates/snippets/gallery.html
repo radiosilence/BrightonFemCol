@@ -3,7 +3,7 @@
     {% for item in items %}
     <li>
     {% thumbnail item.image '168x120' crop='center' as im %}
-        <a class="fancybox" rel="group" href={{ item.image.url }}><img src={{ im.url }} 
+        <a rel="group" href={{ item.image.url }}><img src={{ im.url }} 
             width=168 height=120/></a>
     {% endthumbnail %}
     </li>
