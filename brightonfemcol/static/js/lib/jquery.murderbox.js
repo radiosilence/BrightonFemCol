@@ -187,7 +187,7 @@ var murderbox = function ($, Mousetrap) {
 
 
 if (typeof define === 'function' && define.amd) {
-    define(['jquery', 'mousetrap', 'lib/jquery.transit'], murderbox);
+    define(['jquery', 'mousetrap'], murderbox);
 } else if(
     typeof jQuery === 'function'
         && jQuery.fn.jquery
