@@ -2,7 +2,7 @@ var murderbox = function ($, Mousetrap) {
     $.fn.murderbox = function(options) {
         var active = false;
         var close_all = function() {
-            $shade.transition({
+            $shade.animate({
                 opacity: 0,
             }, 500, function() {
                 $shade.hide();
