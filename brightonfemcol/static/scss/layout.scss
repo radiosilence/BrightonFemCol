@@ -300,8 +300,6 @@ div {
     &.secondary>li.selected {
       font-weight: 800; } } }
 
-/* Navigation */
-
 /* Article related */
 
 #main {
@@ -345,6 +343,7 @@ div {
           line-height: 24px;
           font-size: 24px;
           margin: 0px;
+          float: left;
           width: 100%;
           a {
             width: 100%;
@@ -357,6 +356,7 @@ div {
           border: 5px solid black;
           border-bottom: 0px;
           width: 335px;
+          float: left;
         }
         span {
           padding: 0 3px 0 3px;
@@ -364,6 +364,8 @@ div {
           background-color: #521717;
           color: white;
           display: block;
+          float: left;
+          width: 100%;
           @include UniversCn;
         }
       }
