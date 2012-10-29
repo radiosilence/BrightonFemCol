@@ -1,4 +1,4 @@
-define(['jquery', 'lib/jquery.transit'], function ($) {
+var murderbox = function ($, Mousetrap) {
     $.fn.murderbox = function(options) {
         var active = false;
         var close_all = function() {
@@ -7,6 +7,8 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
             }, 500, function() {
                 $shade.hide();
             });
+            Mousetrap.unbind('left');
+            Mousetrap.unbind('right');
         }
         var optimal_size = function($img) {
             var img = $img.get(0);
@@ -25,6 +27,12 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
             } else if (img.aspect > max.aspect) {
                 // Image is wider
                 var width = max.width - (o.padding * 2);
+                if (img.width < width) {
+                    return {
+                        width: img.width,
+                        height: img.height
+                    }
+                }
                 return {
                     width: width,
                     height: width / img.aspect,
@@ -32,6 +40,12 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
             } else {
                 // Image is taller
                 var height = max.height - (o.padding * 2);
+                if (img.height < width) {
+                    return {
+                        width: img.width,
+                        height: img.height,
+                    }
+                }
                 return {
                     width: height * img.aspect,
                     height: height,
@@ -84,10 +98,13 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
                     'margin-top': -(size.height / 2),
                 });
                 $shade.html($div);
-                $shade.show().transition({
+                $shade.show().animate({
                     opacity: 1,
-                }, 500);
+                }, 1000);
             });
+
+            Mousetrap.bind('left', display_next);
+            Mousetrap.bind('right', display_prev);
         }
         var display_next = function() {
             if (!active) {
@@ -166,4 +183,17 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
         });
     };
 
-});
+};
+
+
+if (typeof define === 'function' && define.amd) {
+    define(['jquery', 'mousetrap', 'lib/jquery.transit'], murderbox);
+} else if(
+    typeof jQuery === 'function'
+        && jQuery.fn.jquery
+        && typeof Mousetrap == 'function') {
+    console.log("Doing it normally");
+    murderbox(jQuery, Mousetrap);
+} else {
+    console.log("Error: Could not find jQuery.");
+}
