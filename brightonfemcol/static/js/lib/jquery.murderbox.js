@@ -1,5 +1,6 @@
 define(['jquery', 'lib/jquery.transit'], function ($) {
     $.fn.murderbox = function(options) {
+        var active = false;
         var close_all = function() {
             $shade.transition({
                 opacity: 0,
@@ -38,6 +39,7 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
             }
         }
         var display = function(image) {
+            active = image;
             var $img = $('<img/>', {
                 src: image.src,
                 css: {
@@ -50,6 +52,29 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
                 class: 'murderbox image-box',
                 html: $img,
             });
+            if (group.length > 1) {
+                var $prev = $('<a/>', {
+                    class: 'murderbox prev',
+                    href: 'javascript:void(0)',
+                });
+                $prev.on('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation()
+                    display_prev();
+                });
+                $div.append($prev);
+                var $next = $('<a/>', {
+                    class: 'murderbox next',
+                    href: 'javascript:void(0)',
+                });
+                $next.on('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation()
+                    display_next();
+                });
+                $div.append($next);
+            }
+
             $img.on('load', function(event) {
                 var size = optimal_size($img);
                 $img.css({
@@ -65,10 +90,16 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
             });
         }
         var display_next = function() {
-            // TODO
+            if (!active) {
+                return false;
+            }
+            display(active.next());
         }
-        var display_previous = function() {
-            // TODO
+        var display_prev = function() {
+            if (!active) {
+                return false;
+            }
+            display(active.prev());
         }
         var image = function(e, g, i) {
             var $e = $(e);
@@ -116,7 +147,13 @@ define(['jquery', 'lib/jquery.transit'], function ($) {
                 display: 'none',
             }
         })
-        $shade.on('click', close_all);
+        $shade.on('click', function(event) {
+            event.preventDefault();
+            var $this = $(this);
+            if (!$this.is('a')) {
+                close_all();
+            }
+        });
         $('body').append($shade);
 
         var o = {
