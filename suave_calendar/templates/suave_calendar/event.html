@@ -15,6 +15,7 @@
     <meta property="og:description"
           content="{{ event.body|striptags|safe|truncatechars:385 }}"/>
 {% endblock %}
+{% block canonical %}http://{{ SITE_DOMAIN }}{{ event.url }}{% endblock %}
 {% block content %}
     {% block header %}
         {% if event.image and event.header_image %}
