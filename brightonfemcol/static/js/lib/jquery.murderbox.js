@@ -1,3 +1,5 @@
+(function( window, undefined ) {
+
 var murderbox = function ($, Mousetrap) {
     $.fn.murderbox = function(options) {
         var active = false;
@@ -185,15 +187,15 @@ var murderbox = function ($, Mousetrap) {
 
 };
 
-
 if (typeof define === 'function' && define.amd) {
     define(['jquery', 'mousetrap'], murderbox);
-} else if(
+} else if (
     typeof jQuery === 'function'
         && jQuery.fn.jquery
         && typeof Mousetrap == 'function') {
-    console.log("Doing it normally");
     murderbox(jQuery, Mousetrap);
 } else {
     console.log("Error: Could not find jQuery.");
 }
+
+})( window );
