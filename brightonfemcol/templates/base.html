@@ -1,4 +1,6 @@
-<!doctype html>{% load staticfiles %}{% load compress %}{% load labjs %}{% load humanize %}
+{% extends kojax.parent %}
+{% load staticfiles %}{% load compress %}{% load humanize %}
+{% block kojax_base %}<!doctype html>
 <html lang="en"
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
@@ -40,6 +42,7 @@
 			<h1><a href="/"><span class="line-1">Brighton Feminist</span><span class="line-2">Collective</span></a></h1>
 		</div>
 		<nav class="sixteen columns alpha omega">
+		{% block nav %}
 			<ul class="primary">
 				{% for item in nav.primary.items %}
 					<li class="
@@ -68,6 +71,7 @@
 						</li>
 				{% endfor %}
 			</ul>
+			{% endblock %}
 		</nav>
 	</header>
 	<section id="main" class="twelve columns main-column">
@@ -113,3 +117,4 @@
 </script>
 </body>
 </html>
+{% endblock %}

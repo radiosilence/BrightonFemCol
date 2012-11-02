@@ -112,11 +112,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'kojax.middleware.KojaxMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    'kojax.context_processors.kojax',
     '{0}.context_processors.{0}'.format(APP),
 )
 
@@ -151,8 +153,8 @@ INSTALLED_APPS = (
     'tinymce',
     'django_extensions',
     'sorl.thumbnail',
-    'labJS',
     'debug_toolbar',
+    'kojax',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',

@@ -17,5 +17,5 @@ require([ 'jquery'
         , 'lib/jquery.kojax'
         ], function($) {
     $('ul.gallery a').murderbox({});
-    $.kojaxBind('a');
+    $.kojaxBind('nav a');
 });

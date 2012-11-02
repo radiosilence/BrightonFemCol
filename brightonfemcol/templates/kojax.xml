@@ -1,0 +1,13 @@
+<kojax>
+    <title>{% block title %}{% endblock %}</title>
+    <jquery selector="body" function="attr">
+        <arg>class</arg>
+        <arg>{% block bodyclass %}{% endblock %}</arg>
+    </jquery>
+    <block selector="header.main-header nav">
+        {% block nav %}{% endblock %}
+    </blocK>
+    <block selector="#main">
+        {% block content %}{% endblock %}
+    </block>
+</kojax>
