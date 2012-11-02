@@ -10,7 +10,7 @@
     <meta property="og:author" content="{{ article.author.username }}"/>
     <meta property="og:type" content="article"/>
     {% for image in article.images.all %}
-    {% thumbnail image.image '720x480' crop='center' as im %}
+    {% thumbnail image.image '480x480' crop='center' as im %}
         <meta property="og:image" content="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
     {% endthumbnail %}
     {% endfor %}
