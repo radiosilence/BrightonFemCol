@@ -1,4 +1,4 @@
-{% extends kojax.parent %}
+{% extends kojax.parent|default:'nokojax.html' %}
 {% load staticfiles %}{% load compress %}{% load humanize %}
 {% block kojax_base %}<!doctype html>
 <html lang="en"

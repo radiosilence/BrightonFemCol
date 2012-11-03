@@ -118,7 +118,6 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'kojax.context_processors.kojax',
     '{0}.context_processors.{0}'.format(APP),
 )
 
