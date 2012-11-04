@@ -59,6 +59,7 @@ class Article(Displayable):
         null=True, blank=True)
     discussion_type = models.CharField(max_length=15,
         choices=DISCUSSION_TYPE, default=DISCUSSION_TYPE.open)
+    featured = models.BooleanField()
 
     objects = PassThroughManager.for_queryset_class(ArticleQuerySet)()
 

@@ -56,6 +56,7 @@ class Event(Displayable):
     
     dark_bg = models.BooleanField()
     header_image = models.BooleanField()
+    featured = models.BooleanField()
 
     objects = PassThroughManager.for_queryset_class(EventQuerySet)()
 
