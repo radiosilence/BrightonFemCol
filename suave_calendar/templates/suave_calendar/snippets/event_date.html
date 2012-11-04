@@ -8,11 +8,13 @@
 {% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
 {% if event.end_date %}
     &mdash; 
-    {% if short %}
-        {{ event.end_date|date:'M d, Y' }}
-    {% else %}
-        {{ event.end_date|date:'F d, Y' }}
+    {% if event.end_date != event.start_date %}
+        {% if short %}
+            {{ event.end_date|date:'M d, Y' }}
+        {% else %}
+            {{ event.end_date|date:'F d, Y' }}
+        {% endif %}
     {% endif %}
-    {% if event.end_time %} @ {{ event.end_time|time:'H:i' }}{% endif %}
+    {% if event.end_time %}{% if event.end_date != event.start_date %} @{% endif %} {{ event.end_time|time:'H:i' }}{% endif %}
 {% endif %}
 </span>
