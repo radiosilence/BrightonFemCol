@@ -170,11 +170,14 @@ body>div>header h1 {
   }
 
   /* HOME PAGE COLUMN THINGS */
-  div.home-articles, div.home-events {
-    width: 345px;
+  div.home-boxes {
     float: left;
+    margin-left: 0px;
     article {
-      width: 100%;
+      padding: 0;
+      margin: 10px 0 0 0;
+      width: 345px;
+
       header {
         position: relative;
         clear: both;
@@ -208,9 +211,9 @@ body>div>header h1 {
         }
       }
     }
-  }
-  div.home-events {
-    margin-left: 10px;
+    article:nth-child(odd) {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -774,10 +777,13 @@ dd {
 /* Tablet Portrait size to standard 960 (devices and browsers) */
 @media only screen and (min-width: 768px) and (max-width: 959px) {
   #main {
-    div.home-articles, div.home-events {
-      width: 273px;
+    div.home-boxes {
+      width: 100%;
       a img {
         width: 263px;
+      }
+      article {
+        width: 273px;
       }
     }
     div.articles {
@@ -824,9 +830,10 @@ dd {
         }
       }
     }
-    div.home-articles, div.home-events {
+    div.home-boxes {
       width: 100%;
       article {
+        width: 100%;
         header {
           h1 {
             width: 100%;

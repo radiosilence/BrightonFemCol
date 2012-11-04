@@ -7,13 +7,9 @@
         
         <p class="eight columns quote">&ldquo;My feminism will be intersectional or it will be bullshit!&rdquo; &ndash; Flavia Dzodan</p>
     </div>
-    <div class="home-articles">
-        {% for article in home.articles %}
-            {% include 'snippets/home_article_block.html' with article=article %}
-        {% endfor %}
-    </div><div class="home-events">
-        {% for event in home.events %}
-            {% include 'snippets/home_article_block.html' with article=event %}
+    <div class="home-boxes">
+        {% for box in home.boxes %}
+            {% include 'snippets/home_article_block.html' with article=box %}
         {% endfor %}
     </div>
     <hr />

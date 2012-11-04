@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy as reverse
+from django.utils.timezone import utc
 
 from model_utils.managers import PassThroughManager
 from suave.models import (Displayable, Ordered, Image, SiteEntityQuerySet,
@@ -73,11 +74,23 @@ class Event(Displayable):
 
     @property
     def start(self):
-        return datetime.datetime.combine(self.start_date, self.start_time)
+        time = self.start_time
+        date = self.start_date
+        if not time:
+            time = datetime.time(0, 0)
+        return datetime.datetime.combine(date, time).replace(tzinfo=utc)
 
     @property
     def end(self):
-        return datetime.datetime.combine(self.end_date, self.end_time)
+        date = self.end_date
+        time = self.end_time
+        if not date:
+            date = self.start_date
+        if not time and self.start_time:
+            time = (self.start_time + datetime.timedelta(hours=1))
+        elif not time:
+            time =  datetime.time(0, 0)
+        return datetime.datetime.combine(date, time).replace(tzinfo=utc)
 
     @property
     def image(self):

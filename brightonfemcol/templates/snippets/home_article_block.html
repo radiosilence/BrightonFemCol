@@ -1,15 +1,15 @@
 {% load thumbnail %}
-<article class="home listed">
+<article class="six columns home listed{% if article.date_start %} event{% else %} article{% endif %}">
     <header>
         {% if article.image %}
             <aside>
                 <a class="category" href="
-                {% if event %}
+                {% if article.date_start %}
                     {% url suave_calendar:home %}
                 {% else %}
                     {{ article.category.url }}
                 {% endif %}">
-                    {% if event %}
+                    {% if article.date_start %}
                         Event
                     {% else %}
                         {{ article.category.title }}
@@ -21,7 +21,7 @@
             {% endthumbnail %}
         {% endif %}
         <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:60 }}</a></h1>
-        {% if event %}
+        {% if article.date_start %}
             {% include 'suave_calendar/snippets/event_date.html' with event=article short='yes' %}
         {% else %}
             {% include 'suave_press/snippets/author.html' with article=article %}
