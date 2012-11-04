@@ -1,10 +1,10 @@
 {{ event.tags_html|safe }}
 <div>
-    <h1>{{ event.title }}</h1>
+    <h1 itemprop="name">{{ event.title }}</h1>
 </div>
 {% if event.location %}
     <div><label>Location</label>
-       <a href="https://maps.google.co.uk/?q={{ event.location }}">{{ event.location }}</a>
+       <a href="https://maps.google.co.uk/?q={{ event.location }}" itemprop="location">{{ event.location }}</a>
     </div>
 {% endif %}
 <div><label>When</label>
@@ -16,4 +16,10 @@
             &pound;{{ event.price|floatformat:-2 }}
         </span>
     </div>
+    <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <span itemprop="price">{{ event.price }}</span>
+        <span itemprop="priceCurrency">GBP</span>
+    </span>
 {% endif %}
+<span class="hide" itemprop="startDate">{{ event.start|date:'c' }}</span>
+<span class="hide" itemprop="endDate">{{ event.end|date:'c' }}</span>

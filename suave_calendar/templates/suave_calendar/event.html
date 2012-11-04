@@ -54,13 +54,13 @@
         </section>
     {% endblock %}
     {% block body %}
-        <div class="twelve columns alpha omega event">
+        <div class="twelve columns alpha omega event" itemscope itemtype="http://schema.org/Event">
             {% if event.images.all.count > 0 and not event.header_image %}
                 {% thumbnail event.image.image '250' crop='center' as im %}
                     <a href={{ event.image.image.url }}><img src={{ im.url }} width=250/></a>
                 {% endthumbnail %}
             {% endif %}
-            {{ event.body|safe }}
+            <div itemprop="description">{{ event.body|safe }}</div>
             {% if event.links.all.count > 0 %}
             <h2>Additional Links</h2>
             <ul>
