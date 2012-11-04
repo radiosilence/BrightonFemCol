@@ -37,5 +37,9 @@
             {% include 'suave_press/snippets/author.html' with article=article %}
         {% endif %}
     </header>
-    <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
+    {% if article.first %}
+        <p>{{ article.body|striptags|safe|truncatechars:440 }}</p>
+    {% else %}
+        <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
+    {% endif %}
 </article>
