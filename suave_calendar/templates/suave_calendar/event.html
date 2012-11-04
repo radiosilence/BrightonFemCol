@@ -61,8 +61,8 @@
                     <a href={{ event.image.image.url }}><img src={{ im.url }} width=250/></a>
                 {% endthumbnail %}
             {% endif %}
-            {% include 'suave_calendar/snippets/event_rich.html' %}
             <div itemprop="description">{{ event.body|safe }}</div>
+            {% include 'suave_calendar/snippets/event_rich.html' %}
             {% if event.links.all.count > 0 %}
             <h2>Additional Links</h2>
             <ul>

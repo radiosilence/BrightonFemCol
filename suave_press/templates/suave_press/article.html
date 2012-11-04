@@ -57,10 +57,10 @@
     {% endblock %}
     {% block body %}
         <div class="ten columns offset-by-one alpha article" itemscope itemtype="http://schema.org/Article">
-            {% include 'suave_press/snippets/article_rich.html' %}
             <div itemprop="articleBody">
             {{ article.body|safe }}
             </div>
+            {% include 'suave_press/snippets/article_rich.html' %}
         </div>
         <div class="twelve columns alpha article">
         {% if article.attachments.all.count > 0 %}
