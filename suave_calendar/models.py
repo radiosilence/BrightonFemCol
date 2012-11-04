@@ -72,6 +72,14 @@ class Event(Displayable):
         })
 
     @property
+    def start(self):
+        return datetime.datetime.combine(self.start_date, self.start_time)
+
+    @property
+    def end(self):
+        return datetime.datetime.combine(self.end_date, self.end_time)
+
+    @property
     def image(self):
         try:
             return self.images.all()[0]

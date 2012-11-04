@@ -61,8 +61,8 @@
                     <a href={{ event.image.image.url }}><img src={{ im.url }} width=250/></a>
                 {% endthumbnail %}
             {% endif %}
-            <span class="hide" itemprop="startDate">{{ event.start_date|date:'c' }}</span>
-            <span class="hide" itemprop="endDate">{{ event.end_date|date:'c' }}</span>
+            <span class="hide" itemprop="startDate">{{ event.start|date:'c' }}</span>
+            <span class="hide" itemprop="endDate">{{ event.end|date:'c' }}</span>
             <span class="hide" itemprop="name">{{ event.title }}</span>
             {% if event.price %}
                 <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
