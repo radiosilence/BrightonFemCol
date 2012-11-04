@@ -34,12 +34,13 @@
         <div class="twelve columns alpha omega">
             {% if category.articles.live.count > 0 %}
                 {% for article in category.articles.live %}
-                    <article>
+                    <article itemscope itemtype="http://schema.org/Article">
                         <header>
                             <h1><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h1>
                             <span class="date">{{ article.published|date:'F d, Y' }}</span>
                         </header>
                         <p>{{ article.body|striptags|safe|truncatewords:100 }}</p>
+                        {% include 'suave_press/snippets/article_rich.html' %}
                     </article>
                 {% endfor %}
             {% else %}

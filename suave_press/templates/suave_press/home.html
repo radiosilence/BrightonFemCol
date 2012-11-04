@@ -12,7 +12,7 @@
     <div class="twelve columns alpha omega articles">
         {% if articles %}
             {% for article in articles %}
-                <article class="{% if article.image %}image{% endif %}">
+                <article class="{% if article.image %}image{% endif %}" itemscope itemtype="http://schema.org/Article">
                     <header>
                         <aside><a href="{{ article.category.url }}">{{ article.category.title }}</a></aside>
                     {% if article == first %}
@@ -42,6 +42,7 @@
                         <p>{{ article.body|striptags|safe|truncatechars:285 }}</p>
                     {% endif %}
                     </div>
+                    {% include 'suave_press/snippets/article_rich.html' %}
                 </article>
             {% endfor %}
         {% else %}
