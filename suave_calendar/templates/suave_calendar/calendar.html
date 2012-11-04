@@ -12,7 +12,9 @@
     <div class="twelve columns alpha omega events">
         {% if events %}
             {% for event in events %}
-                <article class="{% if event.images.all.count > 0 %}image{% endif %}">
+                <article class="{% if event.images.all.count > 0 %}image{% endif %}"  itemscope itemtype="http://schema.org/Event">
+
+                    {% include 'suave_calendar/snippets/event_rich.html' %}
                     <header>
                         {% if event.images.all.count > 0 %}
                             {% thumbnail event.image.image '220x150' crop='center' as im %}
