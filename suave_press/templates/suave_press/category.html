@@ -4,6 +4,27 @@
     <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ url }}" />
 {% endblock %}
 {% block content %}
+        {% block breadcrumbs %}
+            <section class='breadcrumbs' xmlns:v="http://rdf.data-vocabulary.org/#">
+                <ul>
+                    <li typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="/">
+                            Home
+                        </a>
+                    </li>
+                    <li typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="{% url suave_press:home %}">
+                            Articles
+                        </a>
+                    </li>
+                    <li typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="{% url suave_press:category  category=category.slug %}">
+                            {{ category }}
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        {% endblock %}
         {% block header %}
         <header class="twelve columns alpha omega ">
             <h1>{{ category.title }}</h1>

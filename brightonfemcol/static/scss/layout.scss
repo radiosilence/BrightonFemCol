@@ -55,6 +55,37 @@ div.container {
   background: white;
   color: black; }
 
+section.breadcrumbs {
+  width: 100%;
+  display: block;
+  height: 20px;
+  float: left;
+  margin: 10px 0 10px 0;
+  ul {
+    li {
+      list-style-type: none;
+      margin: 0px;
+      float: left;
+      margin-right: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      a {
+        margin-right: 5px;
+      }
+    }
+    li:after {
+      content: "/";
+    }
+    li:last-child:after {
+      content: "";
+    }
+    li:last-child {
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
 
 #main-container>header {
   overflow: hidden;
@@ -557,6 +588,9 @@ dd {
       font-size: 48px;
       line-height: 48px;
     }
+  }
+  section.breadcrumbs.event {
+    margin-top: 0;
   }
   div.events {
     article {

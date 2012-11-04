@@ -19,6 +19,32 @@
 {% endblock %}
 {% block canonical %}http://{{ SITE_DOMAIN }}{{ article.url }}{% endblock %}
 {% block content %}
+    {% block breadcrumbs %}
+        <section class='breadcrumbs' xmlns:v="http://rdf.data-vocabulary.org/#">
+            <ul>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="/">
+                        Home
+                    </a>
+                </li>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="{% url suave_press:home %}">
+                        Articles
+                    </a>
+                </li>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="{% url suave_press:category  category=article.category.slug %}">
+                        {{ article.category }}
+                    </a>
+                </li>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="{{ article.url }}">
+                        {{ article.title }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+    {% endblock %}
     {% block header %}
         <header class="ten columns article alpha omega offset-by-one">
             {{ article.tags_html }}

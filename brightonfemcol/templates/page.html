@@ -8,6 +8,24 @@
 {% endblock %}
 {% block content %}
         {% block prehead %}{% endblock %}
+        {% block breadcrumbs %}
+            <section class='breadcrumbs' xmlns:v="http://rdf.data-vocabulary.org/#">
+                <ul>
+                    {% for ancestor in active.get_ancestors %}
+                    <li typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="{{ ancestor.url }}">
+                            {{ ancestor.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                    <li typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="{{ active.url }}">
+                            {{ active.title }}
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        {% endblock %}
         {% block header %}
             <header class="twelve columns alpha omega ">
                 <h1>{{ page.title }}</h1>

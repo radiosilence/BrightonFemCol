@@ -32,6 +32,27 @@
             </header>
         {% endif %}
     {% endblock %}
+    {% block breadcrumbs %}
+        <section class='breadcrumbs event' xmlns:v="http://rdf.data-vocabulary.org/#">
+            <ul>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="/">
+                        Home
+                    </a>
+                </li>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="{% url suave_calendar:home %}">
+                        Events
+                    </a>
+                </li>
+                <li typeof="v:Breadcrumb">
+                    <a rel="v:url" property="v:title" href="{{ event.url }}">
+                        {{ event }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+    {% endblock %}
     {% block body %}
         <div class="twelve columns alpha omega event">
             {% if event.images.all.count > 0 and not event.header_image %}
