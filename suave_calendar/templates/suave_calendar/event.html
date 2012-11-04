@@ -62,12 +62,6 @@
                 {% endthumbnail %}
             {% endif %}
             {% include 'suave_calendar/snippets/event_rich.html' %}
-            {% if event.price %}
-                <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                    <span itemprop="price">{{ event.price|floatformat:-2 }}</span>
-                    <span itemprop="priceCurrency">GBP</span>
-                </span>
-            {% endif %}
             <div itemprop="description">{{ event.body|safe }}</div>
             {% if event.links.all.count > 0 %}
             <h2>Additional Links</h2>

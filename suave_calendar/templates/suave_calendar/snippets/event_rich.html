@@ -1,4 +1,19 @@
+{% load thumbnail %}
 <span class="hide" itemprop="startDate">{{ event.start|date:'c' }}</span>
 <span class="hide" itemprop="endDate">{{ event.end|date:'c' }}</span>
 <span class="hide" itemprop="name">{{ event.title }}</span>
 <span class="hide" itemprop="location">{{ event.location }}</span>
+<span class="hide" itemprop="dateCreated">{{ event.added|date:'c' }}</span>
+<span class="hide" itemprop="dateModified">{{ event.updated|date:'c' }}</span>
+
+{% if event.price %}
+    <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <span itemprop="price">{{ event.price|floatformat:-2 }}</span>
+        <span itemprop="priceCurrency">GBP</span>
+    </span>
+{% endif %}
+{% for image in event.images.all %}
+    {% thumbnail image.image '720x480' crop='center' as im %}
+        <img class="hide" itemprop="image" src="{{ im.url }}"/>
+    {% endthumbnail %}
+{% endfor %}
