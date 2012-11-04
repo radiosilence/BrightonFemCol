@@ -55,10 +55,20 @@
     {% endblock %}
     {% block body %}
         <div class="twelve columns alpha omega event" itemscope itemtype="http://schema.org/Event">
+            
             {% if event.images.all.count > 0 and not event.header_image %}
                 {% thumbnail event.image.image '250' crop='center' as im %}
                     <a href={{ event.image.image.url }}><img src={{ im.url }} width=250/></a>
                 {% endthumbnail %}
+            {% endif %}
+            <span class="hide" itemprop="startDate">{{ event.start_date|date:'c' }}</span>
+            <span class="hide" itemprop="endDate">{{ event.end_date|date:'c' }}</span>
+            <span class="hide" itemprop="name">{{ event.title }}</span>
+            {% if event.price %}
+                <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <span itemprop="price">{{ event.price|floatformat:-2 }}</span>
+                    <span itemprop="priceCurrency">GBP</span>
+                </span>
             {% endif %}
             <div itemprop="description">{{ event.body|safe }}</div>
             {% if event.links.all.count > 0 %}

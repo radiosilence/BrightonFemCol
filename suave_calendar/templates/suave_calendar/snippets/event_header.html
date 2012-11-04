@@ -16,11 +16,4 @@
             &pound;{{ event.price|floatformat:-2 }}
         </span>
     </div>
-    <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-        <span itemprop="price">{{ event.price|floatformat:-2 }}</span>
-        <span itemprop="priceCurrency">GBP</span>
-    </span>
 {% endif %}
-<span class="hide" itemprop="startDate">{{ event.start_date|date:'c' }}</span>
-<span class="hide" itemprop="endDate">{{ event.end_date|date:'c' }}</span>
-<span class="hide" itemprop="name">{{ event.title }}</span>
