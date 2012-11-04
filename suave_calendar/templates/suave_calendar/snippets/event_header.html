@@ -1,6 +1,6 @@
 {{ event.tags_html|safe }}
 <div>
-    <h1 itemprop="name">{{ event.title }}</h1>
+    <h1>{{ event.title }}</h1>
 </div>
 {% if event.location %}
     <div><label>Location</label>
@@ -23,3 +23,4 @@
 {% endif %}
 <span class="hide" itemprop="startDate">{{ event.start_date|date:'c' }}</span>
 <span class="hide" itemprop="endDate">{{ event.end_date|date:'c' }}</span>
+<span class="hide" itemprop="name">{{ event.title }}</span>
