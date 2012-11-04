@@ -7,12 +7,12 @@
 {% endfor %}
 <span class="hide" itemprop="author">{{ article.author }}</span>
 <span class="hide" itemprop="creator">{{ article.author }}</span>
-<span class="hide" itemprop="url">{{ article.url }}</span>
+<span class="hide" itemprop="url">http://{{ SITE_DOMAIN }}{{ article.url }}</span>
 <span class="hide" itemprop="datePublished">{{ article.published|date:'c' }}</span>
 <span class="hide" itemprop="dateCreated">{{ article.added|date:'c' }}</span>
 <span class="hide" itemprop="dateModified">{{ article.updated|date:'c' }}</span>
 {% for image in article.images.all %}
     {% thumbnail image.image '720x480' crop='center' as im %}
-        <img class="hide" itemprop="image" src="{{ im.url }}"/>
+        <img class="hide" itemprop="image" src="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
     {% endthumbnail %}
 {% endfor %}
