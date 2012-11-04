@@ -49,7 +49,7 @@ class HomeArticlesCache(babylon.Cache):
     model = Article
 
     def generate(self, *args, **kwargs):
-        return Article.objects.published().order_by('-published')[:3]
+        return Article.objects.published().order_by('-published')[:5]
 
 babylon.register(HomeArticlesCache, parents=('PageCache',))
 
@@ -58,7 +58,7 @@ class HomeEventsCache(babylon.Cache):
     model = Article
 
     def generate(self, *args, **kwargs):
-        return Event.objects.future().order_by('start_date', 'start_time')[:3]
+        return Event.objects.future().order_by('start_date', 'start_time')[:5]
 
 babylon.register(HomeEventsCache, parents=('PageCache',))
 

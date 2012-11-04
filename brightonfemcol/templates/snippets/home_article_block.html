@@ -16,9 +16,15 @@
                     {% endif %}
                 </a>
             </aside>
-            {% thumbnail article.image.image '335x85' crop='center' as im %}
-                <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}" width=335 height=85></a>
-            {% endthumbnail %}
+            {% if article.first %}
+                {% thumbnail article.image.image '690x150' crop='center' as im %}
+                    <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}" width=690 height=150></a>
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail article.image.image '335x85' crop='center' as im %}
+                    <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}" width=335 height=85></a>
+                {% endthumbnail %}
+            {% endif %}
         {% endif %}
         <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:60 }}</a></h1>
         {% if article.start_date %}

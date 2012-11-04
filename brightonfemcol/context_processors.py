@@ -15,21 +15,25 @@ def brightonfemcol(request):
         return babylon.get('NavCache', request.path)
 
     def home():
-        def sorter(item):
+        def sorter_date(item):
             if isinstance(item, Article):
                 return item.published
             else:
                 return item.start
+        def sorter_featured(item):
+            if item.featured:
+                return 0
+            else:
+                return 1
 
         articles = list(babylon.get('HomeArticlesCache'))
         events = list(babylon.get('HomeEventsCache'))
-        boxes = []
-        boxes.extend(articles)
-        boxes.extend(events)
-        sorted(boxes, key=sorter)
-
+        boxes = articles + events
+        boxes = sorted(boxes, key=sorter_date, reverse=True)
+        boxes = sorted(boxes, key=sorter_featured)
+        boxes[0].first = True
         return {
-            'boxes': boxes
+            'boxes': boxes[:5]
         }
 
     def twitter():
