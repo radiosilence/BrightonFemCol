@@ -4,6 +4,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
 
+from suave.sitemap import PageSitemap
+from suave_press.sitemap import PressSitemap
+from suave_calendar.sitemap import CalendarSitemap
+
+sitemaps = {
+    'pages': PageSitemap(),
+    'calendar': CalendarSitemap(),
+    'press': PressSitemap(),
+}
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^articles/', include('suave_press.urls',
@@ -14,6 +23,10 @@ urlpatterns = patterns('',
 
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
         'url': settings.STATIC_URL + 'images/favicon.ico'
+    }),
+
+    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {
+        'sitemaps': sitemaps
     }),
 
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
