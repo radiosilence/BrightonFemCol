@@ -1,7 +1,10 @@
 {% load thumbnail %}
 <span class="hide" itemprop="name">{{ article.title }}</span>
 <span class="hide" itemprop="headline">{{ article.title }}</span>
-<span class="hide" itemprop="section">{{ article.category }}</span>
+<span class="hide" itemprop="articleSection">{{ article.category }}</span>
+{% for c in article.categories.all %}
+    <span class="hide" itemprop="articleSection">{{ c }}</span>
+{% endfor %}
 <span class="hide" itemprop="author">{{ article.author }}</span>
 <span class="hide" itemprop="creator">{{ article.author }}</span>
 <span class="hide" itemprop="url">{{ article.url }}</span>
