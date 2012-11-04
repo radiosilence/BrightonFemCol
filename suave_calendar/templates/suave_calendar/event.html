@@ -64,6 +64,7 @@
             <span class="hide" itemprop="startDate">{{ event.start|date:'c' }}</span>
             <span class="hide" itemprop="endDate">{{ event.end|date:'c' }}</span>
             <span class="hide" itemprop="name">{{ event.title }}</span>
+            <span class="hide" itemprop="location">{{ event.location }}</span>
             {% if event.price %}
                 <span class="hide" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                     <span itemprop="price">{{ event.price|floatformat:-2 }}</span>
