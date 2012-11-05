@@ -1,5 +1,12 @@
 {% load thumbnail %}
-<article class="six columns home listed{% if article.start_date %} event{% else %} article{% endif %}">
+<article class="six columns home listed{% if article.start_date %} event{% else %} article{% endif %}"
+    itemscope
+    {% if article.start_date %}
+        itemtype="http://schema.org/Event"
+    {% else %}
+        itemtype="http://schema.org/Article"
+    {% endif %}
+>
     <header>
         {% if article.image %}
             <aside>
@@ -41,5 +48,10 @@
         <p>{{ article.body|striptags|safe|truncatechars:440 }}</p>
     {% else %}
         <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
+    {% endif %}
+    {% if article.start_date %}
+        {% include 'suave_calendar/snippets/event_rich.html' with event=article %}
+    {% else %}
+        {% include 'suave_press/snippets/article_rich.html' with article=article %}
     {% endif %}
 </article>
