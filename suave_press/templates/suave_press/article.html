@@ -48,11 +48,15 @@
     {% block header %}
         <header class="ten columns article alpha omega offset-by-one">
             {{ article.tags_html }}
-            <a href="{{ article.category.url }}" class="category">{{ article.category.title }}</a>
-            <h1><span>{{ article.title }}</span></h1>
+            <a href="{{ article.category.url }}" class="category" itemprop="articleSection">{{ article.category.title }}</a>
+            <h1><span itemprop="name">{{ article.title }}</span></h1>
             <span class="subtitle">{{ article.subtitle }}</span>
-            <span class="article display author">By <a href="#">{{ article.author }}</a></span>
-            <span class="date">{{ article.published|date:'F d, Y' }}</span>
+            <span class="article display author">By <a href="#" itemprop="author">{{ article.author }}</a></span>
+            <span class="date" itemprop="datePublished">
+                <time itemprop="datePublished" datetime="{ article.published|date:'c' }}">
+                    {{ article.published|date:'F d, Y' }}
+                </time>
+            </span>
         </header>
     {% endblock %}
     {% block body %}
