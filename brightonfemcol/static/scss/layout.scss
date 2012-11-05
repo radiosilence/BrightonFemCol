@@ -177,7 +177,11 @@ body>div>header h1 {
       padding: 0;
       margin: 0 0 0 0;
       width: 345px;
-
+      span.location {
+        text-transform: uppercase;
+        font-size: 12px;
+        width: 100%;
+      }
       header {
         position: relative;
         clear: both;
@@ -208,7 +212,11 @@ body>div>header h1 {
           display: block;
           padding: 0px 3px;
           @include UniversCn;
+          > span {
+            display: inline;
+          }
         }
+
       }
     }
     article:first-child {
@@ -650,6 +658,8 @@ dd {
         margin: 5px 0 0 0;
         display: block;
       }
+
+      
     }
     article.image {
       h1 {
@@ -660,6 +670,11 @@ dd {
       }
       div {
         margin: 5px 0 0 240px;
+      }
+      span.location {
+        font-size: 12px;
+        text-transform: uppercase;
+        padding: 0px;
       }
     }
     article.image:nth-child(even) {
@@ -680,6 +695,7 @@ dd {
         display: block;
       }
     }
+
   }
 }
 

@@ -1,8 +1,4 @@
 {% load thumbnail %}
-<span class="hide" itemprop="startDate">{{ event.start|date:'c' }}</span>
-<span class="hide" itemprop="endDate">{{ event.end|date:'c' }}</span>
-<span class="hide" itemprop="name">{{ event.title }}</span>
-<span class="hide" itemprop="location">{{ event.location }}</span>
 <span class="hide" itemprop="url">http://{{ SITE_DOMAIN }}{{ event.url }}</span>
 
 {% if event.price %}

@@ -16,6 +16,7 @@
           content="{{ event.body|striptags|safe|truncatechars:385 }}"/>
 {% endblock %}
 {% block canonical %}http://{{ SITE_DOMAIN }}{{ event.url }}{% endblock %}
+{% block schema %}itemscope itemtype="http://schema.org/Event"{% endblock %}
 {% block content %}
     {% block header %}
         {% if event.image and event.header_image %}
@@ -54,7 +55,7 @@
         </section>
     {% endblock %}
     {% block body %}
-        <div class="twelve columns alpha omega event" itemscope itemtype="http://schema.org/Event">
+        <div class="twelve columns alpha omega event">
             
             {% if event.images.all.count > 0 and not event.header_image %}
                 {% thumbnail event.image.image '250' crop='center' as im %}

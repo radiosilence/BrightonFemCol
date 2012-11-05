@@ -4,6 +4,7 @@
     {{ block.super }}
     <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ url }}" />
 {% endblock %}
+{% block schema %}itemscope itemtype="http://schema.org/Event"{% endblock %}
 {% block content %}
     <header class="twelve columns alpha omega events">
         <h1>{{ title }}</h1>
@@ -12,21 +13,21 @@
     <div class="twelve columns alpha omega events">
         {% if events %}
             {% for event in events %}
-                <article class="{% if event.images.all.count > 0 %}image{% endif %}"  itemscope itemtype="http://schema.org/Event">
-
+                <article class="{% if event.images.all.count > 0 %}image{% endif %}">
                     {% include 'suave_calendar/snippets/event_rich.html' %}
                     <header>
                         {% if event.images.all.count > 0 %}
                             {% thumbnail event.image.image '220x150' crop='center' as im %}
                             <a href="{{ event.url }}">
-                                <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}" width=220 height=150/>
+                                <img src={{ im.url }} alt="{{ event.image.alt }}" title="{{ event.title }}{% if photo.image.credit %} credit: {{ event.image.credit }}{% endif %}" width=220 height=150 itemprop="image"/>
                             </a>
                             {% endthumbnail %}
                         {% endif %}
-                        <h1><a href="{{ event.url }}">{{ event.title }}</a></h1>
+                        <h1><a href="{{ event.url }}" itemprop="name">{{ event.title }}</a></h1>
                         {% include 'suave_calendar/snippets/event_date.html' %}
                     </header>
                     <div>
+                        <span class="location">{{ event.location }}</span>
                         <p>{{ event.body|striptags|safe|truncatechars:285 }}</p>
                     </div>
                 </article>

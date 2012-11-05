@@ -1,13 +1,15 @@
 <span class="event date">
+<time itemprop="startDate" datetime="{{ event.start|date:'c' }}">
     {% if short and event.end_date %}
         {{ event.start_date|date:'M d, Y' }}
     {% else %}
         {{ event.start_date|date:'F d, Y' }}
     {% endif %}
-
-{% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
+    {% if event.start_time %} @ {{ event.start_time|time:'H:i' }}{% endif %}
+</time>
 {% if event.end_date %}
     &mdash; 
+<time itemprop="endDate" datetime="{{ event.end|date:'c' }}">
     {% if event.end_date != event.start_date %}
         {% if short %}
             {{ event.end_date|date:'M d, Y' }}
@@ -16,5 +18,6 @@
         {% endif %}
     {% endif %}
     {% if event.end_time %}{% if event.end_date != event.start_date %} @{% endif %} {{ event.end_time|time:'H:i' }}{% endif %}
+</time>
 {% endif %}
 </span>

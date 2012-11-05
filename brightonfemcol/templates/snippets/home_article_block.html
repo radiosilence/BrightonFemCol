@@ -10,7 +10,7 @@
     <header>
         {% if article.image %}
             <aside>
-                <a class="category" href="
+                <a class="category" itemprop="articleSection" href="
                 {% if article.start_date %}
                     {% url suave_calendar:home %}
                 {% else %}
@@ -25,15 +25,15 @@
             </aside>
             {% if article.first %}
                 {% thumbnail article.image.image '690x150' crop='center' as im %}
-                    <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}" width=690 height=150></a>
+                    <a href="{{ article.get_absolute_url }}"><img itemprop="image" src="{{ im.url }}" width=690 height=150></a>
                 {% endthumbnail %}
             {% else %}
-                {% thumbnail article.image.image '335x85' crop='center' as im %}
-                    <a href="{{ article.get_absolute_url }}"><img src="{{ im.url }}" width=335 height=85></a>
+            {% thumbnail article.image.image '335x85' crop='center' as im %}
+                    <a href="{{ article.get_absolute_url }}"><img itemprop="image" src="{{ im.url }}" width=335 height=85></a>
                 {% endthumbnail %}
             {% endif %}
         {% endif %}
-        <h1><a href="{{ article.get_absolute_url }}">{{ article.title|truncatechars:60 }}</a></h1>
+        <h1><a href="{{ article.get_absolute_url }}" itemprop="name">{{ article.title|truncatechars:60 }}</a></h1>
         {% if article.start_date %}
             {% if article.first %}
                 {% include 'suave_calendar/snippets/event_date.html' with event=article %}
@@ -44,6 +44,9 @@
             {% include 'suave_press/snippets/author.html' with article=article %}
         {% endif %}
     </header>
+    {% if article.start_date %}
+    <span class="location" itemprop="location">{{ article.location }}</span>
+    {% endif %}
     {% if article.first %}
         <p>{{ article.body|striptags|safe|truncatechars:440 }}</p>
     {% else %}

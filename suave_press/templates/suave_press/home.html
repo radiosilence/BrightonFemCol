@@ -21,17 +21,17 @@
                             <aside class="credit"><span>Photo: {{ article.image.credit }}</span></aside>
                         {% endif %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}" width=690 height=200/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" itemprop="image" title="{{ article.title }}" width=690 height=200/>
                         </a>
                         {% endthumbnail %}
                     {% else %}
                         {% thumbnail article.image.image '335x150' crop='center' as im %}
                         <a href="{{ article.url }}">
-                            <img src={{ im.url }} alt="{{ article.image.alt }}" title="{{ article.title }}" width=335 height=150/>
+                            <img src={{ im.url }} alt="{{ article.image.alt }}" itemprop="image" title="{{ article.title }}" width=335 height=150/>
                         </a>
                         {% endthumbnail %}
                     {% endif %}
-                        <h1><a href="{{ article.url }}">{{ article.title }}</a></h1>
+                        <h1><a href="{{ article.url }}" itemprop="name">{{ article.title }}</a></h1>
                         {% include 'suave_press/snippets/author.html' %}
                     </header>
                     <div>

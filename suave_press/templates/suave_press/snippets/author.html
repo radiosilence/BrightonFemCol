@@ -1,1 +1,2 @@
-<span class="author">{{ article.published|date:'F d, Y' }} &ndash; {{ article.author.username }}</span>
+<span class="author">
+    <time itemprop="datePublished" datetime="{{ article.published|date:'c' }}">{{ article.published|date:'F d, Y' }}</time> &ndash; <span itemprop="author">{{ article.author.username }}</span></span>
