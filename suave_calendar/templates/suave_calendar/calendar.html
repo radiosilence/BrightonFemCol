@@ -27,7 +27,7 @@
                         {% include 'suave_calendar/snippets/event_date.html' %}
                     </header>
                     <div>
-                        <span class="location">{{ event.location }}</span>
+                        <span class="location" itemprop="location">{{ event.location }}</span>
                         <p>{{ event.body|striptags|safe|truncatechars:285 }}</p>
                     </div>
                 </article>
