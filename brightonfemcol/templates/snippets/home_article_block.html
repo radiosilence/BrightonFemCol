@@ -33,7 +33,7 @@
                 {% endthumbnail %}
             {% endif %}
         {% endif %}
-        <h1><a href="{{ article.get_absolute_url }}" itemprop="name">{{ article.title|truncatechars:60 }}</a></h1>
+        <h1 itemprop="name"><a href="{{ article.get_absolute_url }}" itemprop="url">{{ article.title|truncatechars:60 }}</a></h1>
         {% if article.start_date %}
             {% if article.first %}
                 {% include 'suave_calendar/snippets/event_date.html' with event=article %}

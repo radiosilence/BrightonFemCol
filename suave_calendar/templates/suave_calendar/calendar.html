@@ -23,7 +23,7 @@
                             </a>
                             {% endthumbnail %}
                         {% endif %}
-                        <h1><a href="{{ event.url }}" itemprop="name">{{ event.title }}</a></h1>
+                        <h1 itemprop="name"><a href="{{ event.url }}" itemprop="url">{{ event.title }}</a></h1>
                         {% include 'suave_calendar/snippets/event_date.html' %}
                     </header>
                     <div>
