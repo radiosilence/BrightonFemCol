@@ -153,7 +153,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'sorl.thumbnail',
     'labJS',
-    'debug_toolbar',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
