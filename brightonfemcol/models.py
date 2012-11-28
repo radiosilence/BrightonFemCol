@@ -1,3 +1,4 @@
+import requests
 import twitter
 from datetime import datetime
 from twitter_text import TwitterText
@@ -5,11 +6,12 @@ from twitter_text import TwitterText
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.timezone import utc
-
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 class TwitterAccount(models.Model):
     user_name = models.CharField(max_length=255)
-    image_url = models.CharField(max_length=511, null=True, blank=True)
+    image = models.ImageField(upload_to='twitter', null=True, blank=True)
 
     @property
     def latest_tweet(self):
@@ -28,10 +30,12 @@ class TwitterAccount(models.Model):
         api = twitter.Api()
         tweets = api.GetUserTimeline(self.user_name)
         user = api.GetUser(self.user_name)
-
-        if user.profile_image_url != self.image_url:
-            self.image_url = user.profile_image_url
-            self.save()
+        url = user.profile_image_url
+        filename = url.split('/')[-1]
+        temp = NamedTemporaryFile(delete=True)
+        temp.write(requests.get(url).content)
+        temp.flush()
+        self.image.save(filename, File(temp))
 
         for tweet in tweets:
             tw, new = Tweet.objects.get_or_create(tweet_id=tweet.id,

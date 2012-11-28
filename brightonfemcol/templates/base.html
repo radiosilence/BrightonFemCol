@@ -84,7 +84,7 @@
 			{% for tweet in twitter.latest_tweets %}
 				<li class="four columns alpha omega tweet_{% cycle 'odd' 'even' %}">
 					<a class="tweet_avatar" href="{{ tweet.account.url }}">
-						{% thumbnail tweet.account.image_url '50x50' crop='center' as im %}
+						{% thumbnail tweet.account.image '50x50' crop='center' as im %}
 						<img src={{ im.url }} width=50 height=50/>
 						{% endthumbnail %}
 					</a>

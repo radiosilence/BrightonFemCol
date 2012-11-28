@@ -11,5 +11,6 @@ django-tinymce>=1.5.1b2
 psycopg2>=2.4.5
 pylibmc>=1.2.3
 python-twitter>=0.8.2
+requests>=0.14.2
 sorl-thumbnail>=11.12
 twitter-text-py>=1.0.3
