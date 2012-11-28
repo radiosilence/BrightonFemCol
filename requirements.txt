@@ -1,4 +1,5 @@
 Django>=1.4.2
+PIL>=1.1.7
 South>=0.7.6
 django-compressor>=1.2
 django-model-utils>=1.1.0
