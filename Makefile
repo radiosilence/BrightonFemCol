@@ -24,10 +24,6 @@ update_db:
 	$(VIRTUAL_ENV)/bin/python manage.py syncdb --noinput
 	$(VIRTUAL_ENV)/bin/python manage.py migrate
 
-optimize_js:
-	 r.js -o name=main out=static/js/main-built.js baseUrl=static/js
-
-
 create_admin:
 	$(VIRTUAL_ENV)/bin/python manage.py create_admin
 

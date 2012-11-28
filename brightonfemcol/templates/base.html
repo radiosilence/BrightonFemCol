@@ -1,4 +1,8 @@
-<!doctype html>{% load staticfiles %}{% load compress %}{% load labjs %}{% load humanize %}
+<!doctype html>
+{% load staticfiles %}
+{% load compress %}
+{% load humanize %}
+{% load require %}
 <html lang="en"
       xmlns:og="http://ogp.me/ns#"
       xmlns:fb="https://www.facebook.com/2008/fbml">
@@ -97,14 +101,8 @@
 		Website by <a href="http://www.dapperdogstudios.com">Dapper Dog Studios</a>, Copyright &copy; 2012 Brighton Feminist Collective
 	</footer>
 </div>
-<script
-{% if debug %}
-	data-main="{% static 'js/main.js' %}"
-{% else %}
-	data-main="{% static 'js/main-built.js' %}"
-{% endif %}
-	src="{% static 'js/require.js' %}"
-></script>
+
+{% require_module 'main' %}
 <script>
 	var _gaq=[['_setAccount','UA-29822466-1'],['_trackPageview']];
 	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

@@ -128,6 +128,22 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+STATICFILES_STORAGE = 'require.storage.OptimizedCachedStaticFilesStorage'
+
+REQUIRE_BASE_URL = "js"
+REQUIRE_BUILD_PROFILE = None
+REQUIRE_JS = "require.js"
+REQUIRE_DEBUG = DEBUG
+REQUIRE_STANDALONE_MODULES = {
+    "main": {
+        # Where to output the built module, relative to REQUIRE_BASE_URL.
+        "out": "main-built.js",
+
+        # Optional: A build profile used to build this standalone module.
+        "build_profile": "main.build.js",
+    }
+}
+
 ROOT_URLCONF = '{0}.urls'.format(APP)
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -141,18 +157,18 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     APP,
+    'mptt',
+    'compressor',
+    'require',
+    'reversion',
+    'south',
     'suave_press',
     'suave_calendar',
     'suave_discussion',
-    'compressor',
-    'mptt',
-    'reversion',
-    'south',
     'suave',
     'tinymce',
     'django_extensions',
     'sorl.thumbnail',
-    'labJS',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
