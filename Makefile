@@ -10,7 +10,7 @@ install_requirements:
 pull:
 	git pull
 
-upgrade: pull install_requirements update_static compress optimize_js update_db restart
+upgrade: pull install_requirements update_static compress optimize_js update_db 
 
 compress:
 	$(VIRTUAL_ENV)/bin/python manage.py compress --force
@@ -34,8 +34,5 @@ create_admin:
 init: init_db create_admin
 
 init_db: update_db
-
-restart:
-	touch $(UWSGI_INI)
 
 	
