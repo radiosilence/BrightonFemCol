@@ -48,6 +48,10 @@ class TwitterAccount(models.Model):
             if new:
                 tw.save()
         self.save()
+
+    @property
+    def url(self):
+        return 'https://twitter.com/{}'.format(self.user_name)
         
     def __unicode__(self):
         return self.user_name
@@ -64,6 +68,10 @@ class Tweet(models.Model):
         tt = TwitterText(self.text)
         tt.autolink.auto_link()
         return tt
+
+    @property
+    def url(self):
+        return '{}/status/{}'.format(self.account.url, self.tweet_id)
 
     def __unicode__(self):
         return '{}'.format(self.tweet_id)
