@@ -8,6 +8,7 @@
  *   - 'dir' will be overidden by django-require during the build process. 
  */
 ({
+    skipDirOptimize: true,
     wrap: true,
     optimize: 'uglify',
     optimizeCss: "standard",
