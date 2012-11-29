@@ -131,9 +131,10 @@ STATICFILES_FINDERS = (
 STATICFILES_STORAGE = 'require.storage.OptimizedCachedStaticFilesStorage'
 
 REQUIRE_BASE_URL = "js"
-REQUIRE_BUILD_PROFILE = None
+REQUIRE_BUILD_PROFILE = 'default.build.js'
 REQUIRE_JS = "require.js"
 REQUIRE_DEBUG = DEBUG
+REQUIRE_ENVIRONMENT = 'node'
 REQUIRE_STANDALONE_MODULES = {
     "main": {
         # Where to output the built module, relative to REQUIRE_BASE_URL.
