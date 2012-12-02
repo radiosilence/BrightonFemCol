@@ -4,6 +4,7 @@ from django.template.response import TemplateResponse
 from django.core.urlresolvers import reverse_lazy as reverse
 from mptt.templatetags.mptt_tags import cache_tree_children
 
+from suave.models import Page
 from .models import Category, Article
 
 
