@@ -52,9 +52,4 @@
     {% else %}
         <p>{{ article.body|striptags|safe|truncatechars:140 }}</p>
     {% endif %}
-    {% if article.start_date %}
-        {% include 'suave_calendar/snippets/event_rich.html' with event=article %}
-    {% else %}
-        {% include 'suave_press/snippets/article_rich.html' with article=article %}
-    {% endif %}
 </article>

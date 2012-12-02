@@ -63,7 +63,6 @@
                 {% endthumbnail %}
             {% endif %}
             <div itemprop="description">{{ event.body|safe }}</div>
-            {% include 'suave_calendar/snippets/event_rich.html' %}
             {% if event.links.all.count > 0 %}
             <h2>Additional Links</h2>
             <ul>

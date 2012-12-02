@@ -40,7 +40,6 @@
                             <span class="date">{{ article.published|date:'F d, Y' }}</span>
                         </header>
                         <p>{{ article.body|striptags|safe|truncatewords:100 }}</p>
-                        {% include 'suave_press/snippets/article_rich.html' %}
                     </article>
                 {% endfor %}
             {% else %}

@@ -64,7 +64,6 @@
             <div itemprop="articleBody">
             {{ article.body|safe }}
             </div>
-            {% include 'suave_press/snippets/article_rich.html' %}
         </div>
         <div class="twelve columns alpha article">
         {% if article.attachments.all.count > 0 %}

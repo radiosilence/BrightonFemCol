@@ -42,7 +42,6 @@
                         <p>{{ article.body|striptags|safe|truncatechars:285 }}</p>
                     {% endif %}
                     </div>
-                    {% include 'suave_press/snippets/article_rich.html' %}
                 </article>
             {% endfor %}
         {% else %}
