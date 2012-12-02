@@ -36,8 +36,13 @@ CACHES = {
             'ketama': True
         },
         'KEY_PREFIX': APP,
+        'JOHNNY_CACHE': True,
     }
 }
+
+JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_{}'.format(APP)
+JIMMY_PAGE_CACHE_PREFIX = "jp_{}".format(APP)
+
 
 COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
@@ -115,6 +120,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'johnny.middleware.LocalStoreClearMiddleware',
+    'johnny.middleware.QueryCacheMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
@@ -169,6 +176,7 @@ INSTALLED_APPS = (
     'tinymce',
     'django_extensions',
     'sorl.thumbnail',
+    'jimmypage',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
