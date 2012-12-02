@@ -118,6 +118,3 @@ class EventImage(Image):
 
 class EventAttachment(Attachment):
     event = models.ForeignKey(Event, related_name='attachments')
-
-
-from caches import *

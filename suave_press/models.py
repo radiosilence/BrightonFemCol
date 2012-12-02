@@ -88,6 +88,3 @@ class ArticleImage(Image):
 
 class ArticleAttachment(Attachment):
     article = models.ForeignKey(Article, related_name='attachments')
-
-
-from caches import *

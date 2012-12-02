@@ -1,6 +1,5 @@
-import babylon
-
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 from suave.models import NavItem
 
@@ -9,10 +8,43 @@ from suave_calendar.models import Event
 
 from collections import namedtuple
 
+from suave_press.models import Article
+from suave_calendar.models import Event
+from brightonfemcol.models import TwitterAccount
+
 
 def brightonfemcol(request):
     def nav():
-        return babylon.get('NavCache', request.path)
+        try:
+            nav = NavItem.objects.get(text='main')
+        except NavItem.DoesNotExist:
+            return False
+
+        primary = nav.get_children()
+        primary_selected = None
+        for item in primary:
+            if item.active(request.path, exact=False):
+                primary_selected = item
+
+        if primary_selected:
+            secondary = primary_selected.get_children()
+        else:
+            secondary = []
+        secondary_selected = None
+        for item in secondary:
+            if item.active(request.path, exact=True):
+                secondary_selected = item
+                break
+        return {
+            'primary': {
+                'items': primary,
+                'selected': primary_selected,
+            },
+            'secondary': {
+                'items': secondary,
+                'selected': secondary_selected
+            }
+        }
 
     def home():
         def sorter_date(item):
@@ -26,8 +58,12 @@ def brightonfemcol(request):
             else:
                 return 1
 
-        articles = list(babylon.get('HomeArticlesCache'))
-        events = list(babylon.get('HomeEventsCache'))
+        articles = list(
+            Article.objects.published().order_by('-published')[:5]
+        )
+        events = list(
+            Event.objects.future().order_by('start_date', 'start_time')[:5]
+        )
         boxes = articles + events
         boxes = sorted(boxes, key=sorter_date, reverse=True)
         boxes = sorted(boxes, key=sorter_featured)
@@ -37,7 +73,7 @@ def brightonfemcol(request):
         }
 
     def twitter():
-        return babylon.get('TwitterCache', 1)
+        return get_object_or_404(TwitterAccount, id=1)
 
     return {
         'home': home(),
