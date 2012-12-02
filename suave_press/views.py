@@ -1,16 +1,17 @@
 from django.http import Http404
-from django.shortcuts import get_object_or_404
-from django.template.response import TemplateResponse
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse_lazy as reverse
 from mptt.templatetags.mptt_tags import cache_tree_children
 
 from suave.models import Page
 from .models import Category, Article
+from jimmypage.cache import cache_page
 
 
+@cache_page
 def category(request, category=None):
     category = get_object_or_404(Category, slug=category)
-    return TemplateResponse(request, 'suave_press/category.html', dict(
+    return render(request, 'suave_press/category.html', dict(
         category=category,
         url=reverse('suave_press:category', kwargs={
             'category': category.slug
@@ -18,6 +19,7 @@ def category(request, category=None):
     ))
 
 
+@cache_page
 def article(request, category=None, article=None):
     category = get_object_or_404(Category, slug=category)
     article = get_object_or_404(Article, slug=article, category=category)
@@ -28,13 +30,14 @@ def article(request, category=None, article=None):
 
     posts = article.posts.all()
     cache_tree_children(posts)
-    return TemplateResponse(request, 'suave_press/article.html', dict(
+    return render(request, 'suave_press/article.html', dict(
         category=category,
         article=article,
         posts=posts
     ))
 
 
+@cache_page
 def home(request):
     try:
         page = get_object_or_404(Page, url=request.path)
@@ -45,7 +48,7 @@ def home(request):
         first = articles[0]
     except IndexError:
         first = None
-    return TemplateResponse(request, 'suave_press/home.html', {
+    return render(request, 'suave_press/home.html', {
         'title': 'Latest Articles',
         'page': page,
         'articles': articles,
