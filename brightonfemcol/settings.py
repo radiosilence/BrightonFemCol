@@ -8,6 +8,8 @@ APP = 'brightonfemcol'
 SITE_DOMAIN = 'www.brightonfeministcollective.org.uk'
 PREPEND_WWW = True
 
+GRAPPELLI_ADMIN_TITLE = 'Brighton Feminist Collective'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -164,6 +166,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     APP,
+    'grappelli',
     'mptt',
     'compressor',
     'require',

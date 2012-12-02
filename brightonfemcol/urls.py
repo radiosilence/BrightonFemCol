@@ -33,6 +33,7 @@ urlpatterns = patterns('',
     (r'^robots\.txt$', direct_to_template,
      {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
+    (r'^grappelli/', include('grappelli.urls')),
 )
 
 
