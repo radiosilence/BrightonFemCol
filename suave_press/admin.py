@@ -18,7 +18,8 @@ class ArticleAdmin(DisplayableAdmin):
         ArticleImageInline,
         ArticleAttachmentInline,
     )
-
+    list_display = ('__unicode__', 'published', 'subtitle', 'status', 'category',)
+    list_editable = ('published', 'status', 'category')
 
 class CategoryAdmin(DisplayableAdmin):
     pass

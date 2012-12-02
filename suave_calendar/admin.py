@@ -23,7 +23,7 @@ class EventLinkInline(OrderedInline):
 
 
 class EventAdmin(DisplayableAdmin):
-    list_display = ('title', 'start_date', 'start_time', 'end_date',
+    list_display = ('__unicode__', 'start_date', 'start_time', 'end_date',
         'end_time', 'status', 'location', )
     inlines = (
         EventImageInline,
