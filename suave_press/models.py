@@ -1,9 +1,14 @@
 import datetime
+from bs4 import BeautifulSoup
+import math
+
 from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.utils.timezone import utc
+from django.template.loader import get_template
+from django.template import Context
 
 from model_utils import Choices
 from model_utils.managers import PassThroughManager
@@ -72,6 +77,32 @@ class Article(Displayable):
             'article': self.slug,
             'category': self.category.slug,
         })
+
+    @property
+    def html(self):
+        img = get_template('suave_press/snippets/img.html')
+        images = [
+            BeautifulSoup(img.render(Context({'image': image})))
+                for image in list(self.images.all())
+        ]
+
+        soup = BeautifulSoup(self.body)
+        paras = []
+        elements = soup.find_all('p')
+        
+        if len(images) > len(elements):
+            images = images[:len(elements) + 1]
+
+        i = 0.0
+        for el in elements:
+            words = el.contents
+            if not words or words == '\xa0':
+                continue
+            if int(i) == i:
+                if len(images) > i:
+                    el.insert_before(images[int(i)])
+            i += 0.5
+        return unicode(soup)
 
     @property
     def image(self):

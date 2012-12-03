@@ -62,7 +62,7 @@
     {% block body %}
         <div class="ten columns offset-by-one alpha article" itemscope itemtype="http://schema.org/Article">
             <div itemprop="articleBody">
-            {{ article.body|safe }}
+            {{ article.html|safe }}
             </div>
         </div>
         <div class="twelve columns alpha article">

@@ -1,0 +1,12 @@
+{% load thumbnail %}
+{% thumbnail image.image '200' as im %}
+    <figure>
+        <img src={{ im.url }} width={{ im.width }} height={{ im.height }} />
+        {% if image.title %}
+            <figcaption class="title">{{ image.title }}</figcaption>
+        {% endif %}
+        {% if image.credit %}
+            <figcaption class="credit">Source: {{ image.credit }}</figcaption>
+        {% endif %}
+    </figure>
+{% endthumbnail %}

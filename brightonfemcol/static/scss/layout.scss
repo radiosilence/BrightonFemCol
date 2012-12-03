@@ -156,12 +156,7 @@ body>div>header h1 {
     &.article p {
       line-height: 28px;
       font-size: 17px; }
-    img {
-      float: left;
-      margin: 0px 10px 10px 0px;
-      &.even {
-        float: right;
-        margin: 0px 0px 10px 10px; } } }
+   }
 
   hr {
     height: 3px;
@@ -255,12 +250,29 @@ footer {
       color: white; } } }
 
 figure {
-  background: #521717;
+  background: black;
   color: white;
   font-size: 12px;
-  padding: 10px;
-  width: 240px;
-  margin: 10px 0px; }
+  padding: 0;
+  width: 206px;
+  margin: 10px 0px;
+  img {
+    width: 200px;
+    border: 3px solid black;
+    margin: 0;
+    padding: 0;
+  }
+  figcaption {
+    @include UniversCn(12px);
+    width: 200px;
+    border: 3px solid black;
+    display: block;
+    &.credit {
+      background-color: #521717;
+      border: 3px solid #521717;
+    }
+  }
+}
 
 .align {
   &.right {
@@ -275,27 +287,6 @@ blockquote.giant {
   font-size: 28px;
   &:before {
     content: '&ldquo;'; } }
-
-figure img {
-  width: 100%; }
-
-figure>a {
-  display: block;
-  width: 100%;
-  text-align: right;
-  font-style: italic;
-  color: white;
-  text-decoration: none;
-  &:visited {
-    display: block;
-    width: 100%;
-    text-align: right;
-    font-style: italic;
-    color: white;
-    text-decoration: none; }
-  &:before {
-    content: "Source: ";
-    text-decoration: none; } }
 
 sup {
   font-size: 70%;
@@ -480,7 +471,7 @@ div {
     float: left; }
 
   header.article {
-    margin-top: 60px;
+    margin-top: 40px;
 
     a.category {
       color: black;
@@ -496,18 +487,22 @@ div {
         margin-bottom: 15px;
         display: block; }
       &.author a {
-        text-decoration: none; } } }
+        text-decoration: none;
+      }
+    }
+  }
 
-  #main {
-    div.article p {
-      img {
-        max-width: 200px;
-        float: right;
-        margin: 0px 0px 20px 20px; }
-      &:nth-child(even) img {
-        float: left;
-        margin: 0px 20px 20px 0px; } }
-    padding-bottom: 40px; }
+  div.article {
+    padding-bottom: 40px;
+    figure {
+      float: right;
+      margin: 0px 0px 20px 20px;
+    }
+    figure:nth-child(even) {
+      float: left;
+      margin: 0px 20px 20px 0px;
+    }
+  }
 
   div {
     h1 {

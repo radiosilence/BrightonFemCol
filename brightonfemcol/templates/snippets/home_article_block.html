@@ -28,7 +28,7 @@
                     <a href="{{ article.get_absolute_url }}"><img itemprop="image" src="{{ im.url }}" width=690 height=150></a>
                 {% endthumbnail %}
             {% else %}
-            {% thumbnail article.image.image '335x85' crop='center' as im %}
+                {% thumbnail article.image.image '335x85' crop='center' as im %}
                     <a href="{{ article.get_absolute_url }}"><img itemprop="image" src="{{ im.url }}" width=335 height=85></a>
                 {% endthumbnail %}
             {% endif %}
