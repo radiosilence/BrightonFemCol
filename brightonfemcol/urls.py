@@ -20,6 +20,7 @@ urlpatterns = patterns('',
         namespace='suave_press')),
     url(r'^events/', include('suave_calendar.urls',
         namespace='suave_calendar')),
+    (r'^accounts/', include('allauth.urls')),
     (r'^tinymce/', include('tinymce.urls')),
 
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {

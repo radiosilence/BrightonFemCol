@@ -45,14 +45,6 @@ CACHES = {
 JOHNNY_MIDDLEWARE_KEY_PREFIX='jc_{}'.format(APP)
 JIMMY_PAGE_CACHE_PREFIX = "jp_{}".format(APP)
 
-
-COMPRESS_PRECOMPILERS = (
-    ('text/coffeescript', 'coffee --compile --stdio'),
-    ('text/x-sass', 'sass {infile} {outfile}'),
-    ('text/x-scss', 'sass --scss {infile} {outfile}'),
-)
-COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
-
 THUMBNAIL_QUALITY = 100
 THUMBNAIL_COLORSPACE = None
 THUMBNAIL_FORMAT = 'PNG'
@@ -125,13 +117,15 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+    "django.core.context_processors.request",
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
     '{0}.context_processors.{0}'.format(APP),
 )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 STATICFILES_STORAGE = 'require.storage.OptimizedCachedStaticFilesStorage'
@@ -151,6 +145,12 @@ REQUIRE_STANDALONE_MODULES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+
 ROOT_URLCONF = '{0}.urls'.format(APP)
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -166,7 +166,6 @@ INSTALLED_APPS = (
     APP,
     'grappelli',
     'mptt',
-    'compressor',
     'require',
     'reversion',
     'south',
@@ -178,6 +177,13 @@ INSTALLED_APPS = (
     'django_extensions',
     'sorl.thumbnail',
     'jimmypage',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.persona',
+    'allauth.socialaccount.providers.twitter',
+
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
