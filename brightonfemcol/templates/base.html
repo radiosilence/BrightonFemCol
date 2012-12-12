@@ -2,8 +2,6 @@
 {% load staticfiles %}
 {% load humanize %}
 {% load require %}
-{% load account %}
-{% load socialaccount %}
 {% load thumbnail %}
 <html lang="en"
       xmlns:og="http://ogp.me/ns#"
@@ -107,7 +105,6 @@
 </div>
 
 {% require_module 'main' %}
-{% providers_media_js %}
 {% if not debug %}
 <script type="text/javascript">
 
