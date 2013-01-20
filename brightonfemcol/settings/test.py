@@ -1,3 +1,4 @@
+from .base import *
 import logging
 
 logging.info('TEST SETTINGS IN EFFECT')

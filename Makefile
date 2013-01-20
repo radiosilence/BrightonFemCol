@@ -12,9 +12,6 @@ install_requirements:
 pull:
 	git pull
 
-set_envs:
-	export DJANGO_SETTINGS_MODULE=$(APP).settings.production
-
 upgrade: pull install_requirements update_static update_db restart increment_cache
 
 update_static:
@@ -38,4 +35,4 @@ watch:
 	sass --watch $(APP)/static/scss/:$(APP)/static/css/
 
 restart:
-	touch ../uwsgi_$(APP).py
+	touch ../wsgi_$(APP).py
