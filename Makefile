@@ -4,7 +4,7 @@ APP?=brightonfemcol
 
 
 debug:
-	$(VIRTUAL_ENV)/bin/python manage.py runserver 0.0.0.0:8000 --settings=$(APP).settings.local
+	$(VIRTUAL_ENV)/bin/python manage.py runserver 0.0.0.0:8000
 
 install_requirements:
 	$(VIRTUAL_ENV)/bin/pip install -r requirements.txt
