@@ -19,9 +19,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'test.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
+        'NAME': 'brightonfemcol',                      # Or path to database file if using sqlite3.
+        'USER': 'brightonfemcol',                      # Not used with sqlite3.
+        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD'),                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -95,7 +95,7 @@ STATIC_ROOT = 'static/'
 STATIC_URL = '/static/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'l)(-ko0021##i^a&amp;+7m-nhl^67x2_94+*3wevc5g33zx*t*y0b'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -235,15 +235,3 @@ LOGGING = {
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
-try:
-    from settings_local import *
-except ImportError:
-    pass
-
-if 'test' in sys.argv:
-    try:
-        from settings_test import *
-    except ImportError:
-        pass
-
-import logging

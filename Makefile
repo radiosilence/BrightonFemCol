@@ -3,7 +3,7 @@ UWSGI_INI?="../uwsgi.yaml"
 APP?=brightonfemcol
 
 debug:
-	./manage.py runserver 0.0.0.0:8000
+	./manage.py runserver 0.0.0.0:8000 --settings=$(APP).settings.local
 
 install_requirements:
 	$(VIRTUAL_ENV)/bin/pip install -r requirements.txt
