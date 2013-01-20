@@ -2,14 +2,18 @@ VIRTUAL_ENV?=".."
 UWSGI_INI?="../uwsgi.yaml"
 APP?=brightonfemcol
 
+
 debug:
-	./manage.py runserver 0.0.0.0:8000 --settings=$(APP).settings.local
+	$(VIRTUAL_ENV)/bin/python manage.py runserver 0.0.0.0:8000 --settings=$(APP).settings.local
 
 install_requirements:
 	$(VIRTUAL_ENV)/bin/pip install -r requirements.txt
 
 pull:
 	git pull
+
+set_envs:
+	export DJANGO_SETTINGS_MODULE=$(APP).settings.production
 
 upgrade: pull install_requirements update_static update_db restart increment_cache
 
