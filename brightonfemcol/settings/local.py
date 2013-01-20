@@ -13,9 +13,7 @@ THUMBNAIL_DEBUG = DEBUG
 TEMPLATE_DEBUG = DEBUG
 REQUIRE_DEBUG = DEBUG
 PREPEND_WWW = False
-ADMINS = (
-    ('James Cleveland', 'jamescleveland@gmail.com'),
-)
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 # CACHES = {

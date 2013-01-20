@@ -1,5 +1,6 @@
 import django.conf.global_settings as DEFAULT_SETTINGS
 import os, sys
+from unipath import Path
 # Django settings for brightonfemcol project.
 
 DEBUG = False
@@ -7,11 +8,12 @@ TEMPLATE_DEBUG = DEBUG
 APP = 'brightonfemcol'
 SITE_DOMAIN = 'www.brightonfeministcollective.org.uk'
 PREPEND_WWW = True
+PROJECT_ROOT = Path(__file__).ancestor(3)
 
 GRAPPELLI_ADMIN_TITLE = 'Brighton Feminist Collective'
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('James Cleveland', 'james@dapperdogstudios.com'),
 )
 
 MANAGERS = ADMINS
@@ -82,7 +84,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = 'media/'
+MEDIA_ROOT = PROJECT_ROOT.child('media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -90,7 +92,7 @@ MEDIA_ROOT = 'media/'
 MEDIA_URL = '/media/'
 
 
-STATIC_ROOT = 'static/'
+STATIC_ROOT = PROJECT_ROOT.child('static')
 
 STATIC_URL = '/static/'
 
