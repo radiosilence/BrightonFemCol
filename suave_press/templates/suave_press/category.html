@@ -13,12 +13,12 @@
                         </a>
                     </li>
                     <li typeof="v:Breadcrumb">
-                        <a rel="v:url" property="v:title" href="{% url suave_press:home %}">
+                        <a rel="v:url" property="v:title" href="{% url 'suave_press:home' %}">
                             Articles
                         </a>
                     </li>
                     <li typeof="v:Breadcrumb">
-                        <a rel="v:url" property="v:title" href="{% url suave_press:category  category=category.slug %}">
+                        <a rel="v:url" property="v:title" href="{% url 'suave_press:category'  category=category.slug %}">
                             {{ category }}
                         </a>
                     </li>
