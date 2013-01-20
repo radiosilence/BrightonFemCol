@@ -11,7 +11,7 @@ install_requirements:
 pull:
 	git pull
 
-upgrade: pull install_requirements update_static update_db increment_cache
+upgrade: pull install_requirements update_static update_db restart increment_cache
 
 update_static:
 	$(VIRTUAL_ENV)/bin/python manage.py collectstatic -l --noinput
@@ -33,3 +33,5 @@ init_db: update_db
 watch:
 	sass --watch $(APP)/static/scss/:$(APP)/static/css/
 
+restart:
+	touch ../uwsgi_$(APP).py

@@ -3,11 +3,17 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
-from django.views.generic.simple import direct_to_template
+from django.views.generic.base import TemplateView, RedirectView
+from django.template.response import TemplateResponse
 
 from suave.sitemap import PageSitemap
 from suave_press.sitemap import PressSitemap
 from suave_calendar.sitemap import CalendarSitemap
+
+class TextResponse(TemplateResponse):
+    def __init__(self, *args, **kwargs):
+        kwargs['mimetype'] = 'text/plain'
+        return super(TextResponse, self).__init__(*args, **kwargs)
 
 sitemaps = {
     'pages': PageSitemap(),
@@ -23,16 +29,18 @@ urlpatterns = patterns('',
     (r'^accounts/', include('allauth.urls')),
     (r'^tinymce/', include('tinymce.urls')),
 
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {
-        'url': settings.STATIC_URL + 'images/favicon.ico'
-    }),
+    (r'^favicon\.ico$', RedirectView.as_view(
+        url=settings.STATIC_URL + 'images/favicon.ico'
+    )),
 
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {
         'sitemaps': sitemaps
     }),
     
-    (r'^robots\.txt$', direct_to_template,
-     {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    (r'^robots\.txt$', TemplateView.as_view(
+        template_name='robots.txt',
+        response_class=TextResponse
+    )),
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
     (r'^grappelli/', include('grappelli.urls')),
 )

@@ -12,7 +12,7 @@
             <aside>
                 <a class="category" itemprop="articleSection" href="
                 {% if article.start_date %}
-                    {% url suave_calendar:home %}
+                    {% url 'suave_calendar:home' %}
                 {% else %}
                     {{ article.category.url }}
                 {% endif %}">
