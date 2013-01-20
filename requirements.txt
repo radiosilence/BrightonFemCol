@@ -1,4 +1,4 @@
--e git+git://github.com/django/django.git@1.5b2#egg=Django
+https://www.djangoproject.com/download/1.5c1/tarball/
 PIL>=1.1.7
 South>=0.7.6
 django-model-utils>=1.1.0
