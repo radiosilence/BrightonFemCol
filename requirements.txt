@@ -1,9 +1,9 @@
-Django>=1.4.2
+-e git+git://github.com/django/django.git@1.5b2#egg=Django
 PIL>=1.1.7
 South>=0.7.6
 django-model-utils>=1.1.0
 django-pylibmc>=0.2.3
-git+git://github.com/etianen/django-require.git#egg=django-require
+-e git+git://github.com/etianen/django-require.git#egg=django-require
 django-reversion>=1.6.2
 django-suave>=0.5.4
 django-tinymce>=1.5.1b2
