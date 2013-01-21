@@ -1,10 +1,11 @@
-from django.conf.urls.defaults import patterns, include, url
 from django.conf import settings
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
-admin.autodiscover()
-from django.views.generic.base import TemplateView, RedirectView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.http import HttpResponse
 from django.template.response import TemplateResponse
+from django.views.generic.base import TemplateView, RedirectView
+admin.autodiscover()
 
 from suave.sitemap import PageSitemap
 from suave_press.sitemap import PressSitemap
@@ -36,6 +37,11 @@ urlpatterns = patterns('',
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {
         'sitemaps': sitemaps
     }),
+    (r'^google38834dce68fed27f\.html$',
+        lambda r: HttpResponse(
+            'google-site-verification: google38834dce68fed27f.html'
+        )
+    ),
     
     (r'^robots\.txt$', TemplateView.as_view(
         template_name='robots.txt',
