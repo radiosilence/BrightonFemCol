@@ -1,5 +1,5 @@
 {% load thumbnail %}
-{% thumbnail image.image '200' as im %}
+{% thumbnail image.image '250' as im %}
     <figure>
         <img src={{ im.url }} width={{ im.width }} height={{ im.height }} />
         {% if image.title %}
