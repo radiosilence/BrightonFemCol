@@ -107,6 +107,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'djangosecure.middleware.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,6 +153,14 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 
+# django-secure settings
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_FRAME_DENY = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
 
 ROOT_URLCONF = '{0}.urls'.format(APP)
 
@@ -179,6 +188,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'sorl.thumbnail',
     'jimmypage',
+    'djangosecure',
 
     'allauth',
     'allauth.account',
