@@ -196,17 +196,17 @@ INSTALLED_APPS = (
     'allauth.socialaccount.providers.persona',
     'allauth.socialaccount.providers.twitter',
 
+    'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.sitemaps',
     'django.contrib.markup',
     'django.contrib.messages',
+    'django.contrib.sessions',
+    'django.contrib.sitemaps',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
 )
 
 TINYMCE_DEFAULT_CONFIG = {
