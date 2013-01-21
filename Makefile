@@ -36,3 +36,6 @@ watch:
 
 restart:
 	touch ../wsgi_$(APP).py
+
+test_suave:
+	$(VIRTUAL_ENV)/bin/python manage.py test suave --settings=$(APP).settings.test

@@ -1,7 +1,4 @@
 from .base import *
-import logging
-
-logging.info('TEST SETTINGS IN EFFECT')
 
 DATABASES = {
     'default': {
@@ -13,6 +10,11 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+TEST_RUNNER = 'discover_runner.DiscoverRunner'
+TEST_DISCOVER_TOP_LEVEL = PROJECT_ROOT
+TEST_DISCOVER_ROOT = PROJECT_ROOT
+TEST_DISCOVER_PATTERN = '*'
 
 CACHES = {
     'default': {
