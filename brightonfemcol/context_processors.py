@@ -10,7 +10,7 @@ from collections import namedtuple
 
 from suave_press.models import Article
 from suave_calendar.models import Event
-from brightonfemcol.models import TwitterAccount
+from brightonfemcol.models import Tweet
 
 
 def brightonfemcol(request):
@@ -72,12 +72,12 @@ def brightonfemcol(request):
             'boxes': boxes[:5]
         }
 
-    def twitter():
-        return get_object_or_404(TwitterAccount, id=1)
+    def tweets(n):
+        return Tweet.objects.all().order_by('-created_at')[:n]
 
     return {
         'home': home(),
         'nav': nav(),
-        'twitter': twitter(),
+        'tweets': tweets(10),
         'SITE_DOMAIN': settings.SITE_DOMAIN,
     }

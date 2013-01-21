@@ -75,7 +75,7 @@
 	</section>
 	<aside class="columns four alpha omega" id="twitter">
 		<ul class="tweet_list">
-			{% for tweet in twitter.latest_tweets %}
+			{% for tweet in tweets %}
 				<li class="four columns alpha omega tweet_{% cycle 'odd' 'even' %}">
 					<a class="tweet_avatar" href={{ tweet.account.url }}>
 						{% thumbnail tweet.account.image '50x50' crop='center' as im %}
