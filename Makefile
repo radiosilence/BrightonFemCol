@@ -32,7 +32,7 @@ init: init_db create_admin
 init_db: update_db
 
 watch:
-	sass --watch $(APP)/static/scss/:$(APP)/static/css/
+	sass --watch $(APP)/static/scss:$(APP)/static/css
 
 restart:
 	touch ../wsgi_$(APP).py
