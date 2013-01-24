@@ -3,19 +3,25 @@
 {% block meta_description %}{{ event.body|striptags|safe|truncatechars:285 }}{% endblock %}
 {% block meta_author %}Brighton Feminist Collective{% endblock %}
 {% block opengraph %}
-    {{ block.super }}
-    <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ event.url }}" />
-    <meta property="og:title" content="{{ event.title }}"/>
+    <meta property="og:url" content="https://{{ SITE_DOMAIN }}{{ event.url }}" />
+    <meta property="og:title" content="{{ event.title|striptags|safe }}"/>
     <meta property="og:type" content="activity"/>
-    {% for image in event.images.all %}
-    {% thumbnail image.image '480x480' crop='center' as im %}
-        <meta property="og:image" content="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
-    {% endthumbnail %}
-    {% endfor %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://{{ SITE_DOMAIN }}{{ event.url }}" />
+    <meta name="twitter:description" content="{{ event.body|striptags|safe|truncatewords:25 }}">
+    <meta name="twitter:title" content="{{ event.title|striptags|safe }}">
     <meta property="og:description"
           content="{{ event.body|striptags|safe|truncatechars:385 }}"/>
 {% endblock %}
-{% block canonical %}http://{{ SITE_DOMAIN }}{{ event.url }}{% endblock %}
+{% block opengraph_image %}
+    {% for image in event.images.all %}
+    {% thumbnail image.image '120x120' crop='center' as im %}
+        <meta property="twitter:image" content="https://{{ SITE_DOMAIN }}{{ im.url }}"/>
+        <meta property="og:image" content="https://{{ SITE_DOMAIN }}{{ im.url }}"/>
+    {% endthumbnail %}
+    {% endfor %}
+{% endblock %}
+{% block canonical %}https://{{ SITE_DOMAIN }}{{ event.url }}{% endblock %}
 {% block schema %}itemscope itemtype="http://schema.org/Event"{% endblock %}
 {% block content %}
     {% block header %}

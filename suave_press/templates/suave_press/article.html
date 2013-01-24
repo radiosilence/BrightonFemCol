@@ -5,19 +5,26 @@
 
 {% block opengraph %}
     {{ block.super }}
-    <meta property="og:url" content="http://{{ SITE_DOMAIN }}{{ article.url }}" />
-    <meta property="og:title" content="{{ article.title }}"/>
+    <meta property="og:url" content="https://{{ SITE_DOMAIN }}{{ article.url }}" />
+    <meta property="og:title" content="{{ article.title|striptags|safe }}"/>
     <meta property="og:author" content="{{ article.author.username }}"/>
     <meta property="og:type" content="article"/>
+    <meta property="og:description"
+          content="{{ article.body|striptags|safe|truncatewords:25 }}"/>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://{{ SITE_DOMAIN }}{{ article.url }}" />
+    <meta name="twitter:description" content="{{ article.body|striptags|safe|truncatewords:25 }}">
+    <meta name="twitter:title" content="{{ article.title|striptags|safe }}">
+{% endblock %}
+{% block opengraph_image %}
     {% for image in article.images.all %}
-    {% thumbnail image.image '480x480' crop='center' as im %}
-        <meta property="og:image" content="http://{{ SITE_DOMAIN }}{{ im.url }}"/>
+    {% thumbnail image.image '120x120' crop='center' as im %}
+        <meta property="og:image" content="https://{{ SITE_DOMAIN }}{{ im.url }}"/>
+        <meta property="twitter:image" content="https://{{ SITE_DOMAIN }}{{ im.url }}"/>
     {% endthumbnail %}
     {% endfor %}
-    <meta property="og:description"
-          content="{{ article.body|striptags|safe|truncatechars:385 }}"/>
 {% endblock %}
-{% block canonical %}http://{{ SITE_DOMAIN }}{{ article.url }}{% endblock %}
+{% block canonical %}https://{{ SITE_DOMAIN }}{{ article.url }}{% endblock %}
 {% block content %}
     {% block breadcrumbs %}
         <section class='breadcrumbs' xmlns:v="http://rdf.data-vocabulary.org/#">
