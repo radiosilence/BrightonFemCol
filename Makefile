@@ -35,7 +35,7 @@ watch:
 	sass --watch $(APP)/static/scss:$(APP)/static/css
 
 restart:
-	touch ../wsgi_$(APP).py
+	touch uwsgi.ini
 
 test_suave:
 	$(VIRTUAL_ENV)/bin/python manage.py test suave --settings=$(APP).settings.test

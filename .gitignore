@@ -7,3 +7,5 @@ media/
 settings_local.py
 .sass-cache/
 *-built.js
+uwsgi.*
+*.sock
