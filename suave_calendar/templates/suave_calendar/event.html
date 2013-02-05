@@ -100,6 +100,11 @@
                 {% include 'snippets/gallery.html' with items=event.images.all %}
             {% endif %}
             
+            <h1>Comments</h1>
+            {% set_disqus_identifier 'event-' event.id %}
+            {% set_disqus_url 'https://' SITE_DOMAIN event.url %}
+            {% set_disqus_title event.title %}
+            {% disqus_show_comments %}
         </div>
     {% endblock %}
 {% endblock %}

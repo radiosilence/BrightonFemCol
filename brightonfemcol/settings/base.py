@@ -162,6 +162,10 @@ SECURE_FRAME_DENY = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 
+# Disqus
+DISQUS_API_KEY = os.environ.get('DJANGO_DISQUS_API_KEY')
+DISQUS_WEBSITE_SHORTNAME = 'brightonfeministcollective'
+
 ROOT_URLCONF = '{0}.urls'.format(APP)
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -189,6 +193,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'jimmypage',
     'djangosecure',
+    'disqus',
 
     'allauth',
     'allauth.account',
