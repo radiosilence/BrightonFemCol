@@ -1,4 +1,7 @@
-{% extends 'base.html' %}{% load thumbnail %}{% load static %}
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load static %}
+{% load disqus_tags %}
 {% block title %}{{ event.title }} - Brighton Feminist Collective{% endblock %}
 {% block meta_description %}{{ event.body|striptags|safe|truncatechars:285 }}{% endblock %}
 {% block meta_author %}Brighton Feminist Collective{% endblock %}
