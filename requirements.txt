@@ -7,6 +7,7 @@ django-pylibmc>=0.2.3
 django-reversion>=1.6.5
 django-secure>=0.1.2
 django-suave>=0.5.14
+django-disqus>=0.4.1
 django-tinymce>=1.5.1b4
 https://www.djangoproject.com/download/1.5c1/tarball/#egg=Django
 PIL>=1.1.7
