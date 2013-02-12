@@ -188,7 +188,7 @@ INSTALLED_APPS = (
     'suave_calendar',
     'suave_discussion',
     'suave',
-    'tinymce',
+    'ckeditor',
     'django_extensions',
     'sorl.thumbnail',
     'jimmypage',
@@ -214,11 +214,26 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT.child('uploads')
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        'toolbarGroups': [
+            { 'name': 'standard', 'groups': ['basicstyles', 'paragraphFormat', 'cleanup', 'links'] },
+            { 'name': 'paragraph', 'groups': ['list', 'indent', 'blocks', 'align'] },
+            { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
+            { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
+            { 'name': 'styles' },
+            { 'name': 'insert', 'groups': ['image'] },
+            { 'name': 'document',    'groups': [ 'mode', 'document', 'doctools' ] },
+            { 'name': 'tools' },
+            { 'name': 'others' },
+        ],
+        'height': 391,
+        'width': 964,
+        'filebrowserWindowWidth': 940,
+        'filebrowserWindowHeight': 725,
+    }
 }
 
 # A sample logging configuration. The only tangible logging

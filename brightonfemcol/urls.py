@@ -22,17 +22,17 @@ sitemaps = {
     'press': PressSitemap(),
 }
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^articles/', include('suave_press.urls',
         namespace='suave_press')),
     url(r'^events/', include('suave_calendar.urls',
         namespace='suave_calendar')),
     (r'^accounts/', include('allauth.urls')),
-    (r'^tinymce/', include('tinymce.urls')),
-
     (r'^favicon\.ico$', RedirectView.as_view(
         url=settings.STATIC_URL + 'images/favicon.ico'
     )),
+    (r'^grappelli/', include('grappelli.urls')),
+    (r'^admin/ckeditor/', include('ckeditor.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 
     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {
         'sitemaps': sitemaps
@@ -48,7 +48,6 @@ urlpatterns = patterns('',
         response_class=TextResponse
     )),
     url(r'^', include('suave.urls', namespace='suave', app_name='suave')),
-    (r'^grappelli/', include('grappelli.urls')),
 )
 
 
