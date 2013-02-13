@@ -10,5 +10,5 @@
  */
 ({
     wrap: true,
-    optimize: 'uglify',
+    optimize: 'uglify2',
 })
