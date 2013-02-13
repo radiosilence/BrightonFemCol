@@ -215,25 +215,32 @@ INSTALLED_APPS = (
 )
 
 CKEDITOR_UPLOAD_PATH = MEDIA_ROOT.child('uploads')
+
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono',
-        'toolbarGroups': [
-            { 'name': 'standard', 'groups': ['basicstyles', 'paragraphFormat', 'cleanup', 'links'] },
-            { 'name': 'paragraph', 'groups': ['list', 'indent', 'blocks', 'align'] },
-            { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
-            { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
-            { 'name': 'styles' },
-            { 'name': 'insert', 'groups': ['image'] },
-            { 'name': 'document',    'groups': [ 'mode', 'document', 'doctools' ] },
-            { 'name': 'tools' },
-            { 'name': 'others' },
-        ],
+        'toolbar': (
+            ('Format', 'Bold', 'Italic', 'Underline', '-', 'RemoveFormat'),
+            ('Link', 'Unlink'),
+            ('NumberedList', 'BulletedList'),
+            ('Cut', 'Copy', 'Paste', 'PasteFromWord', '-', 'Undo', 'Redo'),
+            ('Find', 'Replace', '-', 'Scayt',),
+            ('Maximize', 'ShowBlocks', 'Source'),
+        ),
         'height': 391,
-        'width': 964,
+        'width': 835,
         'filebrowserWindowWidth': 940,
         'filebrowserWindowHeight': 725,
-    }
+    },
+    'small': {
+        'skin': 'moono',
+        'toolbarGroups': [
+            { 'name': 'standard', 'groups': ['basicstyles', 'paragraphFormat', 'links'] },
+            { 'name': 'paragraph', 'groups': ['list',] },
+        ],
+        'height': 100,
+        'width': 400,
+    },
 }
 
 # A sample logging configuration. The only tangible logging
