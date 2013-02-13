@@ -10,7 +10,6 @@
 ({
     skipDirOptimize: true,
     wrap: true,
-    optimize: 'uglify2',
     optimizeCss: "standard",
     modules: []
 })
