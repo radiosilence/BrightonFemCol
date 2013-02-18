@@ -42,6 +42,7 @@ urlpatterns = patterns('',
             'google-site-verification: google38834dce68fed27f.html'
         )
     ),
+    url(r'^parp/$', 'brightonfemcol.views.parp', name='parp'),
     
     (r'^robots\.txt$', TemplateView.as_view(
         template_name='robots.txt',
